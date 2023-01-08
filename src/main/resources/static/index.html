@@ -1,10 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>MainPage</title>
+<!--    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">-->
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        .circle {
+            margin: 0 auto;
+            width: 400px;
+            height: 400px;
+            border: 20px solid rgb(29, 91, 162);
+            border-radius: 50%;
+
+        }
+        .wrapper {
+            margin: 0 auto;
+            padding: 30px;
+            max-width: 1180px;
+        }
+
+        /*#circle:hover {*/
+        /*    pointer-events: painted;*/
+        /*    !*background: palevioletred;*!*/
+        /*    transition: all 0.3s linear;*/
+        /*    transform: scale(1.1);*/
+        /*}*/
+    </style>
 </head>
 <body>
-$END$
+<!--top-->
+<div class="container">
+    <div style="margin-bottom: 200px; margin-top: 50px">
+        <h1 class="text-center">Pomoll D'or</h1>
+    </div>
+</div>
+<!--middle-->
+
+<div>
+    <div>
+<!--        타이머-->
+        <div class="text-center">
+
+            <div class="container-fluid">
+                <div class="circle" style="" id="circle" onclick="stop()">
+
+                    <div>
+                        <p style="line-height: 130px" class="h2 text-white">
+                            목표시간
+                        </p>
+
+                        <label>Time</label>
+                        <p style="margin-bottom: 50px" id="remainTime">00:00:00</p>
+
+                        <div>
+                            <button class = "btn"
+                                    type = "button"
+
+
+
+                                    id="startStopBtn"
+                            >
+                                <div>START</div>
+                            </button>
+                        </div>
+
+                        <div>
+
+                            <button class = "btn"
+                                    type = "button"
+                                    id="reduceBtn"
+                            >
+                                <div>-</div>
+                            </button>
+
+                            <button class = "btn"
+                                    type = "button"
+                                    id="increaseBtn"
+                            >
+                                <div>+</div>
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--bottom-->
+
 </body>
+
+<script>
+
+    const remainTime = document.getElementById("remainTime")
+    const reduceBtn = document.getElementById("reduceBtn")
+    const increaseBtn = document.getElementById("increaseBtn")
+    const startStopBtn = document.getElementById("startStopBtn")
+
+    let pomoInterval;
+    let restInterval;
+    let pomoTime = 1500;
+    let restTime = 300;
+    let status = 0;
+
+    startStopBtn.addEventListener("click", checkRunning);
+    startStopBtn.addEventListener("click", pomoStart);
+    increaseBtn.addEventListener("click", increaseTime);
+
+    function pomoStart() {
+
+        if (!checkRunning()) {
+            console.log("check")
+            // pomodoro();
+            pomoInterval = setInterval(pomodoro, 1000);
+            console.log("check 2")
+
+        }
+        console.log(checkRunning())
+    }
+
+    function checkRunning() {
+        // 처음 실행할 때
+        if (status === 0) {
+            startStopBtn.innerHTML = "STOP"
+            status = 1;
+
+            return true
+        } else {    // 실행중일때 (button = stop일때)
+            startStopBtn.innerHTML = "START"
+            status = 0;
+            clearInterval(pomoInterval);
+            return false
+        }
+    }
+
+    function pomodoro() {
+
+        const minutes = String(Math.floor(pomoTime / 60)).padStart(2, "0");
+        const seconds = String(pomoTime % 60).padStart(2, "0");
+        pomoTime -= 1;
+        remainTime.innerHTML = `${minutes} : ${seconds}`;
+
+        // if (pomoTime < 0)  {
+        //     clearInterval(pomoInterval);
+        //     restStart();
+        //     restInterval = setInterval(restStart, 1000);
+        //     beep();
+        // }
+    }
+
+    function restStart() {
+        const restMinutes = String(Math.floor(restTime / 60)).padStart(2, "0");
+        const restSeconds = String(restTime % 60).padStart(2, "0");
+        restTime -= 1;
+        pomoBtn.innerHTML = `${restMinutes} : ${restSeconds}`;
+        if (restTime < 5 && restTime >= 0)  {
+            beep();
+        } else if (restTime < 0) {
+            clearInterval(restInterval);
+            window.location.reload(true);
+        }
+    }
+
+    function beep() {
+        var snd = new Audio("https://t1.daumcdn.net/cfile/tistory/99412B355CF6B93806?original");
+        snd.play();
+    }
+
+    function reduceTime() {
+        pomoTime += 10;
+        remainTime.innerHTML = pomoTime.value()
+    }
+
+
+    function increaseTime() {
+        pomoTime -= 10;
+        remainTime.innerHTML = pomoTime.value()
+    }
+
+</script>
 </html>
