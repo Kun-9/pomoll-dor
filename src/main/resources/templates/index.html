@@ -7,7 +7,7 @@
     <title>MainPage</title>
 
     <link th:href="@{/css/bootstrap.css}"
-            href="css/bootstrap.css" rel="stylesheet">
+          href="../static/css/bootstrap.css" rel="stylesheet">
     <!--    <link href="css/bootstrap-theme.min.css" rel="stylesheet">-->
 
     <style>
@@ -33,17 +33,20 @@
             /*transform: scale(1.1);*/
         }
 
-        #buttons label {
+        .buttons label {
             border-radius: 0px;
             height: 50px;
             align-content: center;
             font-size: 20px;
             font-weight: bold;
+            width: 150px;
+            margin: 5px;
         }
 
-        #buttons label, input {
+        .buttons label, input {
             height: 100%;
         }
+
 
         body {
             transition: all 0.3s linear;
@@ -56,10 +59,10 @@
 <div class="container">
     <div class="text-right" style="margin-top: 20px">
         <button class="btn btn-primary" data-toggle="modal" data-target="#join">Join</button>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#">Log in</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#login">Log in</button>
     </div>
     <div style="margin-bottom: 150px; margin-top: 100px">
-        <h1 class="text-center" style="color: white; letter-spacing: 14px; font-size: 50px; font-weight: bolder" th:text="hello">Pomoll D'or</h1>
+        <h1 class="text-center" style="color: white; letter-spacing: 14px; font-size: 50px; font-weight: bolder" >Pomoll D'or</h1>
     </div>
 </div>
 
@@ -72,7 +75,7 @@
                 <div class="circle" style="" id="circle">
 
                     <div>
-                        <h3 style="line-height: 150px; color: white;" class="">
+                        <h3 style="line-height: 160px; color: white;" class="">
                             GOAL
                         </h3>
 
@@ -85,6 +88,15 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
                         SETTING
                     </button>
+
+                    <button type="button"  class="btn btn-warning" onclick="stopTimer()" >
+                        CANCEL
+                    </button>
+                </div>
+                <div style="margin-top: 20px">
+                    <label class="label label-info" style="font-size: 22px">REST TIME</label>
+                    <p id="restTimeLabel" style="margin-top: 20px; color: white; font-size: 22px">0</p>
+
                 </div>
             </div>
         </div>
@@ -106,21 +118,39 @@
             </div>
 
             <!--시간 선택 버튼들-->
-            <div class="modal-body text-center">
-                <div id="buttons" class="row btn-group btn-group-toggle" data-toggle="buttons"
-                     style="align-content: center; width: 100%; padding: 20px">
-                    <label class="col-md-6 btn btn-default"><input name="setTime" value="5"
+            <div class="modal-body text-center" style="padding: 44px">
+                <label style="margin-bottom: 15px">Set POMO Time</label>
+                <div class="row btn-group btn-group-toggle buttons" data-toggle="buttons"
+                     style="align-content: center; width: 100%; text-align: center">
+                    <label class="col-md-6 btn btn-default" ><input name="setPomoTime" value="5"
                                                                    type="radio">5</label>
-                    <label class="col-md-6 btn btn-default"><input name="setTime" value="15"
+                    <label class="col-md-6 btn btn-default" ><input name="setPomoTime" value="15"
                                                                    type="radio">15</label>
-                    <label class="col-md-6 btn btn-default"><input name="setTime" value="30"
+                    <label class="col-md-6 btn btn-default" ><input name="setPomoTime" value="30"
                                                                    type="radio">30</label>
-                    <label class="col-md-6 btn btn-default"><input name="setTime" value="60"
+                    <label class="col-md-6 btn btn-default" ><input name="setPomoTime" value="60"
                                                                    type="radio">60</label>
-                    <label class="col-md-6 btn btn-default"><input name="setTime" value="90"
+                    <label class="col-md-6 btn btn-default" ><input name="setPomoTime" value="90"
                                                                    type="radio">90</label>
-                    <label class="col-md-6 btn btn-default"><input name="setTime" value="120"
+                    <label class="col-md-6 btn btn-default" ><input name="setPomoTime" value="120"
                                                                    type="radio">120</label>
+                </div>
+
+                <label style="margin-bottom: 15px; margin-top: 20px">Set REST Time</label>
+                <div class="row btn-group btn-group-toggle buttons restButtons" data-toggle="buttons"
+                     style="align-content: center; width: 100%; text-align: center">
+                    <label class="col-md-6 btn btn-success" ><input name="setRestTime" value="3"
+                                                                    type="radio">3</label>
+                    <label class="col-md-6 btn btn-success" ><input name="setRestTime" value="5"
+                                                                    type="radio">5</label>
+                    <label class="col-md-6 btn btn-success" ><input name="setRestTime" value="10"
+                                                                    type="radio">10</label>
+                    <label class="col-md-6 btn btn-success" ><input name="setRestTime" value="15"
+                                                                    type="radio">15</label>
+                    <label class="col-md-6 btn btn-success" ><input name="setRestTime" value="20"
+                                                                    type="radio">20</label>
+                    <label class="col-md-6 btn btn-success" ><input name="setRestTime" value="30"
+                                                                    type="radio">30</label>
                 </div>
             </div>
 
@@ -144,15 +174,14 @@
 
             <!---->
             <div class="modal-body">
-                <form method="post">
+                <form method="post" th:action="@{/save}" th:object="${member}">
                     <div class="mb-3" style="margin-bottom: 5px">
-                        <label for="InputEmail" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" th:field="*{email}" id="email" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3" style="margin-bottom: 5px">
-                        <label for="InputPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="InputPassword">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" th:field="*{password}" class="form-control" id="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -165,9 +194,46 @@
     </div>
 </div>
 
-<script src="js/jquery-3.6.3.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/timer.js"></script>
+<!--로그인 모달-->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="selectTimeModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="width: 400px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginTitle">Join</h5>
+            </div>
+
+            <!---->
+            <div class="modal-body">
+                <form method="get" th:action="@{/login}" th:object="${member}">
+                    <div class="mb-3" style="margin-bottom: 5px">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" th:field="*{email}" aria-describedby="emailHelp">
+                        <div id="loginHelper" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3" style="margin-bottom: 5px">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" th:field="*{password}" class="form-control" id="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../static/js/jquery-3.6.3.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/timer.js"></script>
+
+<!--타임리프-->
+<script th:src="@{/js/jquery-3.6.3.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/timer.js}" type="text/javascript"></script>
+
 
 </body>
 </html>
