@@ -2,24 +2,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>MainPage</title>
-<!--    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">-->
-    <!-- 합쳐지고 최소화된 최신 CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-    <!-- 부가적인 테마 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>MainPage</title>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+<!--    <link href="css/bootstrap-theme.min.css" rel="stylesheet">-->
 
     <style>
         .circle {
             margin: 0 auto;
-            width: 400px;
-            height: 400px;
-            border: 20px solid rgb(29, 91, 162);
+            width: 500px;
+            height: 500px;
+            border: 20px solid rgb(175, 194, 215);
             border-radius: 50%;
 
         }
@@ -29,168 +24,193 @@
             max-width: 1180px;
         }
 
-        /*#circle:hover {*/
-        /*    pointer-events: painted;*/
-        /*    !*background: palevioletred;*!*/
-        /*    transition: all 0.3s linear;*/
-        /*    transform: scale(1.1);*/
-        /*}*/
+        #circle:hover {
+            pointer-events: painted;
+            background: #1f4377;
+            transition: all 0.3s linear;
+            /*transform: scale(1.1);*/
+        }
+        #buttons label {
+            border-radius: 0px;
+            height: 50px;
+            align-content: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #buttons label, input {
+            height: 100%;
+        }
     </style>
 </head>
-<body>
+<body style="background: #0a58ca">
+
 <!--top-->
 <div class="container">
-    <div style="margin-bottom: 200px; margin-top: 50px">
-        <h1 class="text-center">Pomoll D'or</h1>
+    <div style="margin-bottom: 150px; margin-top: 100px">
+        <h1 class="text-center" style="color: white; letter-spacing: 6px; font-size: 50px; font-weight: bolder">Pomoll D'or</h1>
     </div>
 </div>
 <!--middle-->
-
 <div>
     <div>
 <!--        타이머-->
         <div class="text-center">
-
             <div class="container-fluid">
-                <div class="circle" style="" id="circle" onclick="stop()">
+                <div class="circle" style="" id="circle">
 
                     <div>
-                        <p style="line-height: 130px" class="h2 text-white">
-                            목표시간
-                        </p>
+                        <h3 style="line-height: 150px; color: white;" class="">
+                            GOAL
+                        </h3>
 
-                        <label>Time</label>
-                        <p style="margin-bottom: 50px" id="remainTime">00:00:00</p>
+                        <p style="margin-bottom: 50px; font-weight: bold; font-size: 60px; color: white" id="remainTime">00 : 30 : 00</p>
 
-                        <div>
-                            <button class = "btn"
-                                    type = "button"
-
-
-
-                                    id="startStopBtn"
-                            >
-                                <div>START</div>
-                            </button>
-                        </div>
-
-                        <div>
-
-                            <button class = "btn"
-                                    type = "button"
-                                    id="reduceBtn"
-                            >
-                                <div>-</div>
-                            </button>
-
-                            <button class = "btn"
-                                    type = "button"
-                                    id="increaseBtn"
-                            >
-                                <div>+</div>
-                            </button>
-
-                        </div>
                     </div>
 
                 </div>
+
+                <div style="margin-top: 20px">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
+                        SETTING
+                    </button>
+                </div>
             </div>
         </div>
-
     </div>
 </div>
 
 <!--bottom-->
 
+    <script>
+        const startStopBtn = document.getElementById("circle")
+        const remainTime = document.getElementById("remainTime")
+        const setTimeBtn = document.getElementById("setTimeBtn")
+
+        let pomoInterval;
+        let restInterval;
+        let pomoTime = 1800;
+        let restTime = 300;
+        let status = 0;
+
+        startStopBtn.addEventListener("click", checkRunning);
+        startStopBtn.addEventListener("click", pomoStart);
+
+        function set30() {
+            pomoTime = 1800;
+            remainTime.innerHTML = pomoTime;
+            console.log(pomoTime)
+        }
+        function pomoStart() {
+
+            if (!checkRunning()) {
+                pomoInterval = setInterval(pomodoro, 1000);
+            }
+            console.log(checkRunning())
+        }
+
+        function checkRunning() {
+            // 처음 실행할 때
+            if (status === 0) {
+                // startStopBtn.innerHTML = "STOP"
+                status = 1;
+
+                return true
+            } else {    // 실행중일때 (button = stop일때)
+                // startStopBtn.innerHTML = "START"
+                status = 0;
+                clearInterval(pomoInterval);
+                return false
+            }
+        }
+
+        function pomodoro() {
+
+            let minutes = String(Math.floor(pomoTime / 60))
+            const seconds = String(pomoTime % 60).padStart(2, "0");
+            const hours = String(Math.floor(minutes / 60)).padStart(2, "0")
+
+            minutes = String(minutes % 60).padStart(2, "0")
+
+            pomoTime -= 1;
+
+            remainTime.innerHTML = `${hours} : ${minutes} : ${seconds}`;
+
+            if (pomoTime < 0)  {
+                clearInterval(pomoInterval);
+                beep();
+                //     restStart();
+                //     restInterval = setInterval(restStart, 1000);
+            }
+        }
+
+        function restStart() {
+            const restMinutes = String(Math.floor(restTime / 60)).padStart(2, "0");
+            const restSeconds = String(restTime % 60).padStart(2, "0");
+            restTime -= 1;
+            pomoBtn.innerHTML = `${restMinutes} : ${restSeconds}`;
+            if (restTime < 5 && restTime >= 0)  {
+                beep();
+            } else if (restTime < 0) {
+                clearInterval(restInterval);
+                window.location.reload(true);
+            }
+        }
+
+        function beep() {
+            var snd = new Audio("https://t1.daumcdn.net/cfile/tistory/99412B355CF6B93806?original");
+            snd.play();
+        }
+
+        function getSelectedTime() {
+            const setTimeList = document.getElementsByName('setTime');
+            setTimeList.forEach((node) => {
+                if(node.checked) {
+                    pomoTime = node.value * 60
+
+                    let minutes = String(Math.floor(pomoTime / 60))
+                    const seconds = String(pomoTime % 60).padStart(2, "0");
+                    const hours = String(Math.floor(minutes / 60)).padStart(2, "0")
+
+                    minutes = String(minutes % 60).padStart(2, "0")
+
+                    remainTime.innerHTML = `${hours} : ${minutes} : ${seconds}`;
+
+                }
+            })
+        }
+    </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="selectTimeModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="width: 400px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Setting</h5>
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+                </div>
+
+<!--                시간 선택 버튼들-->
+                <div class="modal-body text-center" >
+                    <div id="buttons" class="row btn-group btn-group-toggle" data-toggle="buttons" style="align-content: center; width: 100%; padding: 20px">
+                        <label class="col-md-6 btn btn-default"><input id="setTimeBtn30" name="setTime" value="30" type="radio">30</label>
+                        <label class="col-md-6 btn btn-default"><input id="setTimeBtn60" name="setTime" value="60" type="radio">60</label>
+                        <label class="col-md-6 btn btn-default"><input id="setTimeBtn90" name="setTime" value="90" type="radio">90</label>
+                        <label class="col-md-6 btn btn-default"><input id="setTimeBtn120" name="setTime" value="120" type="radio">120</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="setTimeBtn" onclick="getSelectedTime();" data-dismiss="modal" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery-3.6.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
 </body>
-
-<script>
-
-    const remainTime = document.getElementById("remainTime")
-    const reduceBtn = document.getElementById("reduceBtn")
-    const increaseBtn = document.getElementById("increaseBtn")
-    const startStopBtn = document.getElementById("startStopBtn")
-
-    let pomoInterval;
-    let restInterval;
-    let pomoTime = 1500;
-    let restTime = 300;
-    let status = 0;
-
-    startStopBtn.addEventListener("click", checkRunning);
-    startStopBtn.addEventListener("click", pomoStart);
-    increaseBtn.addEventListener("click", increaseTime);
-
-    function pomoStart() {
-
-        if (!checkRunning()) {
-            console.log("check")
-            // pomodoro();
-            pomoInterval = setInterval(pomodoro, 1000);
-            console.log("check 2")
-
-        }
-        console.log(checkRunning())
-    }
-
-    function checkRunning() {
-        // 처음 실행할 때
-        if (status === 0) {
-            startStopBtn.innerHTML = "STOP"
-            status = 1;
-
-            return true
-        } else {    // 실행중일때 (button = stop일때)
-            startStopBtn.innerHTML = "START"
-            status = 0;
-            clearInterval(pomoInterval);
-            return false
-        }
-    }
-
-    function pomodoro() {
-
-        const minutes = String(Math.floor(pomoTime / 60)).padStart(2, "0");
-        const seconds = String(pomoTime % 60).padStart(2, "0");
-        pomoTime -= 1;
-        remainTime.innerHTML = `${minutes} : ${seconds}`;
-
-        // if (pomoTime < 0)  {
-        //     clearInterval(pomoInterval);
-        //     restStart();
-        //     restInterval = setInterval(restStart, 1000);
-        //     beep();
-        // }
-    }
-
-    function restStart() {
-        const restMinutes = String(Math.floor(restTime / 60)).padStart(2, "0");
-        const restSeconds = String(restTime % 60).padStart(2, "0");
-        restTime -= 1;
-        pomoBtn.innerHTML = `${restMinutes} : ${restSeconds}`;
-        if (restTime < 5 && restTime >= 0)  {
-            beep();
-        } else if (restTime < 0) {
-            clearInterval(restInterval);
-            window.location.reload(true);
-        }
-    }
-
-    function beep() {
-        var snd = new Audio("https://t1.daumcdn.net/cfile/tistory/99412B355CF6B93806?original");
-        snd.play();
-    }
-
-    function reduceTime() {
-        pomoTime += 10;
-        remainTime.innerHTML = pomoTime.value()
-    }
-
-
-    function increaseTime() {
-        pomoTime -= 10;
-        remainTime.innerHTML = pomoTime.value()
-    }
-
-</script>
 </html>
