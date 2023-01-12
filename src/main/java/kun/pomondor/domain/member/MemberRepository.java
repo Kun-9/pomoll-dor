@@ -33,12 +33,21 @@ public class MemberRepository {
         return null;
     }
 
-    public boolean login(String email, String password) {
+    public Member login(String email, String password) {
         Member byEmail = findByEmail(email);
         if (byEmail != null && byEmail.getPassword().equals(password)) {
-            return true;
+            return byEmail;
         }
-        return false;
+        return null;
+    }
+
+    public int saveUserTime(long userId, int time) {
+        Member member = findById(userId);
+        int accumTime = member.getAccumTime();
+        accumTime += time;
+        member.setAccumTime(accumTime);
+
+        return accumTime;
     }
 
 }

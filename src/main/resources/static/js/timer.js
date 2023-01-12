@@ -8,6 +8,7 @@ let pomoTime = 1800;
 let restTime = 300;
 let status = 0;
 let lastTime = 1800;
+let email = 'kun@naver.com'
 
 startStopBtn.addEventListener("click", isRunning);
 startStopBtn.addEventListener("click", pomoStart);
@@ -66,16 +67,29 @@ function pomodoro() {
 function stopTimer() {
     if (pomoInterval !== null) {
 
+        // 타이머 종료
         clearInterval(pomoInterval);
 
+        // 타이머 시간 => 마지막 세팅 시간으로 초기화
         pomoTime = lastTime;
         remainTime.innerHTML = numberToTime(pomoTime);
-        document.body.style.backgroundColor = "#0a58ca"
-        startStopBtn.style.backgroundColor = "#0a58ca";
-        startStopBtn.style.borderColor = "white"
+        changeStopColor()
 
         status = 0
+
+        // 서버에 측정한 시간 전송
+        const request = new XMLHttpRequest();
+
+        request.open('post', '/basic/save-time','true');
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.send('time=' + pomoTime);
     }
+}
+
+function changeStopColor() {
+    document.body.style.backgroundColor = "#0a58ca"
+    startStopBtn.style.backgroundColor = "#0a58ca";
+    startStopBtn.style.borderColor = "white"
 }
 
 function restStart() {
@@ -102,13 +116,8 @@ function getSelectedTime() {
         if (node.checked) {
             pomoTime = node.value * 60
             lastTime = pomoTime
-            let minutes = String(Math.floor(pomoTime / 60))
-            const seconds = String(pomoTime % 60).padStart(2, "0");
-            const hours = String(Math.floor(minutes / 60)).padStart(2, "0")
 
-            minutes = String(minutes % 60).padStart(2, "0")
-
-            remainTime.innerHTML = `${hours} : ${minutes} : ${seconds}`;
+            remainTime.innerHTML = numberToTime(pomoTime);
         }
     })
 
