@@ -58,10 +58,10 @@
 <!--top-->
 <div class="container">
     <div class="text-right" style="margin-top: 20px">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#join">Join</button>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#login">Login</button>
+        <button id="joinBtn" class="btn btn-primary" data-toggle="modal" data-target="#join">Join</button>
+        <button id="loginBtn" class="btn btn-primary" data-toggle="modal" data-target="#login">Login</button>
         <button class="btn btn-success"
-                th:onclick="|location.href='@{/basic/statistics/{userId}/info(userId=${member.getId})}'|">
+                th:onclick="|location.href='@{/basic/statistics/info}'|">
             My Page</button>
         <label class="label-info" th:text="${member.getEmail}"></label>
     </div>
@@ -73,31 +73,34 @@
 <!--contents-->
 <div>
     <div>
-        <!--        타이머-->
+        <!--타이머-->
         <div class="text-center">
             <div class="container-fluid">
                 <div class="circle" style="" id="circle">
-
                     <div>
                         <p style="margin-bottom: 50px; font-weight: bold; font-size: 60px; color: white; line-height: 480px"
                            id="remainTime">00 : 30 : 00</p>
                     </div>
                 </div>
 
-                <div style="margin-top: 20px">
+                <div id="settingBtn" style="margin-top: 50px">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
                         SETTING
                     </button>
+                </div>
 
-                    <button type="button" class="btn btn-warning" onclick="stopTimer()">
-                        CANCEL
+                <div id="endBtn" style="margin-top: 50px; display: none" class="">
+                    <button type="button" class="btn btn-default" onclick="stopTimer()">
+                        END
                     </button>
                 </div>
-                <div style="margin-top: 20px">
+
+                <div style="margin-top: 20px; display:none;">
                     <label class="label label-info" style="font-size: 22px">REST TIME</label>
                     <p id="restTimeLabel" style="margin-top: 20px; color: white; font-size: 22px">0</p>
 
                 </div>
+
             </div>
         </div>
     </div>

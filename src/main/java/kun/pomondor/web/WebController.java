@@ -2,14 +2,12 @@ package kun.pomondor.web;
 
 import kun.pomondor.domain.member.Member;
 import kun.pomondor.domain.member.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -65,11 +63,12 @@ public class WebController {
     public String saveTime(@RequestParam int time, HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object userId = session.getAttribute("userId");
-        int accumTime = memberRepository.saveUserTime(Long.parseLong(String.valueOf(userId)), time);
-        log.info("time = {}, userId = {}, accumTime = {}", time, userId, accumTime);
-
-        return "ok";
+        if (userId != null) {
+            int accumTime = memberRepository.saveUserTime(Long.parseLong(String.valueOf(userId)), time);
+            log.info("time = {}, userId = {}, accumTime = {}", time, userId, accumTime);
+            return "ok";
+        } else {
+            return "fail";
+        }
     }
-
-
 }

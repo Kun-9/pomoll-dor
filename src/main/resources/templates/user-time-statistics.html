@@ -9,11 +9,14 @@
           href="../static/css/bootstrap.css" rel="stylesheet">
     <title>Title</title>
 </head>
-<body>
+<body style="background: #0a58ca">
 
-  <div>
-<!--    <span class="text-success" th:text="${member.getAccumTime()}"></span>-->
-    hello
+  <div class="text-center" style="margin: 150px">
+    <label class="label label-info" style="font-size: 40px" >Your Accumulated time<br></label>
+    <span class=""
+          style="margin-top: 150px; font-size: 80px; color: white; font-weight: bolder"
+          th:text="${member.getAccumTime()}"></span>
+
   </div>
 
 
@@ -22,7 +25,5 @@
           th:src="@{/js/jquery-3.6.3.min.js}" type="text/javascript"></script>
   <script src="../static/js/bootstrap.min.js"
           th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
-  <script src="../static/js/timer.js"
-          th:src="@{/js/timer.js}" type="text/javascript"></script>
 </body>
 </html>

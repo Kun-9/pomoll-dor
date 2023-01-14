@@ -1,6 +1,8 @@
 const startStopBtn = document.getElementById("circle")
 const remainTime = document.getElementById("remainTime")
 const restTimeLabel = document.getElementById("restTimeLabel")
+const endBtn = document.getElementById("endBtn")
+const settingBtn = document.getElementById("settingBtn")
 
 let pomoInterval;
 let restInterval;
@@ -8,10 +10,25 @@ let pomoTime = 1800;
 let restTime = 300;
 let status = 0;
 let lastTime = 1800;
-let email = 'kun@naver.com'
 
-startStopBtn.addEventListener("click", isRunning);
 startStopBtn.addEventListener("click", pomoStart);
+// startStopBtn.addEventListener("click", pomoStart);
+
+// function getNowTime() {
+//
+//     let now = new Date()
+//     let y = now.getFullYear();
+//     let m = now.getMonth() + 1;
+//     let d = now.getDate();
+//     let h = now.getHours();
+//     let minute = now.getMinutes();
+//
+//     // let year = now.getFullYear();
+//     // let month = ('0' + (now.getMonth() + 1)).slice(-2);
+//     // let day = ('0' + now.getDate()).slice(-2);
+//
+//     console.log(y + '년' + m + '월' + d + '일' + h + '시' + minute + '분')
+// }
 
 function numberToTime(pomoTime) {
     let minutes = String(Math.floor(pomoTime / 60))
@@ -20,25 +37,31 @@ function numberToTime(pomoTime) {
 
     minutes = String(minutes % 60).padStart(2, "0")
 
-    return remainTime.innerHTML = `${hours} : ${minutes} : ${seconds}`;
+    return `${hours} : ${minutes} : ${seconds}`;
 }
 
 function pomoStart() {
 
-    if (isRunning()) {
+    if (!isRunning()) {
+
+        pomoInterval = setInterval(pomodoro, 1000);
+        status = 1;
+
+        // 색 변경
+        startStopBtn.style.backgroundColor = "#002109";
+        // startStopBtn.style.borderColor = "#2a2a2a"
+        document.body.style.backgroundColor = "black";
+
+        // 버튼 변경
+        settingBtn.style.display = 'none'
+        endBtn.style.display = 'block'
+
+    } else {
         clearInterval(pomoInterval);
         status = 0;
         // document.body.style.backgroundColor = "#0a58ca"
         startStopBtn.style.backgroundColor = "#3b0003";
         // startStopBtn.style.borderColor = "white"
-
-    } else {
-        pomoInterval = setInterval(pomodoro, 1000);
-        status = 1;
-        startStopBtn.style.backgroundColor = "#002109";
-        // startStopBtn.style.borderColor = "#2a2a2a"
-        document.body.style.backgroundColor = "black";
-
     }
     console.log(isRunning())
 }
@@ -59,31 +82,32 @@ function pomodoro() {
 
     if (pomoTime <= 0) {
         stopTimer()
-
         beep()
     }
 }
 
 function stopTimer() {
-    if (pomoInterval !== null) {
 
-        // 타이머 종료
-        clearInterval(pomoInterval);
+    // 타이머 종료
+    clearInterval(pomoInterval);
 
-        // 타이머 시간 => 마지막 세팅 시간으로 초기화
-        pomoTime = lastTime;
-        remainTime.innerHTML = numberToTime(pomoTime);
-        changeStopColor()
+    // 타이머 시간 => 마지막 세팅 시간으로 초기화
+    pomoTime = lastTime;
+    remainTime.innerHTML = numberToTime(pomoTime);
+    changeStopColor()
 
-        status = 0
+    status = 0
 
-        // 서버에 측정한 시간 전송
-        const request = new XMLHttpRequest();
+    // 서버에 측정한 시간 전송
+    const request = new XMLHttpRequest();
 
-        request.open('post', '/basic/save-time','true');
-        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.send('time=' + pomoTime);
-    }
+    request.open('post', '/basic/save-time','true');
+    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    request.send('time=' + pomoTime);
+
+    // 버튼 변경
+    settingBtn.style.display = 'block'
+    endBtn.style.display = 'none'
 }
 
 function changeStopColor() {

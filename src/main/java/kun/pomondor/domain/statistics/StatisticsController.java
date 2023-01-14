@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Slf4j
 @Controller
 @RequestMapping("/basic/statistics")
@@ -18,12 +20,18 @@ public class StatisticsController {
     @Autowired
     MemberRepository memberRepository;
 
-    @GetMapping("/{userId}/info")
-    public String statisticsForm(@PathVariable long userId, Model model) {
-        Member member = memberRepository.findById(userId);
-        model.addAttribute("member", member);
+    @GetMapping("/info")
+    public String statisticsForm(Model model, HttpServletRequest request) {
+        Object sessionId = request.getSession().getAttribute("userId");
+        if (sessionId != null) {
+            Member member = memberRepository.findById(Long.parseLong(String.valueOf(sessionId)));
+            model.addAttribute("member", member);
 
-        return "user-time-statistics";
+            return "user-time-statistics";
+        } else {
+            return "redirect:/basic/home";
+        }
+
     }
 
 }
