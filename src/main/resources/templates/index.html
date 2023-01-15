@@ -5,12 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>MainPage</title>
-
     <link th:href="@{/css/bootstrap.css}"
           href="../static/css/bootstrap.css" rel="stylesheet">
     <!--    <link href="css/bootstrap-theme.min.css" rel="stylesheet">-->
 
     <style>
+        .btn-select {
+            height: 60px;
+            width: 120px;
+            border-radius: 45px;
+            border-color: white;
+            border-width: 1.5px;
+        }
+        .btn-menu {
+            color: white;
+            border-color: white;
+        }
+
         .circle {
             margin: 0 auto;
             width: 500px;
@@ -58,11 +69,15 @@
 <!--top-->
 <div class="container">
     <div class="text-right" style="margin-top: 20px">
-        <button id="joinBtn" class="btn btn-primary" data-toggle="modal" data-target="#join">Join</button>
-        <button id="loginBtn" class="btn btn-primary" data-toggle="modal" data-target="#login">Login</button>
-        <button class="btn btn-success"
+<!--        <label id="joinBtn" class="btn btn-menu" data-toggle="modal" data-target="#join">Join</label>-->
+        <label id="joinBtn" class="btn btn-menu"
+               th:onclick="|location.href='@{/basic/join}'|"
+        >Join</label>
+
+        <label id="loginBtn" class="btn btn-menu" data-toggle="modal" data-target="#login">Login</label>
+        <label class="btn btn-menu"
                 th:onclick="|location.href='@{/basic/statistics/info}'|">
-            My Page</button>
+            My Page</label>
         <label class="label-info" th:text="${member.getEmail}"></label>
     </div>
     <div style="margin-bottom: 150px; margin-top: 100px">
@@ -84,13 +99,13 @@
                 </div>
 
                 <div id="settingBtn" style="margin-top: 50px">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
+                    <button type="button" class="btn btn-primary btn-select" data-toggle="modal" data-target="#modal">
                         SETTING
                     </button>
                 </div>
 
                 <div id="endBtn" style="margin-top: 50px; display: none" class="">
-                    <button type="button" class="btn btn-default" onclick="stopTimer()">
+                    <button type="button" class="btn btn-default btn-select" onclick="stopTimer()">
                         END
                     </button>
                 </div>
@@ -168,36 +183,36 @@
 </div>
 
 <!--회원가입 모달-->
-<div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="selectTimeModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="width: 400px" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="joinTitle">Join</h5>
-            </div>
+<!--<div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="selectTimeModal" aria-hidden="true">-->
+<!--    <div class="modal-dialog modal-dialog-centered" style="width: 400px" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="joinTitle">Join</h5>-->
+<!--            </div>-->
 
-            <!---->
-            <div class="modal-body">
-                <form method="post" th:action="@{/basic/join}" th:object="${member}">
-                    <div class="mb-3" style="margin-bottom: 5px">
-                        <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" th:field="*{email}" id="email"
-                               aria-describedby="emailHelp">
-                        <div id="loginHelper" class="form-text">We'll never share your email with anyone else.</div>
-                    </div>
-                    <div class="mb-3" style="margin-bottom: 5px">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" th:field="*{password}" class="form-control" id="password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
+<!--            &lt;!&ndash;&ndash;&gt;-->
+<!--            <div class="modal-body">-->
+<!--                <form method="post" th:action="@{/basic/join}" th:object="${member}">-->
+<!--                    <div class="mb-3" style="margin-bottom: 5px">-->
+<!--                        <label for="email" class="form-label">Email address</label>-->
+<!--                        <input type="email" class="form-control" th:field="*{email}" id="email"-->
+<!--                               aria-describedby="emailHelp">-->
+<!--                        <div id="loginHelper" class="form-text">We'll never share your email with anyone else.</div>-->
+<!--                    </div>-->
+<!--                    <div class="mb-3" style="margin-bottom: 5px">-->
+<!--                        <label for="password" class="form-label">Password</label>-->
+<!--                        <input type="password" th:field="*{password}" class="form-control" id="password">-->
+<!--                    </div>-->
+<!--                    <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--                </form>-->
+<!--            </div>-->
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <!--로그인 모달-->
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="selectTimeModal" aria-hidden="true">

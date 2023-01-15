@@ -10,6 +10,8 @@ let pomoTime = 1800;
 let restTime = 300;
 let status = 0;
 let lastTime = 1800;
+// 임시 로그인 확인용 변수
+let isLogin = 1;
 
 startStopBtn.addEventListener("click", pomoStart);
 // startStopBtn.addEventListener("click", pomoStart);
@@ -48,7 +50,7 @@ function pomoStart() {
         status = 1;
 
         // 색 변경
-        startStopBtn.style.backgroundColor = "#002109";
+        startStopBtn.style.backgroundColor = "#000000";
         // startStopBtn.style.borderColor = "#2a2a2a"
         document.body.style.backgroundColor = "black";
 
@@ -60,7 +62,7 @@ function pomoStart() {
         clearInterval(pomoInterval);
         status = 0;
         // document.body.style.backgroundColor = "#0a58ca"
-        startStopBtn.style.backgroundColor = "#3b0003";
+        startStopBtn.style.backgroundColor = "#2c2c2c";
         // startStopBtn.style.borderColor = "white"
     }
     console.log(isRunning())

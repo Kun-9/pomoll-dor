@@ -25,6 +25,12 @@ public class WebController {
         return "index";
     }
 
+    @GetMapping("/join")
+    public String joinForm(Model model) {
+        model.addAttribute("member", new Member());
+        return "user-join";
+    }
+
     @PostMapping("/join")
     public String addMember(@ModelAttribute Member member, Model model) {
         log.info("post");
