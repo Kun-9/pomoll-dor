@@ -34,9 +34,9 @@ public class MemberRepository {
     }
 
     public Member login(String email, String password) {
-        Member byEmail = findByEmail(email);
-        if (byEmail != null && byEmail.getPassword().equals(password)) {
-            return byEmail;
+        Member memberByEmail = findByEmail(email);
+        if (memberByEmail != null && memberByEmail.getPassword().equals(password)) {
+            return memberByEmail;
         }
         return null;
     }

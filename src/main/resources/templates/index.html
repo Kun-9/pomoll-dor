@@ -64,19 +64,19 @@
         }
     </style>
 </head>
-<body style="background: #0a58ca">
+<body style="background: #0a58ca; height: 1500px">
 
 <!--top-->
-<div class="container">
+<div class="container" style="margin: auto">
     <div class="text-right" style="margin-top: 20px">
 <!--        <label id="joinBtn" class="btn btn-menu" data-toggle="modal" data-target="#join">Join</label>-->
         <label id="joinBtn" class="btn btn-menu"
-               th:onclick="|location.href='@{/basic/join}'|"
+               th:onclick="|location.href='@{/members/join}'|"
         >Join</label>
 
         <label id="loginBtn" class="btn btn-menu" data-toggle="modal" data-target="#login">Login</label>
         <label class="btn btn-menu"
-                th:onclick="|location.href='@{/basic/statistics/info}'|">
+                th:onclick="|location.href='@{/statistics/info}'|">
             My Page</label>
         <label class="label-info" th:text="${member.getEmail}"></label>
     </div>
@@ -86,8 +86,7 @@
 </div>
 
 <!--contents-->
-<div>
-    <div>
+    <div style="margin: auto">
         <!--타이머-->
         <div class="text-center">
             <div class="container-fluid">
@@ -119,7 +118,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <!--bottom-->
 <div></div>
@@ -224,10 +222,10 @@
 
             <!---->
             <div class="modal-body">
-                <form method="get" th:action="@{/basic/login}" th:object="${member}">
+                <form method="get" th:action="@{/members/login}" th:object="${member}">
                     <div class="mb-3" style="margin-bottom: 5px">
                         <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" th:field="*{email}" aria-describedby="emailHelp">
+                        <input id="email" type="text" class="form-control" th:field="*{email}" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3" style="margin-bottom: 5px">
                         <label for="password" class="form-label">Password</label>

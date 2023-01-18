@@ -14,8 +14,14 @@
   <div class="text-center" style="margin: 150px">
     <label class="label label-info" style="font-size: 40px" >Your Accumulated time<br></label>
     <span class=""
-          style="margin-top: 150px; font-size: 80px; color: white; font-weight: bolder"
-          th:text="${member.getAccumTime()}"></span>
+          style="margin-top: 300px; font-size: 80px; color: white; font-weight: bolder"
+          th:text="${member.getAccumTime() / 3600} + h">
+      <script>
+        var a = '[[${member.getAccumTime()}]]'
+        console.log(a)
+      </script>
+
+    </span>
 
   </div>
 
