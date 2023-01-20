@@ -103,7 +103,7 @@ function stopTimer() {
     // 서버에 측정한 시간 전송
     const request = new XMLHttpRequest();
 
-    request.open('post', '/basic/save-time','true');
+    request.open('post', '/time/save-time','true');
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.send('time=' + pomoTime);
 
