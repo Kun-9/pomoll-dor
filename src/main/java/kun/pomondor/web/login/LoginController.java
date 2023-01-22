@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Arrays;
 
 @Controller
 @Slf4j
@@ -30,21 +28,19 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm(Model model) {
-        model.addAttribute("member", new Member());
-        return "user-login";
+        model.addAttribute("loginForm", new LoginForm());
+        return "login-form";
     }
+
 
     @PostMapping("/login")
     public String loginMember(
-            @Valid @ModelAttribute LoginForm loginForm, Model model,
-            HttpServletRequest request, HttpServletResponse response,
-            BindingResult bindingResult) {
+            @Valid @ModelAttribute LoginForm loginForm,
+            BindingResult bindingResult, HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("member", new Member());
-            return "index";
+            return "login-form";
         }
-//        HttpSession session = request.getSession();
 
         Member loginMember = memberRepository.login(loginForm.getEmail(), loginForm.getPassword());
         if (loginMember == null) {
