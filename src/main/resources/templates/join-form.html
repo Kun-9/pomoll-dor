@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link th:href="@{/css/design.css}"
-          href="../static/css/design.css" rel="stylesheet">
+    <link th:href="@{/css/design.css}" href="../static/css/design.css" rel="stylesheet">
 
     <title>Join</title>
 </head>
@@ -15,7 +14,7 @@
 
 <div class="container" style="margin-top: 200px">
     <form method="post" style="width: 400px; margin: auto"
-          th:action="@{/members/join}" th:object="${joinForm}">
+        th:action="@{/members/join}" th:object="${joinForm}">
         <div class="mb-3" style="margin-bottom: 5px;">
             <label style="color: white" for="email" class="form-label">Email address</label>
             <input type="email" class="form-control" th:field="*{email}" id="email" th:errorclass="error-field">

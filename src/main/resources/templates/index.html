@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>MainPage</title>
-    <link th:href="@{/css/bootstrap.css}"
-          href="../static/css/bootstrap.css" rel="stylesheet">
-    <!--    <link href="css/bootstrap-theme.min.css" rel="stylesheet">-->
-    <link th:href="@{/css/design.css}"
-            href="../static/css/design.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.css}" href="../static/css/bootstrap.css" rel="stylesheet">
+    <link th:href="@{/css/design.css}" href="../static/css/design.css" rel="stylesheet">
 
 </head>
 <body style="background: #0a58ca; height: 1500px">
@@ -25,6 +22,9 @@
 <!--        <label id="loginBtn" class="btn btn-menu" data-toggle="modal" data-target="#login">Login</label>-->
         <label id="loginBtn" class="btn btn-menu"
                th:onclick="|location.href='@{/members/login}'|">Login</label>
+
+        <label class="btn btn-menu"
+               th:onclick="|location.href='@{/admin/index}'|">AdminPage</label>
     </div>
     <div style="margin-bottom: 150px; margin-top: 100px">
         <h1 class="text-center" style="color: white; letter-spacing: 14px; font-size: 50px; font-weight: bolder">Pomoll D'or</h1>

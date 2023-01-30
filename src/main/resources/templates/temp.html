@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>MainPage</title>
+    <link th:href="@{/css/bootstrap.css}" href="../../static/css/bootstrap.css" rel="stylesheet">
+    <link th:href="@{/css/design.css}" href="../../static/css/design.css" rel="stylesheet">
+
+</head>
+<body style="background: #0a58ca; height: 1500px">
+
+<!--menubar-->
+<div th:if="${loginInfo} == 0">
+    <div th:replace="fragment/menubar.html :: not-login-menubar"></div>
+</div>
+
+<div th:if="${loginInfo} == 1">
+    <div th:replace="fragment/menubar.html :: login-menubar"></div>
+</div>
+
+<div th:if="${loginInfo} == 2">
+    <div th:replace="fragment/menubar.html :: admin-menubar"></div>
+</div>
+
+<!--contents-->
+<div th:replace="fragment/body.html :: body"></div>
+
+<!--bottom-->
+<div></div>
+
+<!--타임리프-->
+<script src="../../static/js/jquery-3.6.3.min.js"
+        th:src="@{/js/jquery-3.6.3.min.js}" type="text/javascript"></script>
+<script src="../../static/js/bootstrap.min.js"
+        th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script src="../../static/js/timer.js"
+        th:src="@{/js/timer.js}" type="text/javascript"></script>
+</body>
+</html>

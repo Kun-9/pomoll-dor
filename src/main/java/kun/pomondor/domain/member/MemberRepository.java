@@ -27,8 +27,8 @@ public class MemberRepository {
         Iterator<Member> iterator = findAll().iterator();
         if (iterator.hasNext()) {
             Member member = iterator.next();
-            String extracedEmail = member.getEmail();
-            if (extracedEmail.equals(email)) return member;
+            String extractedEmail = member.getEmail();
+            if (extractedEmail.equals(email)) return member;
         }
         return null;
     }

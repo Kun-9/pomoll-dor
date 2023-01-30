@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +33,8 @@ public class LoginController {
     @PostMapping("/login")
     public String loginMember(
             @Valid @ModelAttribute LoginForm loginForm,
-            BindingResult bindingResult, HttpServletRequest request) {
+            BindingResult bindingResult, HttpServletRequest request,
+            @RequestParam(defaultValue = "/") String redirectURL) {
 
         if (bindingResult.hasErrors()) {
             return "login-form";
@@ -48,11 +46,14 @@ public class LoginController {
             return "index";
         }
 
-        log.info("로그인 성공 email = {}", loginForm.getEmail());
+        if (loginMember.getEmail().equals("admin@naver.com")) {
+            log.info("관리자 로그인");
+        } else {
+            log.info("로그인 성공 email = {}", loginForm.getEmail());
+        }
 
         request.getSession(true).setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
-
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @PostMapping("logout")

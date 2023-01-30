@@ -24,13 +24,19 @@ public class HomeController {
 
         if (memberId == null) {
             model.addAttribute("member", new Member());
-            return "index";
+            model.addAttribute("loginInfo", 0);
+            return "temp";
         }
 
         Member loginMember = memberRepository.findById(memberId);
         model.addAttribute("member", loginMember);
 
+        if (memberId == 1) {
+            model.addAttribute("loginInfo", 2);
+            return "temp";
+        }
 
-        return "index-login";
+        model.addAttribute("loginInfo", 1);
+        return "temp";
     }
 }
