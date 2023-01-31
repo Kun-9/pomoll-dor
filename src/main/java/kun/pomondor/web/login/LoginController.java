@@ -11,9 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -40,16 +40,28 @@ public class LoginController {
             return "login-form";
         }
 
+        log.info("로그인 시도 email={}, password={}", loginForm.getEmail(), loginForm.getPassword());
+
+        memberRepository.findAll().forEach(m -> log.info("mem = {}",m));
+
+//        log.info("find by email = {}", );
         Member loginMember = memberRepository.login(loginForm.getEmail(), loginForm.getPassword());
+
         if (loginMember == null) {
             log.info("로그인 실패");
-            return "index";
+//            return "temp";
+            return "redirect:" + "/home";
         }
 
+        HttpSession session = request.getSession();
+
         if (loginMember.getEmail().equals("admin@naver.com")) {
-            log.info("관리자 로그인");
+            log.info("관리자 로그인 성공");
+            session.setAttribute(SessionConst.LOGIN_LEVEL, SessionConst.ADMIN_LOGIN);
+
         } else {
-            log.info("로그인 성공 email = {}", loginForm.getEmail());
+            log.info("일반 사용자 로그인 성공 email = {}", loginForm.getEmail());
+            session.setAttribute(SessionConst.LOGIN_LEVEL, SessionConst.COMMOM_LOGIN);
         }
 
         request.getSession(true).setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());

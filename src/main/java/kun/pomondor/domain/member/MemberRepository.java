@@ -24,13 +24,9 @@ public class MemberRepository {
         return new ArrayList<>(store.values());
     }
     public Member findByEmail(String email) {
-        Iterator<Member> iterator = findAll().iterator();
-        if (iterator.hasNext()) {
-            Member member = iterator.next();
-            String extractedEmail = member.getEmail();
-            if (extractedEmail.equals(email)) return member;
-        }
-        return null;
+        return findAll().stream().filter(
+                e -> e.getEmail().equals(email)
+        ).findFirst().orElse(null);
     }
 
     public Member login(String email, String password) {

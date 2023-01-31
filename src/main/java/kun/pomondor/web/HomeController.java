@@ -20,23 +20,20 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String index(@SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Long memberId, Model model) {
+    public String index(@SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
+                        @SessionAttribute(value = SessionConst.LOGIN_LEVEL, required = false) Integer loginLevel,
+                        Model model) {
 
         if (memberId == null) {
             model.addAttribute("member", new Member());
-            model.addAttribute("loginInfo", 0);
+            model.addAttribute("loginInfo", SessionConst.NOT_LOGIN);
             return "temp";
         }
 
         Member loginMember = memberRepository.findById(memberId);
+
         model.addAttribute("member", loginMember);
-
-        if (memberId == 1) {
-            model.addAttribute("loginInfo", 2);
-            return "temp";
-        }
-
-        model.addAttribute("loginInfo", 1);
+        model.addAttribute("loginInfo", loginLevel);
         return "temp";
     }
 }

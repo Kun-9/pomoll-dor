@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Slf4j
@@ -36,6 +37,10 @@ public class MemberController {
                 e -> log.info("error = {}", e)
         );
 
+        if (checkEmailExist(joinForm.getEmail())) {
+            bindingResult.rejectValue("email", "","이메일 중복");
+        }
+
         if (bindingResult.hasErrors()) {
             return "join-form";
         }
@@ -47,7 +52,19 @@ public class MemberController {
         log.info("id = {} email = {} password = {}",
                 member.getId(), member.getEmail(), member.getPassword());
 
+        List<Member> members = memberRepository.findAll();
+        members.forEach(m -> log.info("repository member = {}", m));
+
         model.addAttribute("member", new Member());
         return "redirect:/home";
+    }
+
+    private Boolean checkEmailExist(String email) {
+
+        if (memberRepository.findByEmail(email) != null) {
+            return true;
+        }
+
+        return false;
     }
 }

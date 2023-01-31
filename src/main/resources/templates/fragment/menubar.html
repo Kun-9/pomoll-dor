@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -44,6 +44,9 @@
         <label style="color: white; margin-right: 20px" th:text="Admin"></label>
 
         <label class="btn btn-menu"
+               th:onclick="|location.href='@{/admin/index}'|">AdminPage</label>
+
+        <label class="btn btn-menu"
                th:onclick="'#'">MyGroup</label>
 
         <label class="btn btn-menu"
@@ -56,8 +59,6 @@
             <button type="submit" class="btn btn-default">Logout</button>
         </form>
 
-        <label class="btn btn-menu"
-               th:onclick="|location.href='@{/admin/index}'|">AdminPage</label>
     </div>
 </div>
 

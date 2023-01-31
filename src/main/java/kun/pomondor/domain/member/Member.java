@@ -2,8 +2,9 @@ package kun.pomondor.domain.member;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class Member {
     private long id;
     private String email;
