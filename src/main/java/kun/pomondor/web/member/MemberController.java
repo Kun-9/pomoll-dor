@@ -38,7 +38,11 @@ public class MemberController {
         );
 
         if (checkEmailExist(joinForm.getEmail())) {
-            bindingResult.rejectValue("email", "","이메일 중복");
+            bindingResult.rejectValue("email", "","이미 등록된 이메일입니다.");
+        }
+
+        if (checkUsernameExist(joinForm.getUsername())) {
+            bindingResult.rejectValue("username", "","이미 등록된 닉네임입니다.");
         }
 
         if (bindingResult.hasErrors()) {
@@ -59,12 +63,16 @@ public class MemberController {
         return "redirect:/home";
     }
 
+    // 존재하면 true 반환
     private Boolean checkEmailExist(String email) {
+        return memberRepository.findByEmail(email) != null;
+    }
 
-        if (memberRepository.findByEmail(email) != null) {
-            return true;
-        }
-
-        return false;
+    // 존재하면 true 반환
+    private Boolean checkUsernameExist(String username) {
+        Member member = memberRepository.findAll().stream().filter(
+                m -> m.getUsername().equals(username)
+        ).findFirst().orElse(null);
+        return member != null;
     }
 }

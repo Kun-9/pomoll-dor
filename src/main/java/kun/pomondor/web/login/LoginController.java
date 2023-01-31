@@ -40,7 +40,7 @@ public class LoginController {
             return "login-form";
         }
 
-        log.info("로그인 시도 email={}, password={}", loginForm.getEmail(), loginForm.getPassword());
+        log.info("로그인 시도 : {}", loginForm);
 
         memberRepository.findAll().forEach(m -> log.info("mem = {}",m));
 
@@ -53,18 +53,20 @@ public class LoginController {
             return "redirect:" + "/home";
         }
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(true);
+        Integer memberLevel;
 
         if (loginMember.getEmail().equals("admin@naver.com")) {
             log.info("관리자 로그인 성공");
-            session.setAttribute(SessionConst.LOGIN_LEVEL, SessionConst.ADMIN_LOGIN);
-
+            memberLevel = SessionConst.ADMIN_LOGIN;
         } else {
             log.info("일반 사용자 로그인 성공 email = {}", loginForm.getEmail());
-            session.setAttribute(SessionConst.LOGIN_LEVEL, SessionConst.COMMOM_LOGIN);
+            memberLevel = SessionConst.COMMOM_LOGIN;
         }
 
-        request.getSession(true).setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
+        session.setAttribute(SessionConst.LOGIN_LEVEL, memberLevel);
+
         return "redirect:" + redirectURL;
     }
 
