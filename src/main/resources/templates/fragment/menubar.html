@@ -47,7 +47,7 @@
                th:onclick="|location.href='@{/admin/index}'|">AdminPage</label>
 
         <label class="btn btn-menu"
-               th:onclick="'#'">MyGroup</label>
+               th:onclick="|location.href='@{/group/index}'|">MyGroup</label>
 
         <label class="btn btn-menu"
                th:onclick="|location.href='@{/statistics/info}'|"
@@ -58,7 +58,6 @@
               th:action="@{/members/logout}">
             <button type="submit" class="btn btn-default">Logout</button>
         </form>
-
     </div>
 </div>
 

@@ -9,21 +9,41 @@
     <link th:href="@{/css/design.css}" href="../../static/css/design.css" rel="stylesheet">
 
 </head>
-<body style="background: #0a58ca; height: 1500px">
+
+<style>
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: #0a58ca;
+    }
+
+</style>
+
+<body>
 
 <!--menubar-->
-<div th:if="${loginInfo} == 0">
-    <div th:replace="fragment/menubar.html :: not-login-menubar"></div>
-</div>
+<div class="container-fluid">
+    <div th:if="${loginInfo} == 0">
+        <div th:replace="fragment/menubar.html :: not-login-menubar"></div>
+    </div>
 
-<div th:if="${loginInfo} == 1">
-    <div th:replace="fragment/menubar.html :: login-menubar"></div>
-</div>
+    <div th:if="${loginInfo} == 1">
+        <div th:replace="fragment/menubar.html :: login-menubar"></div>
+    </div>
 
-<div th:if="${loginInfo} == 2">
-    <div th:replace="fragment/menubar.html :: admin-menubar"></div>
+    <div th:if="${loginInfo} == 2">
+        <div th:replace="fragment/menubar.html :: admin-menubar"></div>
+    </div>
 </div>
-
 <div style="height: 100px"></div>
 
 <!--contents-->
