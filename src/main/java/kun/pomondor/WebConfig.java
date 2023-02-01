@@ -2,6 +2,7 @@ package kun.pomondor;
 
 import kun.pomondor.web.interceptor.AdminCheckInterceptor;
 import kun.pomondor.web.interceptor.LoginCheckInterceptor;
+import kun.pomondor.web.interceptor.LoginJoinPageInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -19,5 +20,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new AdminCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/admin/**");
+
+        registry.addInterceptor(new LoginJoinPageInterceptor())
+                .order(3)
+                .addPathPatterns("/members/login", "/members/join");
     }
 }

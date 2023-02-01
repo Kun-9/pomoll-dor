@@ -36,27 +36,26 @@ public class LoginController {
             BindingResult bindingResult, HttpServletRequest request,
             @RequestParam(defaultValue = "/") String redirectURL) {
 
-        if (bindingResult.hasErrors()) {
-            return "login-form";
-        }
 
         log.info("로그인 시도 : {}", loginForm);
 
-        memberRepository.findAll().forEach(m -> log.info("mem = {}",m));
-
-//        log.info("find by email = {}", );
         Member loginMember = memberRepository.login(loginForm.getEmail(), loginForm.getPassword());
 
         if (loginMember == null) {
             log.info("로그인 실패");
-//            return "temp";
-            return "redirect:" + "/home";
+            bindingResult.reject("","아이디 또는 비밀번호를 확인해주세요.");
+//            return "redirect:/home";
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "login-form";
         }
 
         HttpSession session = request.getSession(true);
         Integer memberLevel;
+        log.info("로그인 진행 로그");
 
-        if (loginMember.getEmail().equals("admin@naver.com")) {
+        if (loginMember != null && loginMember.getEmail().equals("admin@naver.com")) {
             log.info("관리자 로그인 성공");
             memberLevel = SessionConst.ADMIN_LOGIN;
         } else {

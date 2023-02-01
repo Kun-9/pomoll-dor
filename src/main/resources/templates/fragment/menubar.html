@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}" href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    <title>Main</title>
 </head>
 <body>
 <!--not login menubar-->
@@ -21,10 +22,11 @@
 <!--login menubar-->
 <div th:fragment="login-menubar" class="container" style="margin: auto">
     <div class="text-right" style="margin-top: 20px">
-        <label style="color: white; margin-right: 20px" th:text="${member.username}"></label>
+<!--        <label style="color: white; margin-right: 20px" th:text="'Hello ' + ${member.username} + '!'"></label>-->
+        <label class="btn btn-success fw-bold" th:text="'Hello ' + ${member.username} + '!'"></label>
 
         <label class="btn btn-menu"
-               th:onclick="'#'">MyGroup</label>
+               th:onclick="|location.href='@{/group/index}'|">MyGroup</label>
 
         <label class="btn btn-menu"
                th:onclick="|location.href='@{/statistics/info}'|"

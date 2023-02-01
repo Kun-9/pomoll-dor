@@ -17,7 +17,6 @@ public class GroupController {
 
     @GetMapping("/index")
     public String groupPageIndex() {
-//        return "group/group-page";
-        return "login-form2";
+        return "group/group-page";
     }
 }

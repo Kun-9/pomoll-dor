@@ -27,13 +27,13 @@ public class HomeController {
         if (memberId == null) {
             model.addAttribute("member", new Member());
             model.addAttribute("loginInfo", SessionConst.NOT_LOGIN);
-            return "temp";
+            return "index";
         }
 
         Member loginMember = memberRepository.findById(memberId);
 
         model.addAttribute("member", loginMember);
         model.addAttribute("loginInfo", loginLevel);
-        return "temp";
+        return "index";
     }
 }

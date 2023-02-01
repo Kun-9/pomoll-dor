@@ -4,27 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
+<!--    <link th:href="@{/css/bootstrap.min.css}" href="../../static/css/bootstrap.min.css" rel="stylesheet">-->
+    <link th:href="@{/css/bootstrap.css}" href="../../static/css/bootstrap.css" rel="stylesheet">
 
-    <link th:href="@{/css/bootstrap.css}"
-          href="../static/css/bootstrap.css" rel="stylesheet">
-    <title>Title</title>
+
+    <title>Statistic Page</title>
 </head>
-<body style="background: #0a58ca">
 
-  <div class="text-center" style="margin: 150px">
-    <label class="label label-info" style="font-size: 40px" >Your Accumulated time<br></label>
-    <span class=""
-          style="margin-top: 300px; font-size: 80px; color: white; font-weight: bolder"
-          th:text="${member.getAccumTime()} + s">
-      <script>
-        var a = '[[${member.getAccumTime()}]]'
-        console.log(a)
-      </script>
+<style>
 
-    </span>
+  html,
+  body {
+    height: 100%;
+  }
 
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #0a58ca;
+  }
+
+</style>
+
+<body style="background: #0a58ca" class="text-center">
+
+  <div class="text-center" style="margin: 150px; display: flex; ">
+    <label class="label label-danger" style="font-size: 40px; margin-bottom: 20px; margin: auto"
+           th:text="'Today\'s Pomo Time : ' + ${member.getAccumTime()}/60 + 'm'"
+    >Today Pomo Time<br></label>
   </div>
-
 
 
   <script src="../static/js/jquery-3.6.3.min.js"
