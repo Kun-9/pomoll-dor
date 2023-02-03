@@ -10,7 +10,7 @@ public class Member {
     private String email;
     private String username;
     private String password;
-    private int accumTime = 0;
+    private Integer accumTime = 0;
 
     public Member() {
     }

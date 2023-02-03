@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
 
 <!--contents-->
 <div th:fragment="body" style="margin: auto" class="container-fluid">
@@ -24,7 +20,7 @@
       </div>
 
       <div id="settingBtn" style="margin-top: 50px">
-        <button type="button" class="btn btn-primary btn-select" data-toggle="modal" data-target="#modal">
+        <button type="button" class="btn btn-primary btn-select" data-bs-toggle="modal" data-bs-target="#modal">
           SETTING
         </button>
       </div>
@@ -40,7 +36,6 @@
         <p id="restTimeLabel" style="margin-top: 20px; color: white; font-size: 22px">0</p>
 
       </div>
-
     </div>
   </div>
 
@@ -59,18 +54,18 @@
           <label style="margin-bottom: 15px">Set POMO Time</label>
           <div class="row btn-group btn-group-toggle buttons" data-toggle="buttons"
                style="align-content: center; width: 100%; text-align: center">
-            <label class="col-md-6 btn btn-default"><input name="setPomoTime" value="5"
-                                                           type="radio">5</label>
-            <label class="col-md-6 btn btn-default"><input name="setPomoTime" value="15"
-                                                           type="radio">15</label>
-            <label class="col-md-6 btn btn-default"><input name="setPomoTime" value="30"
-                                                           type="radio">30</label>
-            <label class="col-md-6 btn btn-default"><input name="setPomoTime" value="60"
-                                                           type="radio">60</label>
-            <label class="col-md-6 btn btn-default"><input name="setPomoTime" value="90"
-                                                           type="radio">90</label>
-            <label class="col-md-6 btn btn-default"><input name="setPomoTime" value="120"
-                                                           type="radio">120</label>
+            <label class="col-md-6 btn btn-warning">
+              <input name="setPomoTime" value="5" type="radio">5</label>
+            <label class="col-md-6 btn btn-warning">
+              <input name="setPomoTime" value="15" type="radio">15</label>
+            <label class="col-md-6 btn btn-warning">
+              <input name="setPomoTime" value="30" type="radio">30</label>
+            <label class="col-md-6 btn btn-warning">
+              <input name="setPomoTime" value="60" type="radio">60</label>
+            <label class="col-md-6 btn btn-warning">
+              <input name="setPomoTime" value="90" type="radio">90</label>
+            <label class="col-md-6 btn btn-warning">
+              <input name="setPomoTime" value="120" type="radio">120</label>
           </div>
 
           <label style="margin-bottom: 15px; margin-top: 20px">Set REST Time</label>
@@ -92,16 +87,15 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button id="setTimeBtn" onclick="getSelectedTime();" data-dismiss="modal" type="button"
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button id="setTimeBtn" onclick="getSelectedTime();" data-bs-dismiss="modal" type="button"
                   class="btn btn-primary">Save changes
           </button>
+
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
 
 </html>
