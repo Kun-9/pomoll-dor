@@ -1,9 +1,8 @@
 package kun.pomondor.web.admin;
 
 
-import kun.pomondor.domain.member.Member;
-import kun.pomondor.domain.member.MemberRepository;
-import kun.pomondor.web.login.JoinForm;
+import kun.pomondor.repository.member.Member;
+import kun.pomondor.repository.member.MemberRepository1;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,12 +22,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final MemberRepository memberRepository;
+    private final MemberRepository1 memberRepository1;
 
     @GetMapping("/index")
     public String adminPageForm(Model model) {
 
-        List<Member> members = memberRepository.findAll();
+        List<Member> members = memberRepository1.findAll();
 
         model.addAttribute("members", members);
 
@@ -60,14 +59,14 @@ public class AdminController {
         }
 
         Member member = new Member(joinForm.getEmail(), joinForm.getUsername(), joinForm.getPassword());
-        member.setAccumTime(joinForm.getAccumTime());
+//        member.setAccumTime(joinForm.getAccumTime());
 
-        memberRepository.save(member);
+        memberRepository1.save(member);
 
         log.info("id = {} email = {} password = {}",
                 member.getId(), member.getEmail(), member.getPassword());
 
-        List<Member> members = memberRepository.findAll();
+        List<Member> members = memberRepository1.findAll();
         members.forEach(m -> log.info("repository member = {}", m));
 
         model.addAttribute("member", new Member());
@@ -76,12 +75,12 @@ public class AdminController {
 
     // 존재하면 true 반환
     private Boolean checkEmailExist(String email) {
-        return memberRepository.findByEmail(email) != null;
+        return memberRepository1.findByEmail(email) != null;
     }
 
     // 존재하면 true 반환
     private Boolean checkUsernameExist(String username) {
-        Member member = memberRepository.findAll().stream().filter(
+        Member member = memberRepository1.findAll().stream().filter(
                 m -> m.getUsername().equals(username)
         ).findFirst().orElse(null);
         return member != null;

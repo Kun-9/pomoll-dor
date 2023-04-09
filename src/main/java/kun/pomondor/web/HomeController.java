@@ -1,18 +1,20 @@
 package kun.pomondor.web;
 
-import kun.pomondor.domain.member.Member;
-import kun.pomondor.domain.member.MemberRepository;
+import kun.pomondor.repository.member.Member;
+import kun.pomondor.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final MemberRepository memberRepository;
+//    private final MemberRepository1 memberRepository1;
+    private final MemberService memberService;
 
     @GetMapping("/")
     public String home() {
@@ -30,10 +32,17 @@ public class HomeController {
             return "index";
         }
 
-        Member loginMember = memberRepository.findById(memberId);
+        Member loginMember = memberService.findById(memberId);
 
         model.addAttribute("member", loginMember);
         model.addAttribute("loginInfo", loginLevel);
         return "index";
+    }
+
+    @ResponseBody
+    @PostMapping("/ex")
+    public String ex(@RequestParam Object start) {
+        log.info("start = {}", start);
+        return "ok";
     }
 }

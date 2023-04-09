@@ -1,0 +1,14 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<namespace name = "kun.pomondor.repository.member.MemberRepository1" >-->
+<!--    <select id = "findUser" return="kun.pomondor.repository.member.Member">-->
+<!--        SELECT * FROM user WHERE username = 'wjddustkd' ORDER BY DESC;-->
+<!--    </select>-->
+<!--</namespace>-->
+
+
+
+<!--<namespace name="kun.pomondo.domain.member.MemberRepository">-->
+<!--    <insert id="insertUser">-->
+<!--        INSERT INTO user VALUES('' '' '' '' '');-->
+<!--    </insert>-->
+<!--</namespace>-->

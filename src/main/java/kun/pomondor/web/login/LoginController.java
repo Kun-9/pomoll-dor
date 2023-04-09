@@ -1,7 +1,7 @@
 package kun.pomondor.web.login;
 
-import kun.pomondor.domain.member.Member;
-import kun.pomondor.domain.member.MemberRepository;
+import kun.pomondor.repository.member.Member;
+import kun.pomondor.service.member.MemberService;
 import kun.pomondor.web.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @Slf4j
@@ -21,7 +20,7 @@ import java.util.List;
 @RequestMapping("/members")
 public class LoginController {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @GetMapping("/login")
     public String loginForm(Model model) {
@@ -29,17 +28,19 @@ public class LoginController {
         return "login-form";
     }
 
-
     @PostMapping("/login")
     public String loginMember(
             @Valid @ModelAttribute LoginForm loginForm,
             BindingResult bindingResult, HttpServletRequest request,
             @RequestParam(defaultValue = "/") String redirectURL) {
 
-
         log.info("로그인 시도 : {}", loginForm);
 
-        Member loginMember = memberRepository.login(loginForm.getEmail(), loginForm.getPassword());
+        Member loginMember = memberService.login(loginForm.getEmail(), loginForm.getPassword());
+
+        if (bindingResult.hasErrors()) {
+            return "login-form";
+        }
 
         if (loginMember == null) {
             log.info("로그인 실패");
@@ -60,7 +61,7 @@ public class LoginController {
             memberLevel = SessionConst.ADMIN_LOGIN;
         } else {
             log.info("일반 사용자 로그인 성공 email = {}", loginForm.getEmail());
-            memberLevel = SessionConst.COMMOM_LOGIN;
+            memberLevel = SessionConst.COMMON_LOGIN;
         }
 
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
@@ -69,7 +70,7 @@ public class LoginController {
         return "redirect:" + redirectURL;
     }
 
-    @PostMapping("logout")
+    @GetMapping("logout")
     public String logout(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         session.getAttributeNames()

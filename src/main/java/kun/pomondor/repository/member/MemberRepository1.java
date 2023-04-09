@@ -1,11 +1,11 @@
-package kun.pomondor.domain.member;
+package kun.pomondor.repository.member;
 
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
-public class MemberRepository {
+public class MemberRepository1 {
 
     private static long sequence = 0L;
     private static Map<Long, Member> store = new HashMap<>();
@@ -39,11 +39,19 @@ public class MemberRepository {
 
     public int saveUserTime(long userId, int time) {
         Member member = findById(userId);
-        int accumTime = member.getAccumTime();
-        accumTime += time;
-        member.setAccumTime(accumTime);
+//        int accumTime = member.getAccumTime();
+//        accumTime += time;
+//        member.setAccumTime(accumTime);
 
-        return accumTime;
+//        return accumTime;
+        return 0;
     }
+
+//    public Member findUser (String useremail) {
+//
+//        Member member = new Member();
+//
+//        return null;
+//    }
 
 }

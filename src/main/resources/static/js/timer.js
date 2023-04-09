@@ -12,6 +12,8 @@ let status = 0;
 let lastTime = 1800;
 // 임시 로그인 확인용 변수
 let isLogin = 1;
+let startTime;
+let substantialTime;
 
 startStopBtn.addEventListener("click", pomoStart);
 // startStopBtn.addEventListener("click", pomoStart);
@@ -32,6 +34,13 @@ startStopBtn.addEventListener("click", pomoStart);
 //     console.log(y + '년' + m + '월' + d + '일' + h + '시' + minute + '분')
 // }
 
+function saveStartTime() {
+    // 현재 시간을 나타내는 Date 객체 생성
+    startTime = new Date().toISOString();
+
+    console.log(startTime);
+}
+
 function numberToTime(pomoTime) {
     let minutes = String(Math.floor(pomoTime / 60))
     const seconds = String(pomoTime % 60).padStart(2, "0");
@@ -45,6 +54,8 @@ function numberToTime(pomoTime) {
 function pomoStart() {
 
     if (!isRunning()) {
+        // startTime = new Date().toLocaleString();
+        saveStartTime()
 
         pomoInterval = setInterval(pomodoro, 1000);
         status = 1;
@@ -90,6 +101,8 @@ function pomodoro() {
 
 function stopTimer() {
 
+    substantialTime = lastTime - pomoTime;
+
     // 타이머 종료
     clearInterval(pomoInterval);
 
@@ -105,7 +118,9 @@ function stopTimer() {
 
     request.open('post', '/time/save-time','true');
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    request.send('time=' + pomoTime);
+    // request.send('time=' + pomoTime);
+
+    request.send('time=' + substantialTime + '&start=' + startTime);
 
     // 버튼 변경
     settingBtn.style.display = 'block'

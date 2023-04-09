@@ -1,12 +1,19 @@
 package kun.pomondor.web.time;
 
-import kun.pomondor.domain.member.Member;
-import kun.pomondor.domain.member.MemberRepository;
+import kun.pomondor.repository.member.Member;
+import kun.pomondor.repository.time.Time;
+import kun.pomondor.service.member.MemberService;
+import kun.pomondor.service.time.TimeService;
 import kun.pomondor.web.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 
 @Controller
@@ -15,24 +22,38 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("time")
 public class TimeController {
 
-    private final MemberRepository memberRepository;
+	private final TimeService timeService;
+	private final MemberService memberService;
 
-    @ResponseBody
-    @PostMapping("/save-time")
-    public String saveTime(
-            @SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
-            @RequestParam int time) {
+	@ResponseBody
+	@PostMapping("/save-time")
+	public String saveTime(
+			@SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
+			@RequestParam("time") int time, @RequestParam("start") String start) {
 
         if (memberId == null) {
             return "fail";
         }
 
-        Member member = memberRepository.findById(memberId);
+        Member member = memberService.findById(memberId);
         if (member == null) {
             return "fail";
         }
-        int accumTime = memberRepository.saveUserTime(memberId, time);
-        log.info("time = {}, userId = {}, accumTime = {}", time, memberId, accumTime);
-        return "ok";
-    }
+
+		log.info("start = {}", start);
+		Instant instant = Instant.parse(start);
+
+		log.info("instant = {}", instant);
+
+
+		LocalDateTime startTime = LocalDateTime.ofInstant(instant, ZoneId.of("Asia/Seoul"));
+		log.info("date = {}", startTime);
+
+		Time accum = new Time(startTime, time);
+
+		timeService.saveUserTime(memberId, accum);
+		log.info("time = {}, userId = {}", time, memberId);
+
+		return "ok";
+	}
 }

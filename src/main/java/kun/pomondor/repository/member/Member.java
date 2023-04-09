@@ -1,4 +1,4 @@
-package kun.pomondor.domain.member;
+package kun.pomondor.repository.member;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,10 +9,17 @@ public class Member {
     private long id;
     private String email;
     private String username;
+    private String nickname;
     private String password;
-    private Integer accumTime = 0;
 
     public Member() {
+    }
+
+    public Member(long id, String email, String username, String password) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.password = password;
     }
 
     public Member(String email, String username, String password) {

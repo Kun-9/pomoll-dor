@@ -1,41 +1,87 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
-  <title>Login</title>
+    <title>Login</title>
 </head>
 
 <style>
 
-  html,
-  body {
-    height: 100%;
-  }
+    html,
+    body {
+        height: 100%;
+    }
 
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #0a58ca;
-  }
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /*padding-top: 10px;*/
+        padding-bottom: 10px;
+        background-color: #0a58ca;
+    }
+
+    table {
+        border-spacing: 10px;
+    }
+
+    .table-container {
+        border: 1px solid whitesmoke;
+        border-radius: 10px;
+        padding: 30px;
+    }
+
+    .table-container td {
+        border-bottom: white 1px solid;
+    }
+    .table-container tr {
+        padding: 5px;
+    }
+    th, td {
+        padding: 10px;
+    }
+
 
 </style>
 
 <body style="background: #0a58ca" class="text-center">
 
-  <div class="text-center w-100" style="margin: 150px">
+
+
+<div class="text-center w-100" style="margin: 150px">
     <button class="w-50 btn btn-primary m-auto mb-4" style="font-size: 30px; height: 100px"
-           th:text="'Today\'s Pomo Time : ' + ${member.getAccumTime()}/60 + 'm'">Today Pomo Time<br></button>
-  </div>
+            th:text="'Today\'s Pomo Time : ' + ${member.getAccumTime()}/60 + 'm'">Today Pomo Time<br></button>
+</div>
+
+<div class="table-container w-50 text-white">
+    <table class="w-100">
+        <thead>
+        <tr>
+            <th>시작 시간</th>
+            <th>종료 시간</th>
+            <th>실제 시간</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="time : ${times}">
+            <td th:text="${time.getStartDate()}">2022/11/11 10:30</td>
+            <td th:text="${time.getEndDate()}">2022/11/11 10:30</td>
+            <td th:text="${time.getTime()}">66분</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 </html>
