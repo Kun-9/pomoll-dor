@@ -24,25 +24,12 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public Member join(Member member) {
-//		String sql = "INSERT INTO member (member_key, email, password, username) " +
-//				"VALUES (member_id_seq.nextval, ?, ?, ?)";
+		String sql = "INSERT INTO member (ID, EMAIL, PASSWORD, USERNAME) " +
+				"VALUES (member_id_seq.nextval, ?, ?, ?)";
 
-		String sql = "CALL CREATE_MEMBER(?, ?, ?, ?)";
-
-//		template.update(sql, member.getEmail(),
-//				member.getPassword(),
-//				member.getUsername());
-
-		template.execute(sql,
-				(CallableStatementCallback<Void>) cs -> {
-					cs.setString(1, " ");
-					cs.setString(2, member.getEmail());
-					cs.setString(3, member.getPassword());
-					cs.setString(4, member.getUsername());
-					cs.execute();
-					return null;
-				}
-		);
+		template.update(sql, member.getEmail(),
+				member.getPassword(),
+				member.getUsername());
 
 		return member;
 	}
@@ -57,7 +44,7 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public List<Member> findAll() {
-		String sql = "SELECT member_key as id, email, password, username FROM member";
+		String sql = "SELECT id, email, password, username FROM member";
 
 		return getMembers(sql);
 	}

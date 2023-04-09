@@ -13,6 +13,12 @@
 
 <style>
 
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
     html,
     body {
         height: 100%;
@@ -35,6 +41,8 @@
         border: 1px solid whitesmoke;
         border-radius: 10px;
         padding: 30px;
+        margin-top: 220px;
+        margin-bottom: 50px;
     }
 
     .table-container td {
@@ -47,24 +55,171 @@
         padding: 10px;
     }
 
+    .grid-container {
+        margin-top: 150px;
+        display: grid;
+        grid-template-columns: 300px 300px;
+        grid-template-rows: 330px 330px;
+        grid-gap: 30px;
+    }
+
+    .grid-container > div {
+        /*background: whitesmoke;*/
+    }
+
+    .weekly {
+        grid-column: 1 / span 2;
+    }
+
+    .grid-container > div > p {
+        color: whitesmoke;
+        padding-top: 25px;
+        font-size: 18px;
+        padding-bottom: 0;
+    }
+
+    .border-box {
+        width: 100%;
+        height: 270px;
+        border: 1px navy solid;
+        border-radius: 10px;
+        background: #d4e8f3;
+        /*background: #242E49;*/
+        padding: 0 40px;
+    }
+
+    .chart {
+        height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    #graph_sun {
+
+    }
+
+    .graph {
+        border-radius: 3px;
+        background: cadetblue;
+        /*background: #242E49;*/
+        width: 50%;
+        height: 0px;
+        align-self: center;
+        margin-bottom: 10px;
+        transition: 1s;
+    }
+
+    .chart > p {
+        font-weight: 400;
+        margin-bottom: 5px;
+        font-size: 13px;
+    }
+
+    .today-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
 </style>
 
 <body style="background: #0a58ca" class="text-center">
 
+<!--menubar-->
+<div th:replace="fragment/menubar.html :: login-menubar-mypage"></div>
 
+<div class="grid-container">
+    <div class="today">
+        <p>Today</p>
+        <div class="border-box today-container">
+            <p class="h2 font-primary" th:text="${timeStr}">16</p>
+        </div>
+    </div>
 
-<div class="text-center w-100" style="margin: 150px">
-    <button class="w-50 btn btn-primary m-auto mb-4" style="font-size: 30px; height: 100px"
-            th:text="'Today\'s Pomo Time : ' + ${member.getAccumTime()}/60 + 'm'">Today Pomo Time<br></button>
+    <div class="Greedy">
+        <p>Greedy</p>
+        <div class="border-box">
+
+        </div>
+    </div>
+
+    <div class="weekly">
+        <p>Weekly</p>
+        <div class="border-box" style="display: grid; grid-template-columns: repeat(7, 7fr)">
+            <span>
+                <div class="chart">
+                    <p th:text="${week_time[0] + 'h'}">1.2h</p>
+                    <div class="graph" id="graph_sun"></div>
+                </div>
+                <p>일</p>
+            </span>
+
+            <span>
+                <div class="chart">
+                    <p th:text="${week_time[1] + 'h'}">1.2</p>
+                    <div class="graph" id="graph_mon"></div>
+                </div>
+                <p>월</p>
+            </span>
+
+            <span>
+                <div class="chart">
+                    <p th:text="${week_time[2] + 'h'}">1.2</p>
+                    <div class="graph" id="graph_tue"></div>
+                </div>
+                <p>화</p>
+            </span>
+
+            <span>
+                <div class="chart">
+                    <p th:text="${week_time[3] + 'h'}">1.2</p>
+                    <div class="graph" id="graph_wed"></div>
+                </div>
+                <p>수</p>
+            </span>
+
+            <span>
+                <div class="chart">
+                    <p th:text="${week_time[4] + 'h'}">1.2</p>
+                    <div class="graph" id="graph_thu"></div>
+                </div>
+                <p>목</p>
+            </span>
+
+            <span>
+                <div class="chart">
+                    <p th:text="${week_time[5] + 'h'}">1.2</p>
+                    <div class="graph" id="graph_fri"></div>
+                </div>
+                <p>금</p>
+            </span>
+
+            <span>
+                <div class="chart">
+                    <p th:text="${week_time[6] + 'h'}">1.2</p>
+                    <div class="graph" id="graph_sat"></div>
+                </div>
+                <p>토</p>
+            </span>
+
+        </div>
+    </div>
 </div>
+
+
+
+<!--<div class="text-center w-100" style="margin: 150px">-->
+<!--    <button onclick="hello()" class="w-50 btn btn-primary m-auto mb-4" style="font-size: 30px; height: 100px"-->
+<!--            th:text="${member.username}">Today Pomo Time<br></button>-->
+<!--</div>-->
 
 <div class="table-container w-50 text-white">
     <table class="w-100">
         <thead>
         <tr>
-            <th>시작 시간</th>
-            <th>종료 시간</th>
+            <th>시작</th>
+            <th>종료</th>
             <th>실제 시간</th>
         </tr>
         </thead>
@@ -73,11 +228,49 @@
         <tr th:each="time : ${times}">
             <td th:text="${time.getStartDate()}">2022/11/11 10:30</td>
             <td th:text="${time.getEndDate()}">2022/11/11 10:30</td>
-            <td th:text="${time.getTime()}">66분</td>
+            <td th:text="${time.getTime()} + 's'">66분</td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<script>
+    window.onload = function () {
+        let graphSun = document.getElementById('graph_sun');
+        let graphMon = document.getElementById('graph_mon');
+        let graphTue = document.getElementById('graph_tue');
+        let graphWed = document.getElementById('graph_wed');
+        let graphThu = document.getElementById('graph_thu');
+        let graphFri = document.getElementById('graph_fri');
+        let graphSat = document.getElementById('graph_sat');
+
+
+        const arrGraph = [graphSun, graphMon, graphTue, graphWed, graphThu, graphFri, graphSat];
+
+        const arrAccum = []
+        arrAccum[0] = [[${week_time[0]}]];
+        arrAccum[1] = [[${week_time[1]}]];
+        arrAccum[2] = [[${week_time[2]}]];
+        arrAccum[3] = [[${week_time[3]}]];
+        arrAccum[4] = [[${week_time[4]}]];
+        arrAccum[5] = [[${week_time[5]}]];
+        arrAccum[6] = [[${week_time[6]}]];
+
+        let max = arrAccum[0];
+        for (let i = 1; i < 7; i++) {
+            if (arrAccum[i] > max) {
+                max = arrAccum[i];
+            }
+        }
+        console.log(arrAccum);
+
+        const abs = 145 / max;
+
+        for (let i = 0; i < 7; i++) {
+            arrGraph[i].style.height = arrAccum[i] * abs + 'px';
+        }
+    }
+</script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

@@ -31,7 +31,7 @@ class TimeRepositoryImplTest {
 
 	@Test
 	void getAccumTimeById() {
-		List<Time> list = timeRepository.getAccumTimeById(11L);
+		List<Time> list = timeRepository.findAllTimes(11L);
 
 		for (Time time : list) {
 			System.out.println(time);

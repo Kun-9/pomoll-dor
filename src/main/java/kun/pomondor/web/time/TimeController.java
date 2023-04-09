@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 
 
 @Controller
@@ -51,7 +50,7 @@ public class TimeController {
 
 		Time accum = new Time(startTime, time);
 
-		timeService.saveUserTime(memberId, accum);
+		timeService.saveTime(memberId, accum);
 		log.info("time = {}, userId = {}", time, memberId);
 
 		return "ok";

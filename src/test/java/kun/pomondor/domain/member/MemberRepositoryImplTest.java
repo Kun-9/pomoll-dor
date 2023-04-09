@@ -25,19 +25,17 @@ class MemberRepositoryImplTest {
 
 	@Test
 	void findById() {
-		Member member = memberRepository.findById(16L);
+		Member member = memberRepository.findById(18L);
 		System.out.println(member);
 	}
 
 	@Test
 	void findByEmail() {
-		String email = "sasd@naver.com";
+		String email = "email@naver.codm4";
 		Member member = memberRepository.findByEmail(email);
 		Member member2 = memberRepository.findByEmail("sas.com");
 
 		assertThat(member.getEmail()).isEqualTo(email);
 		assertThat(member2).isNull();
 	}
-
-
 }
