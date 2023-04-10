@@ -1,4 +1,4 @@
-package kun.pomondor.web.time;
+package kun.pomondor.web.controller.time;
 
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.repository.time.Time;

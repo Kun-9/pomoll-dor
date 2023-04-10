@@ -1,4 +1,4 @@
-package kun.pomondor.web.group;
+package kun.pomondor.web.controller.group;
 
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.repository.member.MemberRepository1;

@@ -1,8 +1,8 @@
-package kun.pomondor.web.member;
+package kun.pomondor.web.controller.member;
 
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.service.member.MemberService;
-import kun.pomondor.web.login.JoinForm;
+import kun.pomondor.web.controller.login.JoinForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,6 @@ import javax.validation.Valid;
 @RequestMapping("/members")
 public class MemberController {
 
-    //    private final MemberRepository1 memberRepository1;
     private final MemberService memberService;
 
     @GetMapping("/join")

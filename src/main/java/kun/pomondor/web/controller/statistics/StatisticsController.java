@@ -1,4 +1,4 @@
-package kun.pomondor.web.statistics;
+package kun.pomondor.web.controller.statistics;
 
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.repository.member.MemberRepository1;
@@ -20,6 +20,8 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
+import static kun.pomondor.web.controller.statistics.StatisticsUtils.*;
+
 @Slf4j
 @Controller
 @RequestMapping("/statistics")
@@ -29,6 +31,7 @@ public class StatisticsController {
     private final MemberService memberService;
     private final TimeService timeService;
 
+
     @GetMapping("/info")
     public String statisticsForm(
             @SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
@@ -36,46 +39,39 @@ public class StatisticsController {
         if (memberId == null) {
             return "redirect:/home";
         }
-
-        LocalDate currentDate = LocalDate.now();
         Member loginMember = memberService.findById(memberId);
 
-//        List<Time> timesByToday = timeService.findTimesByDate(memberId, LocalDate.now());
+        LocalDate currentDate = LocalDate.now();
 
+        // 오늘 누적 시간
         int todayTime = timeService.findAccumTimeByDate(memberId, currentDate);
 
-        int hour = todayTime / 60 / 60;
-        int minute = (todayTime / 60) % 60;
-        int second = todayTime % 60;
-
-        // 현재 날짜
+        // 초 -> 시 분 초 문자열
+        String timeStr = getTimeStr(todayTime);
 
         // 현재 날짜가 속한 주의 일요일
-        LocalDate sundayDate = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+        LocalDate sundayDate = getSunday(currentDate);
 
-        Double[] week_time = new Double[7];
+        Double[] week_time = getWeekAccumTime(sundayDate, timeService, memberId);
 
-        for (int i = 0; i < 7; i++) {
-            int accumTime = timeService.findAccumTimeByDate(memberId, sundayDate.plusDays(i));
-            week_time[i] = Double.parseDouble(accumTime / 60 / 60 + "." + ((accumTime / 60) % 60) / 10);
-        }
+        String[] week_time_str = getWeekTimeStr(timeService, memberId, sundayDate);
 
-        String timeStr = hour + "h " + minute + "m " + second + "s";
-
-        List<Time> timesByWeek;
 
         model.addAttribute("member", loginMember);
 
         List<Time> times = timeService.findAllTimes(memberId);
 
+        // 해당 아이디의 모든 타임 객체
         model.addAttribute("times", times);
+        // 오늘 누적 시간 문자열
         model.addAttribute("timeStr", timeStr);
+        // 최근 일주일의 요일별 시간
         model.addAttribute("week_time", week_time);
-        model.addAttribute("login_info");
+        // 최근 일주일의 요일별 시간 문자열
+        model.addAttribute("week_time_str", week_time_str);
 
         return "user-time-statistics";
     }
-
 
 
 }

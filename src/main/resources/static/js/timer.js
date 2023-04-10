@@ -10,8 +10,6 @@ let pomoTime = 1800;
 let restTime = 300;
 let status = 0;
 let lastTime = 1800;
-// 임시 로그인 확인용 변수
-let isLogin = 1;
 let startTime;
 let substantialTime;
 

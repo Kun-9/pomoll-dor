@@ -95,10 +95,6 @@
         justify-content: flex-end;
     }
 
-    #graph_sun {
-
-    }
-
     .graph {
         border-radius: 3px;
         background: cadetblue;
@@ -149,7 +145,8 @@
         <div class="border-box" style="display: grid; grid-template-columns: repeat(7, 7fr)">
             <span>
                 <div class="chart">
-                    <p th:text="${week_time[0] + 'h'}">1.2h</p>
+                    <p th:text="${week_time_str[0]}">1.2h</p>
+
                     <div class="graph" id="graph_sun"></div>
                 </div>
                 <p>일</p>
@@ -157,7 +154,7 @@
 
             <span>
                 <div class="chart">
-                    <p th:text="${week_time[1] + 'h'}">1.2</p>
+                    <p th:text="${week_time_str[1]}">1.2</p>
                     <div class="graph" id="graph_mon"></div>
                 </div>
                 <p>월</p>
@@ -165,7 +162,7 @@
 
             <span>
                 <div class="chart">
-                    <p th:text="${week_time[2] + 'h'}">1.2</p>
+                    <p th:text="${week_time_str[2]}">1.2</p>
                     <div class="graph" id="graph_tue"></div>
                 </div>
                 <p>화</p>
@@ -173,7 +170,7 @@
 
             <span>
                 <div class="chart">
-                    <p th:text="${week_time[3] + 'h'}">1.2</p>
+                    <p th:text="${week_time_str[3]}">1.2</p>
                     <div class="graph" id="graph_wed"></div>
                 </div>
                 <p>수</p>
@@ -181,7 +178,7 @@
 
             <span>
                 <div class="chart">
-                    <p th:text="${week_time[4] + 'h'}">1.2</p>
+                    <p th:text="${week_time_str[4]}">1.2</p>
                     <div class="graph" id="graph_thu"></div>
                 </div>
                 <p>목</p>
@@ -189,7 +186,7 @@
 
             <span>
                 <div class="chart">
-                    <p th:text="${week_time[5] + 'h'}">1.2</p>
+                    <p th:text="${week_time_str[5]}">1.2</p>
                     <div class="graph" id="graph_fri"></div>
                 </div>
                 <p>금</p>
@@ -197,7 +194,7 @@
 
             <span>
                 <div class="chart">
-                    <p th:text="${week_time[6] + 'h'}">1.2</p>
+                    <p th:text="${week_time_str[6]}">1.2</p>
                     <div class="graph" id="graph_sat"></div>
                 </div>
                 <p>토</p>
@@ -234,6 +231,8 @@
     </table>
 </div>
 
+
+<!--<script src="../static/js/graph.js" th:src="@{/js/graph.js}" type="text/javascript"></script>-->
 <script>
     window.onload = function () {
         let graphSun = document.getElementById('graph_sun');

@@ -1,4 +1,4 @@
-package kun.pomondor.web.login;
+package kun.pomondor.web.controller.login;
 
 
 import lombok.Getter;

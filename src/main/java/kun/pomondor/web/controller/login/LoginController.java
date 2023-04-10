@@ -1,4 +1,4 @@
-package kun.pomondor.web.login;
+package kun.pomondor.web.controller.login;
 
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.service.member.MemberService;
