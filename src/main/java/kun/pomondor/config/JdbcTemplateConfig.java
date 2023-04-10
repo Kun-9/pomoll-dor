@@ -1,5 +1,7 @@
 package kun.pomondor.config;
 
+import kun.pomondor.repository.friend.FriendRepository;
+import kun.pomondor.repository.friend.FriendRepositoryImpl;
 import kun.pomondor.repository.member.MemberRepository;
 import kun.pomondor.repository.member.MemberRepositoryImpl;
 import kun.pomondor.repository.time.TimeRepository;
@@ -28,6 +30,11 @@ public class JdbcTemplateConfig {
 	@Bean
 	public MemberRepository memberRepository() {
 		return new MemberRepositoryImpl(dataSource);
+	}
+
+	@Bean
+	public FriendRepository friendRepository() {
+		return new FriendRepositoryImpl(dataSource);
 	}
 
 	@Bean

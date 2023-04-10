@@ -2,6 +2,7 @@ package kun.pomondor.web.controller.member;
 
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.repository.time.Time;
+import kun.pomondor.service.friend.FriendService;
 import kun.pomondor.service.member.MemberService;
 import kun.pomondor.service.time.TimeService;
 import kun.pomondor.web.SessionConst;
@@ -25,6 +26,7 @@ import static kun.pomondor.web.controller.statistics.StatisticsUtils.getTimeStr;
 public class MemberSearchController {
 	private final MemberService memberService;
 	private final TimeService timeService;
+	private final FriendService friendService;
 
 	@GetMapping("/all")
 	public String searchAllUsers(
@@ -42,6 +44,8 @@ public class MemberSearchController {
 			@SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
 			@PathVariable Long targetId,
 			Model model) {
+
+		String status = friendService.getStatus(memberId, targetId);
 
 		Member member = memberService.findById(memberId);
 		Member targetMember = memberService.findById(targetId);
@@ -73,6 +77,8 @@ public class MemberSearchController {
 		model.addAttribute("week_time", week_time);
 		// 최근 일주일의 요일별 시간 문자열
 		model.addAttribute("week_time_str", week_time_str);
+		// 현재 조회하는 회원과의 상태
+		model.addAttribute("status", status);
 
 		return "user/user-info";
 	}
