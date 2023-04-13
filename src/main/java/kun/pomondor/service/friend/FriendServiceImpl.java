@@ -59,4 +59,9 @@ public class FriendServiceImpl implements FriendService {
 	public String getStatus(Long memberId, Long targetId) {
 		return friendRepository.getStatus(memberId, targetId);
 	}
+
+	@Override
+	public int cancelRequest(Long memberId, Long targetId) {
+		return friendRepository.cancelRequset(memberId, targetId);
+	}
 }

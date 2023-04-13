@@ -57,6 +57,8 @@ public class FriendRepositoryImpl implements FriendRepository {
 
 	@Override
 	public int deleteFriend(Long memberId, Long targetId) {
+		String sql = "CALL DELETE_FRIEND(?, ?)";
+		template.update(sql, memberId, targetId);
 		return 0;
 	}
 
@@ -78,7 +80,8 @@ public class FriendRepositoryImpl implements FriendRepository {
 
 	@Override
 	public int cancelRequset(Long memberId, Long targetId) {
-		return 0;
+		String sql = "DELETE friend WHERE sender_id = ? AND receiver_id = ?";
+		return template.update(sql, memberId, targetId);
 	}
 
 	@Override

@@ -47,4 +47,8 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	@Override
+	public List<Member> findByUsername(String keyword) {
+		return memberRepository.findByUsername(keyword);
+	}
 }

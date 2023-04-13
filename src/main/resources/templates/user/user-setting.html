@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>MainPage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<style>
+
+    body {
+        background-color: #0a58ca;
+        height: 1300px;
+    }
+
+    body > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+
+    .main-container {
+        width: 40%;
+        height: 100%;
+        background: #212e4b;
+        /*margin-top: 100px;*/
+        margin-bottom: 150px;
+        border-radius: 30px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .flex-container {
+        display: flex;
+        height: 100%;
+        justify-items: center;
+        align-content: center;
+        text-align: center;
+        padding: 8%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-container > .check-box2 {
+        width: 80px; height: 45px; border-radius: 50px
+    }
+
+    .form-container > label {
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 650;
+    }
+
+    .form-container {
+        display: flex;
+        width: 90%;
+        height: 100px;
+        justify-content: space-between;
+        align-items: center;
+        background: #7e89a1;
+        padding: 0 40px;
+        border-radius: 25px;
+    }
+
+    .main-label {
+        padding: 100px 0;
+        font-size: 50px;
+        font-weight: 700;
+        color: white;
+    }
+</style>
+<body>
+<!--menubar-->
+<div th:replace="fragment/menubar.html :: login-menubar"></div>
+<div class="w-100 h-100">
+    <h2 class="main-label">SETTING</h2>
+    <div class="main-container shadow-lg">
+        <div class="w-100 flex-container">
+            <label style="color: white">구현 X</label>
+            <div class="form-check form-switch form-container shadow">
+                <label class="form-check-label" for="setting1">
+                    시간 공개 여부
+                </label>
+                <input class="form-check-input check-box2" type="checkbox" id="setting1" style="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -82,6 +82,12 @@ public class MemberRepositoryImpl implements MemberRepository {
 	}
 
 	@Override
+	public List<Member> findByUsername(String keyword) {
+		String sql = "SELECT id, email, username, PASSWORD FROM member WHERE INSTR(UPPER(username), UPPER(?)) > 0";
+		return template.query(sql, (rs, rowNum) -> getMember(rs), keyword);
+	}
+
+	@Override
 	public int deleteMember(long userId) {
 		return 0;
 	}

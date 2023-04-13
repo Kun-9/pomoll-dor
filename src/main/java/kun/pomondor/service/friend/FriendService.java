@@ -22,4 +22,6 @@ public interface FriendService {
 	int deleteFriend(Long memberId, Long targetId);
 
 	String getStatus(Long memberId, Long targetId);
+
+	int cancelRequest(Long memberId, Long targetId);
 }

@@ -14,4 +14,6 @@ public interface MemberService {
 	Member findByEmail(String email);
 
 	Member login(String email, String password);
+
+	List<Member> findByUsername(String keyword);
 }

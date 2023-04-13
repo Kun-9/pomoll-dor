@@ -164,7 +164,9 @@ function getSelectedTime() {
     setRestTimeList.forEach((node) => {
         if (node.checked) {
             restTime = node.value
-            restTimeLabel.innerHTML = restTime
+            restTimeLabel.innerHTML = restTime + ' : 00'
         }
     })
 }
+
+window.onload = () => getSelectedTime();

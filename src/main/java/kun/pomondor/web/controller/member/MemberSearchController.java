@@ -82,4 +82,17 @@ public class MemberSearchController {
 
 		return "user/user-info";
 	}
+
+	@GetMapping("members/")
+	@ResponseBody
+	public List<Member> searchUsername(
+			@SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Long loginId,
+			@RequestParam("query") String username,
+			Model model
+	) {
+		log.info(username);
+		List<Member> members = memberService.findByUsername(username);
+		model.addAttribute("members", members);
+		return members;
+	}
 }

@@ -11,6 +11,12 @@ public interface MemberRepository {
 
 	Member findByEmail(String email);
 
+	/**
+	 * @param keyword 검색할 문자 입력
+	 * @return 하나라도 일치시 출력 (대소문자 구분 X)
+	 */
+	List<Member> findByUsername(String keyword);
+
 	int deleteMember(long userId);
 }
 

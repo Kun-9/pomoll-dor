@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,81 +7,104 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <link th:href="@{/css/design.css}" href="../../static/css/design.css" rel="stylesheet">
     <link th:href="@{/css/form-design.css}" href="../../static/css/form-design.css" rel="stylesheet">
 
-    <title>Login</title>
+    <title>search</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: 0.5s;
         }
+
         .main-container {
             background: #1f4377;
-            width: 75%;
-            height: 1000px;
+            width: 60%;
+            height: 100%;
             margin: 0 auto;
             display: grid;
             justify-content: center;
             align-items: center;
-            padding: 150px 50px;
+            padding: 75px 50px;
             grid-template-columns: 1fr 1fr 1fr;
-            grid-auto-rows: 150px;
+            grid-auto-rows: 130px;
             grid-gap: 20px;
-
+            overflow: auto;
         }
 
         .user-card {
             width: 100%;
-            height: 150px;
+            height: 100%;
             background: cadetblue;
             border-radius: 15px;
             display: grid;
             align-items: center;
-            padding: 25px 40px;
-            grid-template-columns: 100px 150px auto;
-            grid-template-rows: 50px 50px;
+            padding: 10% 5%;
+            grid-template-columns: 75px auto;
+            justify-items: center;
         }
         .profile {
-            width: 100px;
-            height: 100px;
+            width: 65px;
+            height: 65px;
             background: white;
             border-radius: 50px;
         }
 
         .profile-bundle {
-            grid-row: 1/span2;
             position: relative;
         }
 
         .status {
             position: absolute;
-            width: 25px;
-            height: 25px;
-            background: darkred;
-            right: 2px;
-            bottom: 2px;
+            width: 20px;
+            height: 20px;
+            background: #c25a5a;
+            right: 0;
+            bottom: 0;
             border-radius: 12.5px;
         }
         .username {
-            grid-row: 1/span2;
-            margin-left: 40px;
-            font-size: 40px;
+            font-size: 35px;
             font-weight: bolder;
         }
         body {
+            padding-top: 0;
+            width: 100vw;
+            height: 100vh;
             display: flex;
+            padding-bottom: 100px;
             flex-direction: column;
-            padding: 0;
         }
 
-        .info {
-            align-self: center;
-            font-weight: 700;
+        .search-container {
+            width: 20%;
+            margin: 60px 0;
+            min-width: 300px;
+            display: flex;
+            flex-direction: row;
+
+            align-items: center;
+            /*padding: 20px 200px 60px;*/
+            gap: 20px;
+        }
+        .search-btn {
+            height: 100%;
+            flex: 1;
+            border-radius: 10px;
             font-size: 20px;
         }
+
+        .search-input {
+            width: 75%;
+            height: 100%;
+            border-radius: 10px;
+            font-size: 1em;
+            padding: 0 20px;
+        }
+
     </style>
 </head>
 
@@ -89,24 +112,147 @@
 
 <div th:replace="fragment/menubar.html :: login-menubar"></div>
 
-<div class="main-container">
-    <form th:each="member : ${members}" class="w-100">
-        <a type="submit" class="user-card btn btn-success w-100"
-                th:href="@{'/search/info/' + ${member.id}}">
-<!--            <td><a th:href="@{'/process/' + ${member.id}}">Click Here</a></td>-->
-            <div class="profile-bundle">
-                <img class="profile" src="https://github.com/mdo.png">
-                <div class="status"></div>
-            </div>
-            <span class="username" th:text="${member.username}">kun</span>
-        </a>
-    </form>
+<form class="search-container">
+    <input id="searchInput" placeholder="search name..." type="text" class="search-input">
+    <button class="search-btn btn btn-success">Search</button>
+</form>
+<div class="main-container" id="resultForm">
 
+<!--    <div class="w-100" th:each="member : ${members}">-->
+<!--        <a type="submit" class="user-card btn btn-success w-100 shadow"-->
+<!--           th:href="@{'/search/info/' + ${member.id}}">-->
+<!--            <div class="profile-bundle">-->
+<!--                <img class="profile" src="https://github.com/mdo.png">-->
+<!--                <div class="status"></div>-->
+<!--            </div>-->
+<!--            <span class="username" th:text="${member.username}">kun</span>-->
+<!--        </a>-->
+<!--    </div>-->
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#searchInput").on("input", function() {
+            let query = $(this).val();
+            $.ajax({
+                url: "/search/members/",
+                type: "GET",
+                data: { query: query },
+                success: function(data) {
+                    console.log(data);
+                    let members = data;
+                    let resultForm = $('#resultForm');
+                    resultForm.empty();
+                    $.each(members, function(i, member) {
+                        let userCardTemplate = `
+                            <div class="w-100">
+                                <a type="submit" class="user-card btn btn-success w-100 shadow"
+                                    href="/search/info/${member.id}">
+                                    <div class="profile-bundle">
+                                        <img class="profile" src="https://github.com/mdo.png">
+                                        <div class="status"></div>
+                                    </div>
+                                    <span class="username">${member.username}</span>
+                                </a>
+                            </div>
+                        `;
+                        resultForm.append(userCardTemplate);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
 </body>
+
 </html>
+
+
+
+
+<!--<body class="text-center" style="background: #0a58ca;">-->
+
+<!--<div th:replace="fragment/menubar.html :: login-menubar"></div>-->
+
+<!--<div class="main-container">-->
+<!--    <form class="search-container w-100 h-100">-->
+<!--        <input id="searchInput" placeholder="search name..." type="text" class="search-input">-->
+<!--        <button class="search-btn btn btn-success">Search</button>-->
+<!--    </form>-->
+
+<!--    <form th:each="member : ${members}" class="w-100" id="resultForm">-->
+<!--        <a type="submit" class="user-card btn btn-success w-100 shadow"-->
+<!--                th:href="@{'/search/info/' + ${member.id}}">-->
+<!--            <div class="profile-bundle">-->
+<!--                <img class="profile" src="https://github.com/mdo.png">-->
+<!--                <div class="status"></div>-->
+<!--            </div>-->
+<!--            <span class="username" th:text="${member.username}">kun</span>-->
+<!--        </a>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--<script>-->
+
+<!--    $(document).ready(function() {-->
+<!--        $("#searchInput").on("input", function() {-->
+<!--            // let keyword = document.getElementById('searchInput');-->
+<!--            let query = $(this).val();-->
+<!--            $.ajax({-->
+<!--                url: "/search/members/",-->
+<!--                type: "GET",-->
+<!--                data: { query: query },-->
+<!--                success: function(data) {-->
+<!--                    console.log(data);-->
+<!--                    let str = '';-->
+<!--                    let username, userId;-->
+<!--                    for (const datum of data) {-->
+<!--                        username = datum.username;-->
+<!--                        userId = datum.id;-->
+
+
+<!--                    }-->
+
+<!--                },-->
+<!--                error: function(xhr, status, error) {-->
+<!--                    console.error(error);-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+
+<!--</script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"-->
+<!--        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"-->
+<!--        crossorigin="anonymous"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--/*-->
+
+<!--<a type="submit" class="user-card btn btn-success w-100 shadow"-->
+<!--   th:href="@{'/search/info/' + ${member.id}}">-->
+<!--    <div class="profile-bundle">-->
+<!--        <img class="profile" src="https://github.com/mdo.png">-->
+<!--        <div class="status"></div>-->
+<!--    </div>-->
+<!--    <span class="username" th:text="${member.username}">kun</span>-->
+<!--</a>-->
+
+<!--*/-->
+
+<!--// let results = $("#results");-->
+<!--// results.empty();-->
+<!--// data.forEach(function(member) {-->
+<!--//     console.log(member.getUsername);-->
+<!--//-->
+<!--//     let li = $("<li>").text(member.name + " (" + member.email + ")");-->
+<!--    //     results.append(li);-->
+<!--    // });-->
