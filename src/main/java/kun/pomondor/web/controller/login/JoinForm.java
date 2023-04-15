@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter @Setter
 public class JoinForm {
     @NotEmpty
-    @Length(min = 3, max = 8)
+    @Length(min = 3, max = 5)
     private String username;
     @NotEmpty
     @Email

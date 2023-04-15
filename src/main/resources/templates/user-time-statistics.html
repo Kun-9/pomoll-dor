@@ -19,12 +19,8 @@
         box-sizing: border-box;
     }
 
-    html,
     body {
-        height: 100%;
-    }
-
-    body {
+        padding-top: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -56,7 +52,8 @@
     }
 
     .grid-container {
-        margin-top: 150px;
+        margin: 60px 0;
+
         display: grid;
         grid-template-columns: 300px 300px;
         grid-template-rows: 330px 330px;
@@ -123,7 +120,7 @@
 <body style="background: #0a58ca" class="text-center">
 
 <!--menubar-->
-<div th:replace="fragment/menubar.html :: login-menubar-mypage"></div>
+<div th:replace="fragment/menubar.html :: login-menubar"></div>
 
 <div class="grid-container">
     <div class="today">
@@ -211,30 +208,32 @@
 <!--            th:text="${member.username}">Today Pomo Time<br></button>-->
 <!--</div>-->
 
-<div class="table-container w-50 text-white">
-    <table class="w-100">
-        <thead>
-        <tr>
-            <th>시작</th>
-            <th>종료</th>
-            <th>실제 시간</th>
-        </tr>
-        </thead>
+<!--<div class="table-container w-50 text-white">-->
+<!--    <table class="w-100">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>시작</th>-->
+<!--            <th>종료</th>-->
+<!--            <th>실제 시간</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
 
-        <tbody>
-        <tr th:each="time : ${times}">
-            <td th:text="${time.getStartDate()}">2022/11/11 10:30</td>
-            <td th:text="${time.getEndDate()}">2022/11/11 10:30</td>
-            <td th:text="${time.getTime()} + 's'">66분</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<!--        <tbody>-->
+<!--        <tr th:each="time : ${times}">-->
+<!--            <td th:text="${time.getStartDate()}">2022/11/11 10:30</td>-->
+<!--            <td th:text="${time.getEndDate()}">2022/11/11 10:30</td>-->
+<!--            <td th:text="${time.getTime()} + 's'">66분</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
 
 
 <!--<script src="../static/js/graph.js" th:src="@{/js/graph.js}" type="text/javascript"></script>-->
 <script>
     window.onload = function () {
+        document.getElementById('myPage').classList.add('text-secondary');
+
         let graphSun = document.getElementById('graph_sun');
         let graphMon = document.getElementById('graph_mon');
         let graphTue = document.getElementById('graph_tue');

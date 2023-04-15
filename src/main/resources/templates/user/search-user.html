@@ -17,32 +17,44 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: 0.5s;
+            /*transition: 0.5s;*/
+        }
+
+        body {
+            padding-top: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            padding-bottom: 100px;
+            flex-direction: column;
         }
 
         .main-container {
-            background: #1f4377;
-            width: 60%;
+            /*background: #1f4377;*/
+            /*width: 70%;*/
             height: 100%;
             margin: 0 auto;
-            display: grid;
-            justify-content: center;
-            align-items: center;
-            padding: 75px 50px;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-auto-rows: 130px;
-            grid-gap: 20px;
+            /*justify-content: center;*/
+            /*align-items: center;*/
+            /*padding: 75px 50px;*/
+
+            /*display: grid;*/
+            /*grid-template-columns: 1fr 1fr 1fr;*/
+            /*grid-auto-rows: 130px;*/
+            /*grid-gap: 20px;*/
             overflow: auto;
         }
 
         .user-card {
+            margin: 0;
             width: 100%;
-            height: 100%;
+            aspect-ratio: 5 / 2;
+            /*height: 100%;*/
             background: cadetblue;
             border-radius: 15px;
             display: grid;
             align-items: center;
-            padding: 10% 5%;
+            padding: 10% 10%;
             grid-template-columns: 75px auto;
             justify-items: center;
         }
@@ -67,16 +79,8 @@
             border-radius: 12.5px;
         }
         .username {
-            font-size: 35px;
+            font-size: 30px;
             font-weight: bolder;
-        }
-        body {
-            padding-top: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            padding-bottom: 100px;
-            flex-direction: column;
         }
 
         .search-container {
@@ -98,11 +102,11 @@
         }
 
         .search-input {
-            width: 75%;
+            width: 100%;
             height: 100%;
             border-radius: 10px;
             font-size: 1em;
-            padding: 0 20px;
+            padding: 10px 30px;
         }
 
     </style>
@@ -114,23 +118,27 @@
 
 <form class="search-container">
     <input id="searchInput" placeholder="search name..." type="text" class="search-input">
-    <button class="search-btn btn btn-success">Search</button>
+<!--    <button class="search-btn btn btn-success">Search</button>-->
 </form>
-<div class="main-container" id="resultForm">
-
-<!--    <div class="w-100" th:each="member : ${members}">-->
-<!--        <a type="submit" class="user-card btn btn-success w-100 shadow"-->
-<!--           th:href="@{'/search/info/' + ${member.id}}">-->
-<!--            <div class="profile-bundle">-->
-<!--                <img class="profile" src="https://github.com/mdo.png">-->
-<!--                <div class="status"></div>-->
-<!--            </div>-->
-<!--            <span class="username" th:text="${member.username}">kun</span>-->
-<!--        </a>-->
-<!--    </div>-->
+<div class="main-container container">
+    <div id="resultForm" class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" style="margin: auto">
+<!--        <div class="col" th:each="member : ${members}">-->
+<!--            <a type="submit" class="user-card btn btn-success w-100 shadow"-->
+<!--               th:href="@{'/search/info/' + ${member.id}}">-->
+<!--                <div class="profile-bundle">-->
+<!--                    <img class="profile" src="https://github.com/mdo.png">-->
+<!--                    <div class="status"></div>-->
+<!--                </div>-->
+<!--                <span class="username" th:text="${member.username}">iphone</span>-->
+<!--            </a>-->
+<!--        </div>-->
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    window.onload = () => document.getElementById('search').classList.add('text-secondary');
+</script>
 <script>
     $(document).ready(function() {
         $("#searchInput").on("input", function() {
@@ -146,9 +154,9 @@
                     resultForm.empty();
                     $.each(members, function(i, member) {
                         let userCardTemplate = `
-                            <div class="w-100">
+                            <div class="col">
                                 <a type="submit" class="user-card btn btn-success w-100 shadow"
-                                    href="/search/info/${member.id}">
+                                    href="/member/info/${member.id}">
                                     <div class="profile-bundle">
                                         <img class="profile" src="https://github.com/mdo.png">
                                         <div class="status"></div>
@@ -167,92 +175,5 @@
         });
     });
 </script>
-
 </body>
-
 </html>
-
-
-
-
-<!--<body class="text-center" style="background: #0a58ca;">-->
-
-<!--<div th:replace="fragment/menubar.html :: login-menubar"></div>-->
-
-<!--<div class="main-container">-->
-<!--    <form class="search-container w-100 h-100">-->
-<!--        <input id="searchInput" placeholder="search name..." type="text" class="search-input">-->
-<!--        <button class="search-btn btn btn-success">Search</button>-->
-<!--    </form>-->
-
-<!--    <form th:each="member : ${members}" class="w-100" id="resultForm">-->
-<!--        <a type="submit" class="user-card btn btn-success w-100 shadow"-->
-<!--                th:href="@{'/search/info/' + ${member.id}}">-->
-<!--            <div class="profile-bundle">-->
-<!--                <img class="profile" src="https://github.com/mdo.png">-->
-<!--                <div class="status"></div>-->
-<!--            </div>-->
-<!--            <span class="username" th:text="${member.username}">kun</span>-->
-<!--        </a>-->
-<!--    </form>-->
-<!--</div>-->
-
-<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
-<!--<script>-->
-
-<!--    $(document).ready(function() {-->
-<!--        $("#searchInput").on("input", function() {-->
-<!--            // let keyword = document.getElementById('searchInput');-->
-<!--            let query = $(this).val();-->
-<!--            $.ajax({-->
-<!--                url: "/search/members/",-->
-<!--                type: "GET",-->
-<!--                data: { query: query },-->
-<!--                success: function(data) {-->
-<!--                    console.log(data);-->
-<!--                    let str = '';-->
-<!--                    let username, userId;-->
-<!--                    for (const datum of data) {-->
-<!--                        username = datum.username;-->
-<!--                        userId = datum.id;-->
-
-
-<!--                    }-->
-
-<!--                },-->
-<!--                error: function(xhr, status, error) {-->
-<!--                    console.error(error);-->
-<!--                }-->
-<!--            });-->
-<!--        });-->
-<!--    });-->
-
-<!--</script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"-->
-<!--        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"-->
-<!--        crossorigin="anonymous"></script>-->
-<!--</body>-->
-<!--</html>-->
-
-
-<!--/*-->
-
-<!--<a type="submit" class="user-card btn btn-success w-100 shadow"-->
-<!--   th:href="@{'/search/info/' + ${member.id}}">-->
-<!--    <div class="profile-bundle">-->
-<!--        <img class="profile" src="https://github.com/mdo.png">-->
-<!--        <div class="status"></div>-->
-<!--    </div>-->
-<!--    <span class="username" th:text="${member.username}">kun</span>-->
-<!--</a>-->
-
-<!--*/-->
-
-<!--// let results = $("#results");-->
-<!--// results.empty();-->
-<!--// data.forEach(function(member) {-->
-<!--//     console.log(member.getUsername);-->
-<!--//-->
-<!--//     let li = $("<li>").text(member.name + " (" + member.email + ")");-->
-<!--    //     results.append(li);-->
-<!--    // });-->

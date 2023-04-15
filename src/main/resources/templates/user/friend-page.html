@@ -28,7 +28,9 @@
             display: grid;
             justify-content: center;
             grid-template-columns: 400px 400px;
-            grid-template-rows: 400px;
+            min-height: 600px;
+            /*grid-template-rows: 1vh;*/
+            height: 100vh;
             grid-gap: 50px;
         }
 
@@ -66,13 +68,14 @@
             background: #354259;
             padding: 25px;
             border-radius: 15px;
-            flex: 1;
+            /*flex: 1;*/
+            height: 100%;
             /*border: 2px solid white;*/
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-auto-rows: 100px;
             align-items: center;
-            overflow: auto;
+            overflow: scroll;
         }
 
         .receive-bundle {
@@ -84,7 +87,6 @@
             align-items: center;
             /*border: 1px solid #6b6b6b;*/
             border-radius: 10px;
-            margin-top: 10px;
             transition: 0.6s;
             grid-column: 1/span2;
         }
@@ -149,6 +151,11 @@
             flex-direction: column;
             height: 100%;
         }
+
+        .no-content-msg {
+            color: white;
+            grid-column: 1/span2;
+        }
     </style>
 </head>
 
@@ -159,24 +166,27 @@
 <div class="main-container">
     <div class="flex-container">
         <h2 class="container-label">신청 목록</h2>
+
         <div class="receive-container shadow">
-                <div class="receive-bundle shadow" th:each="receiveRequest : ${receiveRequests}">
-                    <span class="username-label" th:text="${receiveRequest.sendMember.username}">kun</span>
-                    <div>
-                        <button th:data-parameter="${receiveRequest.sendMember.id}"
-                                onclick="acceptRequest(this.getAttribute('data-parameter'), this.parentNode.parentNode)" class="btn btn-success">수락</button>
-                        <button class="btn btn-danger" th:data-parameter="${receiveRequest.sendMember.id}"
-                                onclick="rejectRequest(this.getAttribute('data-parameter'), this)">거절</button>
-                    </div>
+            <div th:if="${receiveRequests.isEmpty()}" class="no-content-msg">수신된 친구 신청이 없습니다.</div>
+            <div class="receive-bundle shadow" th:each="receiveRequest : ${receiveRequests}">
+                <span class="username-label" th:text="${receiveRequest.sendMember.username}">kun</span>
+                <div>
+                    <button th:data-parameter="${receiveRequest.sendMember.id}"
+                            onclick="acceptRequest(this.getAttribute('data-parameter'), this.parentNode.parentNode)" class="btn btn-success">수락</button>
+                    <button class="btn btn-danger" th:data-parameter="${receiveRequest.sendMember.id}"
+                            onclick="rejectRequest(this.getAttribute('data-parameter'), this)">거절</button>
                 </div>
+            </div>
         </div>
     </div>
 
     <div class="flex-container">
         <h2 class="container-label">친구 목록</h2>
         <div class="friend-container shadow">
+            <div th:if="${friendList.isEmpty()}" class="no-content-msg">등록된 친구가 없습니다.</div>
             <form class="friend-bundle" th:each="friend : ${friendList}">
-                <a class="shadow btn" type="submit" th:href="@{'/search/info/' + ${friend.getSendMember().getId()}}">
+                <a class="shadow btn" type="submit" th:href="@{'/member/info/' + ${friend.getSendMember().getId()}}">
                     <div class="profile-bundle">
                         <img class="profile-img shadow" src="https://github.com/mdo.png">
                         <div class="status shadow"></div>
@@ -189,6 +199,7 @@
 
 
 <script th:inline="javascript">
+    window.onload = () => document.getElementById('friend').classList.add('text-secondary');
 
     function acceptRequest(targetMemberId, a) {
         // 서버에 친구 요청 전송
