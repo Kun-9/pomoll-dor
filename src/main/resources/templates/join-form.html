@@ -27,7 +27,8 @@
 
 <body style="background: #0a58ca;">
     <div class="w-100 m-auto form-signin" style="max-width: 330px; padding: 15px">
-        <h1 class="text-white h3 fw-normal mb-5 text-center">Join</h1>
+        <h1 class="h2 text-white h3 fw-normal mb-5 text-center">Join</h1>
+        <p class="fw-normal" style="color: #e0e0e0">아이디와 비밀번호는 암호화되지 않습니다.<br>임의의 아이디를 입력해주세요.</p>
         <form method="post" th:action="@{/member/join}" th:object="${joinForm}">
             <div class="mb-3">
                 <label for="email" class="form-label text-white">Email address</label>

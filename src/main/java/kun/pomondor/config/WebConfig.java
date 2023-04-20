@@ -1,4 +1,4 @@
-package kun.pomondor;
+package kun.pomondor.config;
 
 import kun.pomondor.web.interceptor.AdminCheckInterceptor;
 import kun.pomondor.web.interceptor.LoginCheckInterceptor;

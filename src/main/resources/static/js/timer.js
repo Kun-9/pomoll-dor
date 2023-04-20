@@ -59,9 +59,9 @@ function pomoStart() {
         status = 1;
 
         // 색 변경
-        startStopBtn.style.backgroundColor = "#000000";
+        startStopBtn.style.backgroundColor = "#12121a";
         // startStopBtn.style.borderColor = "#2a2a2a"
-        document.body.style.backgroundColor = "black";
+        document.body.style.backgroundColor = "#57575b";
 
         // 버튼 변경
         settingBtn.style.display = 'none'

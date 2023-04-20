@@ -188,7 +188,7 @@
             <form class="friend-bundle" th:each="friend : ${friendList}">
                 <a class="shadow btn" type="submit" th:href="@{'/member/info/' + ${friend.getSendMember().getId()}}">
                     <div class="profile-bundle">
-                        <img class="profile-img shadow" src="https://github.com/mdo.png">
+                        <img class="profile-img shadow" src="/picture/default.png">
                         <div class="status shadow"></div>
                     </div>
                     <span class="username-label" th:text="${friend.sendMember.username}">kun</span>

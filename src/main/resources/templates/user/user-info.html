@@ -24,24 +24,15 @@
         width: 100vw;
     }
     .main-container {
-        height: 35vw;
-        min-height: 600px;
-        width: 55vw;
-        min-width: 900px;
-
-        /*width: 100%;*/
-        /*height: 100%;*/
-        /*background: cadetblue;*/
+        margin: 200px auto;
+        height: 80vh;
+        aspect-ratio: 3 / 2;
         background: #212e4b;
-        margin-top: 15%;
-        margin-bottom: 5%;
         border-radius: 30px;
         position: relative;
         display: flex;
         flex-direction: column;
-        /*padding-bottom: 2%;*/
         padding: 0 1% 2% 1%;
-        /*border: 2px solid white;*/
     }
 
     .profile-img {
@@ -53,10 +44,10 @@
     }
 
     .profile-bundle {
-        bottom: 135px;
-        left: -1px;
-        width: 300px;
-        height: 300px;
+        top: -70%;
+        left: 3%;
+        width: 250px;
+        height: 250px;
         position: relative;
     }
 
@@ -86,6 +77,7 @@
         align-self: flex-end;
         text-align: end;
         color: white;
+        /*width: 100%;*/
     }
     .text-container > label {
         font-size: 35px;
@@ -102,6 +94,8 @@
     .flex-container {
         display: flex;
         height: 180px;
+        position: relative;
+        justify-content: space-between;
     }
     .today {
         /*background: whitesmoke;*/
@@ -165,7 +159,7 @@
     .follow-btn {
         position: absolute;
         right: 0;
-        top: -155px;
+        top: -165px;
         /*display: flex;*/
         justify-content: center;
         align-items: center;
@@ -203,110 +197,120 @@
         display: grid;
         grid-template-columns: repeat(7, 7fr);
     }
+
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+    }
 </style>
 
 <body>
 <!--menubar-->
 <div th:replace="fragment/menubar.html :: login-menubar"></div>
 
-<div class="main-container shadow-lg">
-    <div class="w-100 flex-container" style="justify-content: space-between">
-        <div class="profile-bundle">
-            <img class="profile-img shadow" src="https://github.com/mdo.png">
-            <div class="status shadow"></div>
-        </div>
+<div class="container-fluid">
+    <div class="main-container shadow-lg">
+        <div class="w-100 flex-container">
+            <div class="profile-bundle">
+                <img class="profile-img shadow" th:src="${targetMember.picture}">
+                <div class="status shadow"></div>
+            </div>
 
-        <div class="username" th:text="${targetMember.username}">username</div>
+            <div class="username" th:text="${targetMember.username}">username</div>
 
 
-        <button id="btn-friend" class="follow-btn shadow" onclick="sendRequest()" >
-            <i class="fa-solid fa-plus"></i>
-        </button>
+            <button id="btn-friend" class="follow-btn shadow" onclick="sendRequest()" >
+                <i class="fa-solid fa-plus"></i>
+            </button>
 
-        <div class="text-container">
-            <label>E-Mail</label>
-            <div th:text="${targetMember.email}">email</div>
-        </div>
-    </div>
-
-<!--    <form method="post" action="/upload" enctype="multipart/form-data">-->
-<!--        <input type="file" name="file"/>-->
-<!--        <input type="submit" value="Upload"/>-->
-<!--    </form>-->
-
-    <div class="graph-container">
-        <div class="today">
-            <p class="container-label">Today</p>
-            <div class="border-box today-container">
-                <p class="h2 font-primary" th:text="${timeStr}">16</p>
+            <div class="text-container">
+                <label>E-Mail</label>
+                <div th:text="${targetMember.email}">email</div>
             </div>
         </div>
 
-        <div class="weekly">
-            <p class="container-label">Weekly</p>
-            <div class="border-box weekly-grid" >
-            <span class="chart-container">
-                <div class="chart">
-                    <p th:text="${week_time_str[0]}">1.2</p>
+    <!--    <form method="post" action="/upload" enctype="multipart/form-data">-->
+    <!--        <input type="file" name="file"/>-->
+    <!--        <input type="submit" value="Upload"/>-->
+    <!--    </form>-->
 
-                    <div class="graph" id="graph_sun"></div>
+        <div class="graph-container">
+            <div class="today">
+                <p class="container-label">Today</p>
+                <div class="border-box today-container">
+                    <p class="h2 font-primary" th:text="${timeStr}">16</p>
                 </div>
-                <div>일</div>
-            </span>
+            </div>
 
-            <span class="chart-container">
-                <div class="chart">
-                    <p th:text="${week_time_str[1]}">1.2</p>
-                    <div class="graph" id="graph_mon"></div>
+            <div class="weekly">
+                <p class="container-label">Weekly</p>
+                <div class="border-box weekly-grid" >
+                    <span class="chart-container">
+                        <div class="chart">
+                            <p th:text="${week_time_str[0]}">1.2</p>
+
+                            <div class="graph" id="graph_sun"></div>
+                        </div>
+                        <div>일</div>
+                    </span>
+
+                    <span class="chart-container">
+                        <div class="chart">
+                            <p th:text="${week_time_str[1]}">1.2</p>
+                            <div class="graph" id="graph_mon"></div>
+                        </div>
+                        <div>월</div>
+                    </span>
+
+                    <span class="chart-container">
+                        <div class="chart">
+                            <p th:text="${week_time_str[2]}">1.2</p>
+                            <div class="graph" id="graph_tue"></div>
+                        </div>
+                        <div>화</div>
+                    </span>
+
+                    <span class="chart-container">
+                        <div class="chart">
+                            <p th:text="${week_time_str[3]}">1.2</p>
+                            <div class="graph" id="graph_wed"></div>
+                        </div>
+                        <div>수</div>
+                    </span>
+
+                    <span class="chart-container">
+                        <div class="chart">
+                            <p th:text="${week_time_str[4]}">1.2</p>
+                            <div class="graph" id="graph_thu"></div>
+                        </div>
+                        <div>목</div>
+                    </span>
+
+                    <span class="chart-container">
+                        <div class="chart">
+                            <p th:text="${week_time_str[5]}">1.2</p>
+                            <div class="graph" id="graph_fri"></div>
+                        </div>
+                        <div>금</div>
+                    </span>
+
+                    <span class="chart-container">
+                        <div class="chart">
+                            <p th:text="${week_time_str[6]}">1.2</p>
+                            <div class="graph" id="graph_sat"></div>
+                        </div>
+                        <div>토</div>
+                    </span>
+
                 </div>
-                <div>월</div>
-            </span>
-
-            <span class="chart-container">
-                <div class="chart">
-                    <p th:text="${week_time_str[2]}">1.2</p>
-                    <div class="graph" id="graph_tue"></div>
-                </div>
-                <div>화</div>
-            </span>
-
-            <span class="chart-container">
-                <div class="chart">
-                    <p th:text="${week_time_str[3]}">1.2</p>
-                    <div class="graph" id="graph_wed"></div>
-                </div>
-                <div>수</div>
-            </span>
-
-            <span class="chart-container">
-                <div class="chart">
-                    <p th:text="${week_time_str[4]}">1.2</p>
-                    <div class="graph" id="graph_thu"></div>
-                </div>
-                <div>목</div>
-            </span>
-
-            <span class="chart-container">
-                <div class="chart">
-                    <p th:text="${week_time_str[5]}">1.2</p>
-                    <div class="graph" id="graph_fri"></div>
-                </div>
-                <div>금</div>
-            </span>
-
-            <span class="chart-container">
-                <div class="chart">
-                    <p th:text="${week_time_str[6]}">1.2</p>
-                    <div class="graph" id="graph_sat"></div>
-                </div>
-                <div>토</div>
-            </span>
-
             </div>
         </div>
     </div>
 </div>
-
 <script th:inline="javascript">
 
     let status
@@ -368,7 +372,6 @@
 
                 request.open('post', '/friend/delete-friend', 'true');
                 request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
                 request.send('targetMemberId=' + [[${targetMember.id}]]);
 
                 status = null;

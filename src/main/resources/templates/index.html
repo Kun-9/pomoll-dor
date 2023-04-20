@@ -66,6 +66,13 @@
         color: red;
     }
 
+    .container-fluid {
+
+        height: 100%;
+
+        justify-items: center;
+    }
+
 </style>
 
 <body>
@@ -99,12 +106,12 @@
 <!--<div th:replace="fragment/body.html :: body"></div>-->
 
 <!--contents-->
-<div th:fragment="body" style="margin: auto" class="container-fluid">
+<div style="margin: auto; display: flex; flex-direction: column; align-items: center" class="container">
 
     <!--타이머-->
     <div class="text-center">
-        <div class="container-fluid" style="margin-top: 20px">
-            <div class="circle" id="circle">
+        <div class="container-fluid" style="aspect-ratio: 1 / 1;">
+            <div class="circle shadow-lg btn" id="circle">
                 <div class="timer-bundle">
                     <div class="timer" id="remainTime">00 : 30 : 00</div>
                     <div class="restTime" id="restTimeLabel"> 5 : 00 </div>
@@ -112,13 +119,13 @@
             </div>
 
             <div id="settingBtn" style="margin-top: 50px">
-                <button type="button" class="btn btn-primary btn-select" data-bs-toggle="modal" data-bs-target="#modal">
+                <button type="button" class="btn btn-primary btn-select shadow-lg" data-bs-toggle="modal" data-bs-target="#modal">
                     SETTING
                 </button>
             </div>
 
             <div id="endBtn" style="margin-top: 50px; display: none" class="">
-                <button type="button" class="btn btn-default btn-select text-white" onclick="stopTimer()">
+                <button type="button" class="btn btn-default btn-select text-white shadow-lg" onclick="stopTimer()">
                     END
                 </button>
             </div>
@@ -131,8 +138,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="selectTimeModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="width: 400px" role="document">
+    <div class="modal fade" style="" id="modal" tabindex="-1" role="dialog" aria-labelledby="selectTimeModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="width: 400px; margin: auto" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Setting</h5>

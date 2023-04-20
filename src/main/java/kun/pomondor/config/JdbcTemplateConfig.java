@@ -1,11 +1,15 @@
 package kun.pomondor.config;
 
+import kun.pomondor.repository.etc.food.post.FoodPostRepository;
+import kun.pomondor.repository.etc.food.post.FoodPostRepositoryImpl;
 import kun.pomondor.repository.friend.FriendRepository;
 import kun.pomondor.repository.friend.FriendRepositoryImpl;
 import kun.pomondor.repository.member.MemberRepository;
 import kun.pomondor.repository.member.MemberRepositoryImpl;
 import kun.pomondor.repository.time.TimeRepository;
 import kun.pomondor.repository.time.TimeRepositoryImpl;
+import kun.pomondor.service.etc.food.FoodPostService;
+import kun.pomondor.service.etc.food.FoodPostServiceImpl;
 import kun.pomondor.service.member.MemberService;
 import kun.pomondor.service.member.MemberServiceImpl;
 import kun.pomondor.service.time.TimeService;
@@ -45,6 +49,16 @@ public class JdbcTemplateConfig {
 	@Bean
 	public TimeService timeService() {
 		return new TimeServiceImpl(timeRepository());
+	}
+
+	@Bean
+	public FoodPostRepository foodPostRepository() {
+		return new FoodPostRepositoryImpl(dataSource);
+	}
+
+	@Bean
+	public FoodPostService foodPostService() {
+		return new FoodPostServiceImpl(foodPostRepository());
 	}
 }
 
