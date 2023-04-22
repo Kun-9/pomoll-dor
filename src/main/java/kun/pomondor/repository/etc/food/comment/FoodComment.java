@@ -1,5 +1,6 @@
 package kun.pomondor.repository.etc.food.comment;
 
+import kun.pomondor.repository.etc.food.score.Score;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +15,15 @@ public class FoodComment {
 	private Long writerId;
 	private Long boardId;
 	private LocalDateTime createdDate;
-	private String menu;
-	private Double score;
 	private String content;
 	private String picture;
+	private Score score;
+
+	public FoodComment(Long writerId, Long boardId, String content, String picture, Score score) {
+		this.writerId = writerId;
+		this.boardId = boardId;
+		this.content = content;
+		this.picture = picture;
+		this.score = score;
+	}
 }

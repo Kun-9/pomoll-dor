@@ -1,5 +1,7 @@
 package kun.pomondor.config;
 
+import kun.pomondor.repository.etc.food.comment.FoodCommentRepository;
+import kun.pomondor.repository.etc.food.comment.FoodCommentRepositoryImpl;
 import kun.pomondor.repository.etc.food.post.FoodPostRepository;
 import kun.pomondor.repository.etc.food.post.FoodPostRepositoryImpl;
 import kun.pomondor.repository.friend.FriendRepository;
@@ -59,6 +61,11 @@ public class JdbcTemplateConfig {
 	@Bean
 	public FoodPostService foodPostService() {
 		return new FoodPostServiceImpl(foodPostRepository());
+	}
+
+	@Bean
+	public FoodCommentRepository foodCommentRepository() {
+		return new FoodCommentRepositoryImpl(dataSource);
 	}
 }
 

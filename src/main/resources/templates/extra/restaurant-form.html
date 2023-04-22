@@ -75,7 +75,7 @@
 <div class="container mt-5">
     <div class="container-fluid p-5">
 
-        <form method="post" enctype="multipart/form-data" class="main-content-card" th:action="@{/etc/food/post-test}">
+        <form method="post" enctype="multipart/form-data" class="main-content-card" action="">
             <div class="input-group mb-5">
                 <!-- 식당 이름 적는 칸 -->
                 <!-- 검색 후 비슷한 가게 찾아줌 -->
@@ -115,7 +115,7 @@
 <!--            </div>-->
 
 
-            <div th:if="${formType} == post" class="w-100 mt-5 text-end">
+            <div class="w-100 mt-5 text-end">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
 

@@ -12,162 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
           rel="stylesheet">
     <link th:href="@{/css/design.css}" href="../../static/css/design.css" rel="stylesheet">
+    <link th:href="@{/css/restaurant-post.css}" href="../../static/css/restaurant-post.css" rel="stylesheet">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <title>Food Review</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            transition: 0.5s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            justify-content: center;
-            width: 100vw;
-        }
-
-        .user-card {
-            margin: 0;
-            width: 100%;
-            aspect-ratio: 5 / 2;
-            /*height: 100%;*/
-            background: #588a6a;
-            border-radius: 15px;
-            display: grid;
-            align-items: center;
-            border: none;
-            padding: 3% 3%;
-            grid-template-columns: 15% 20% 35% 1fr;
-            grid-template-rows: 1fr 1fr;
-            justify-items: center;
-            grid-row-gap: 10%;
-        }
-
-        .profile {
-            width: 65px;
-            height: 65px;
-            background: white;
-            border-radius: 50px;
-        }
-
-        .profile-bundle {
-            position: relative;
-        }
-
-        .menu {
-            padding: 4%;
-            font-weight: 500;
-            font-size: 1.3rem;
-            background: #212e4b;
-            border-radius: 40px;
-        }
-
-        .status {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #c25a5a;
-            right: 0;
-            bottom: 0;
-            border-radius: 12.5px;
-        }
-
-        .username {
-            font-size: 2rem;
-            font-weight: bolder;
-        }
-
-        .comment-content {
-            grid-column: 1/span3;
-            background: white;
-            width: 100%;
-            border-radius: 10px;
-            height: 100%;
-            color: #212e4b;
-            padding: 2.5%;
-            text-align: left;
-        }
-
-        .container {
-            max-width: 800px;
-        }
-
-        .comment-img {
-            width: 2fr;
-            height: 0.5fr;
-            text-align: center;
-        }
-
-        .comment-img > img {
-            aspect-ratio: 5 / 2.5;
-            width: 95%;
-            /*height: 40%;*/
-            object-fit: cover;
-            border-radius: 50px 50px 0 0;
-            /*padding: 15px;*/
-            /* object-fit: cover; 를 사용하여 이미지를 요소 크기에 맞게 확대 또는 축소합니다. */
-        }
-
-        .comment-container {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        .main-content-card {
-            text-align: center;
-            background: none;
-            border: none;
-            border-radius: 20px;
-            /*min-height: 400px;*/
-            width: 100%;
-            padding: 8%;
-        }
-
-        @media (max-width: 700px) {
-            .username {
-                font-size: 18px;
-            }
-
-            .user-card {
-                grid-template-columns: 20% 26% 30% 1fr;
-            }
-
-            .menu {
-                font-size: 1rem;
-            }
-        }
-
-        .restaurant-name {
-            font-weight: 700;
-            margin-bottom: 10%;
-        }
-
-        .button-set {
-            padding: 0 5%;
-            margin-bottom: 0;
-            display: flex;
-            justify-content: end;
-            gap: 5px;
-        }
-
-        .main-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50px;
-            filter: brightness(65%);
-            z-index: 1;
-            padding: 0;
-            /*padding: 15px;*/
-            /* object-fit: cover; 를 사용하여 이미지를 요소 크기에 맞게 확대 또는 축소합니다. */
-        }
-    </style>
 </head>
 <body>
 <div th:replace="fragment/menubar.html :: login-menubar"></div>
@@ -194,15 +44,15 @@
     <div class="container-fluid" style="padding: 2% 5% 5% 5%">
 
         <div class="main-content-card card">
-            <img class="main-img card-img-overlay shadow-lg" th:src="${post.picture}"
-                 src="../../static/picture/hamburger.jpeg"
-                 th:if="${post.picture} != null">
-            <img class="main-img card-img-overlay shadow-lg" alt="" th:if="${post.picture} == null" style="background: white">
+            <img class="main-img card-img-overlay shadow-lg" th:if="${post.picture} != null"
+                 th:src="${post.picture}"
+                 src="../../static/picture/hamburger.jpeg">
+<!--            <img class="main-img card-img-overlay shadow-lg" alt="" th:if="${post.picture} == null" style="background: white">-->
 
             <div style="z-index: 2; color: white; text-shadow: 0 5px 10px black">
                 <h1 class="restaurant-name" th:text="${post.restaurantName}">다운타우너</h1>
                 <div class="m-4">
-                    <div class="h5 mt-3">평점 (준비중)</div>
+                    <div class="h5 mt-3">평점</div>
                     <div>
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
@@ -222,44 +72,190 @@
                     <div class="h5">설명</div>
                     <p th:text="${post.content}">햄버거가 맛있음</p>
                 </div>
+
+                <div class="mt-5">
+                    <span>작성자 : <span th:text="${writerMember.getUsername()}">kun</span></span>
+                    <span style="display: inline-block; margin-left: 20px">작성일 : <span th:text="${#strings.arraySplit(post.createdDate, 'T')[0] + ' ' + #strings.arraySplit(post.createdDate, 'T')[1]}">2023/01/01</span></span>
+                </div>
             </div>
 
         </div>
     </div>
 
-<!--    <div class="container-fluid p-5">-->
-<!--        <div class="reply-container card">-->
-<!--            <label >-->
-<!--                <input type="number">-->
-<!--            </label>-->
-<!--            <input type="text">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="flex-row-container shadow-lg">-->
+<!--            <div class="profile-bundle">-->
+<!--                <img class="profile" src="../../static/picture/default.png" style="object-fit: cover">-->
+<!--                <div class="status"></div>-->
+<!--            </div>-->
+<!--            <div class="comment-input">-->
+<!--                <textarea type="text" class="w-100 h-100" placeholder="write a comment..."></textarea>-->
+<!--            </div>-->
 <!--        </div>-->
 <!--    </div>-->
 
-    <div class="container-fluid p-5 comment-container">
-        <div>
-            <div class="comment-img">
-                <img src="/picture/hamburger.jpeg" alt="">
-            </div>
-            <a type="submit" class="user-card btn btn-success w-100 shadow">
+    <div class="container-fluid mt-5 mb-5">
+        <div class="flex-col-container shadow-lg align-top">
+            <div class="flex-row-container-inner">
                 <div class="profile-bundle">
-                    <img class="profile" src="/picture/default.png" style="object-fit: cover">
+                    <img class="profile" src="../../static/picture/default.png" style="object-fit: cover">
                     <div class="status"></div>
                 </div>
-                <span class="username">iphone</span>
-                <span>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star-half-stroke"></i>
-                    <i class="fa-regular fa-star"></i>
-                </span>
-                <span class="menu">짜장면</span>
-                <div class="comment-content">
-                    있음맛있맛있음맛있음맛음맛있음맛맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음
+                <div class="comment-input comment-input-expand" id="expand">
+                    <textarea type="text" class="w-100 h-100" style="width: 100%" placeholder="write a comment..."></textarea>
                 </div>
-            </a>
+            </div>
+
+            <div class="rating-container-bundle" id="rate-container">
+                <div class="rating-container">
+                    <div class="badge rating-label">Taste</div>
+                    <div class="starBundle">
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                    </div>
+                </div>
+                <div class="rating-container">
+                    <div class="badge rating-label">Price</div>
+                    <div class="starBundle">
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                    </div>
+                </div>
+                <div class="rating-container">
+                    <div class="badge rating-label">Distance</div>
+                    <div class="starBundle">
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                    </div>
+                </div>
+            </div>
+            <div id="comment-btn-container" class="w-100" style="text-align: right">
+                <button class="btn btn-danger" id="foldBtn" style="width: 100px; height: 45px">Cancel</button>
+                <button class="btn btn-success" onclick="getRating()" style="width: 100px; height: 45px; margin-left: 5px">Submit</button>
+            </div>
         </div>
+    </div>
+
+    <div class="container-fluid mt-5 mb-5">
+        <div class="flex-col-container shadow-lg align-top">
+            <div class="flex-row-container-inner">
+                <div class="profile-bundle">
+                    <img class="profile" src="../../static/picture/default.png" style="object-fit: cover">
+                    <div class="status"></div>
+                </div>
+                <div class="comment-input comment-input-expand">
+                    <div class="commenter-info">
+                        <div class="commenter-name">KUN</div>
+                        <div class="commenter-etc">2023.04.02</div>
+                        <div class="commenter-etc">16:42</div>
+                    </div>
+                    <div>텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 </div>
+                </div>
+            </div>
+
+            <div class="rating-container-bundle" style="display: flex">
+                <div class="rating-container">
+                    <div class="badge rating-label">Taste</div>
+                    <div class="starBundle">
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                    </div>
+                </div>
+                <div class="rating-container">
+                    <div class="badge rating-label">Price</div>
+                    <div class="starBundle">
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                    </div>
+                </div>
+                <div class="rating-container">
+                    <div class="badge rating-label">Distance</div>
+                    <div class="starBundle">
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                        <i class="fa-regular fa-star rate"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    <div class="container-fluid">-->
+<!--        <div class="reply-container card bg-secondary">-->
+<!--            <div class="flex-row-container">-->
+<!--                <div class="starBundle">-->
+<!--                    <i class="fa-regular fa-star rate"></i>-->
+<!--                    <i class="fa-regular fa-star rate"></i>-->
+<!--                    <i class="fa-regular fa-star rate"></i>-->
+<!--                    <i class="fa-regular fa-star rate"></i>-->
+<!--                    <i class="fa-regular fa-star rate"></i>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <button id="add-menu-btn" class="btn btn-success">메뉴 추가</button>-->
+<!--                    <div class="btn-group">-->
+<!--                        <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                            메뉴선택-->
+<!--                        </button>-->
+<!--                        <ul class="dropdown-menu">-->
+<!--                            <div style="display: flex; flex-direction: row; padding: 5px 10px; gap: 5px; height: 50px">-->
+<!--                                <input type="text" style="width: 70%; border-radius: 5px; border: 1px solid black">-->
+<!--                                <button class="btn btn-success" style="width: 30%; border-radius: 5px; font-size: 13px">+</button>-->
+<!--                            </div>-->
+<!--                            <li><hr class="dropdown-divider"></li>-->
+<!--                            <li><a class="dropdown-item" href="#">메뉴1</a></li>-->
+<!--                            <li><a class="dropdown-item" href="#">메뉴2</a></li>-->
+<!--                            <li><a class="dropdown-item" href="#">메뉴3</a></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <input class="reply-text-input" type="text">-->
+<!--            <button class="btn btn-warning">Submit</button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+<!--    <div class="container-fluid p-5 comment-container">-->
+<!--        <div>-->
+<!--            <div class="comment-img" style="z-index: 2">-->
+<!--                <img src="../../static/picture/hamburger.jpeg" style="z-index: 2" alt="">-->
+<!--            </div>-->
+<!--            <a type="submit" class="user-card btn btn-success w-100 shadow" >-->
+<!--                <div class="profile-bundle">-->
+<!--                    <img class="profile" src="/picture/default.png" style="object-fit: cover">-->
+<!--                    <div class="status"></div>-->
+<!--                </div>-->
+<!--                <span class="username">iphone</span>-->
+<!--                <span>-->
+<!--                    <i class="fa-solid fa-star"></i>-->
+<!--                    <i class="fa-solid fa-star"></i>-->
+<!--                    <i class="fa-solid fa-star"></i>-->
+<!--                    <i class="fa-solid fa-star-half-stroke"></i>-->
+<!--                    <i class="fa-regular fa-star"></i>-->
+<!--                </span>-->
+<!--                <span class="menu">짜장면</span>-->
+<!--                <div class="comment-content">-->
+<!--                    있음맛있맛있음맛있음맛음맛있음맛맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
 
 
 
@@ -287,29 +283,136 @@
         <!--        </div>-->
     </div>
 </div>
+<th:block>
+    <script>
+        window.addEventListener('load', function () {
+            let distance = document.getElementById('distance');
+            let value = [[${post.distance}]] + "";
+            let result
+            let dowon = value / 5 + 1 + '도원'
+            if (value < 10) {
+                result = '엄청 가까움'
+            } else if (value < 40) {
+                result = '가까움'
+            } else if (value < 60) {
+                result = '적당함'
+            } else if (value < 80) {
+                result = '조금 멈'
+            } else if (value < 90) {
+                result = '많이 멈'
+            } else if (value <= 100) {
+                result = '가지마'
+            }
+
+            distance.innerText = result + " / " + dowon + '\n' + '1도원 = 약 50m'
+        })
+    </script>
+</th:block>
 <script>
 
-    window.addEventListener('load', function () {
-        let distance = document.getElementById('distance');
-        let value = [[${post.distance}]] + "";
-        let result
-        let dowon = value / 5 + 1 + '도원'
-        if (value < 10) {
-            result = '엄청 가까움'
-        } else if (value < 40) {
-            result = '가까움'
-        } else if (value < 60) {
-            result = '적당함'
-        } else if (value < 80) {
-            result = '조금 멈'
-        } else if (value < 90) {
-            result = '많이 멈'
-        } else if (value <= 100) {
-            result = '가지마'
+    let starBundles = document.getElementsByClassName('starBundle');
+    let STAR_COLOR_DEFAULT = '#74778c'
+    let STAR_COLOR_HOVER = '#5a5b6c'
+
+
+    // let starBundle = document.getElementsByClassName('rate');
+    // let rating=0, lastStarIsFull
+
+    let rating = [0, 0, 0];
+    lastStarIsFull = [true, true, true]
+
+    function getRating() {
+        let result = []
+        for (let i = 0; i < 3; i++) {
+            result.push(rating[i] + (lastStarIsFull[i]?1:0.5))
         }
 
-        distance.innerText = result + " / " + dowon + '\n' + '1도원 = 약 50m'
+        alert('맛 : ' + result[0] + ' 가격 : ' + result[1] + ' 거리 : ' + result[2])
+    }
+
+    for(let k = 0; k < 3; k++) {
+        let starBundle = starBundles[k].getElementsByTagName('i');
+        for (let i = 0; i < 5; i++) {
+            starBundle[i].addEventListener('mousemove', function (e) {
+                // 별 원상복구
+                for (const star of starBundle) {
+                    star.classList.replace('fa-solid', 'fa-regular')
+                    star.classList.replace('fa-star-half-stroke', 'fa-star');
+                    // star.style.color = 'rgb(143,143,143)';
+                }
+
+                for (let j = 0; j <= i; j++) {
+                    starBundle[j].classList.replace('fa-regular', 'fa-solid')
+                    starBundle[j].style.color = STAR_COLOR_HOVER
+                }
+
+                let rect = starBundle[i].getBoundingClientRect();
+                // 클릭한 x좌표
+                let x = e.clientX - rect.left;
+
+                if (x < rect.width / 2) {
+                    // 왼쪽 클릭한 경우
+                    starBundle[i].classList.replace('fa-star', 'fa-star-half-stroke');
+                } else {
+                    // 오른쪽 클릭한 경우
+                    starBundle[i].classList.replace('fa-regular', 'fa-solid')
+                }
+            });
+
+            // 마우스 땠을때 초기화
+            starBundle[i].addEventListener('mouseout', function (e) {
+                for (const star of starBundle) {
+                    star.classList.replace('fa-solid', 'fa-regular')
+                    star.classList.replace('fa-star-half-stroke', 'fa-star');
+                    star.style.color = STAR_COLOR_DEFAULT
+                }
+                if (rating[k] === 0) return;
+
+                for (let j = 0; j <= rating[k]; j++) {
+                    starBundle[j].classList.replace('fa-regular', 'fa-solid')
+                }
+
+                if (!lastStarIsFull[k]) starBundle[rating[k]].classList.replace('fa-star', 'fa-star-half-stroke');
+            });
+
+            starBundle[i].addEventListener('click', function (e) {
+                // 현재 별 등급을 유지
+                // i가 눌렸다면 i+1점
+                // i-1까지 꽉찬 별, i번째 별이 반별인지 꽉찬 별인지만 적용한다.
+                rating[k] = i
+                lastStarIsFull[k] = true
+                lastStarIsFull[k] = !starBundle[i].classList.contains('fa-star-half-stroke')
+            });
+        }
+    }
+
+</script>
+<script>
+    let comment = document.getElementsByClassName('comment-input-expand')[0];
+    let ratingCon = document.getElementsByClassName('rating-container-bundle')[0];
+    let commentBtnCon = document.getElementById('comment-btn-container')
+    let foldBtn = document.getElementById('foldBtn');
+
+    comment.addEventListener('click', function () {
+        comment.style.height = '250px';
+        ratingCon.style.display = 'flex';
+        commentBtnCon.style.display = 'block';
+    });
+    //
+    //
+    foldBtn.addEventListener('click', function () {
+        ratingCon.style.display = 'none';
+        commentBtnCon.style.display = 'none';
+        comment.style.height = '100px';
     })
+
+    // function foldComment() {
+    //     comment.style.height = '100px';
+    //     ratingCon.style.display = 'none';
+    //     commentBtnCon.style.display = 'none';
+    // }
 </script>
 </body>
 </html>
+
+

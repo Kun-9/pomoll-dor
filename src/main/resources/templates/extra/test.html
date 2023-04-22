@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
+    <link th:href="@{/css/design.css}" href="../../static/css/design.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <title>Food Review</title>
+
+    <style>
+        .rate {
+            font-size: 100px;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            color: #ffbf00;
+        }
+        
+        .rate:hover {
+            cursor: pointer;
+            filter: brightness(80%);
+            scale: 105%;
+        }
+
+        .starBundle {
+            display: grid;
+            width: 100%;
+            grid-template-columns: 140px 140px 140px 140px 140px;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="starBundle">
+    <i class="fa-regular fa-star rate"></i>
+    <i class="fa-regular fa-star rate"></i>
+    <i class="fa-regular fa-star rate"></i>
+    <i class="fa-regular fa-star rate"></i>
+    <i class="fa-regular fa-star rate"></i>
+</div>
+
+<div><button class="btn btn-success" onclick="getRating()">별점 확인</button></div>
+
+<script>
+    let starBundle = document.getElementsByClassName('rate');
+    let rating=0, lastStarIsFull
+
+    function getRating() {
+        let rate = rating + (lastStarIsFull?1:0.5)
+        alert(rate)
+    }
+
+    for (let i = 0; i < 5; i++) {
+        starBundle[i].addEventListener('mousemove', function (e) {
+            // 별 원상복구
+            for (const star of starBundle) {
+                star.classList.replace('fa-solid', 'fa-regular')
+                star.classList.replace('fa-star-half-stroke', 'fa-star');
+                // star.style.color = 'rgb(143,143,143)';
+            }
+
+            for (let j = 0; j < i; j++) {
+                starBundle[j].classList.replace('fa-regular', 'fa-solid')
+            }
+
+            let rect = starBundle[i].getBoundingClientRect();
+            // 클릭한 x좌표
+            let x = e.clientX - rect.left;
+
+            if (x < rect.width / 2) {
+                // 왼쪽 클릭한 경우
+                starBundle[i].classList.replace('fa-regular', 'fa-solid')
+                starBundle[i].classList.replace('fa-star', 'fa-star-half-stroke');
+            } else {
+                // 오른쪽 클릭한 경우
+                starBundle[i].classList.replace('fa-regular', 'fa-solid')
+            }
+        });
+
+        starBundle[i].addEventListener('mouseout', function (e) {
+            for (const star of starBundle) {
+                star.classList.replace('fa-solid', 'fa-regular')
+                star.classList.replace('fa-star-half-stroke', 'fa-star');
+            }
+            if (rating === 0) return;
+
+            for (let j = 0; j <= rating; j++) {
+                starBundle[j].classList.replace('fa-regular', 'fa-solid')
+            }
+
+            if (!lastStarIsFull) starBundle[rating].classList.replace('fa-star', 'fa-star-half-stroke');
+        });
+
+        starBundle[i].addEventListener('click', function (e) {
+            // 현재 별 등급을 유지
+            // i가 눌렸다면 i+1점
+            // i-1까지 꽉찬 별, i번째 별이 반별인지 꽉찬 별인지만 적용한다.
+            rating = i
+            lastStarIsFull = true
+            lastStarIsFull = !starBundle[i].classList.contains('fa-star-half-stroke')
+        });
+    }
+</script>
+</body>
+</html>
