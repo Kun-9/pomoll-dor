@@ -10,6 +10,8 @@ import kun.pomondor.repository.member.MemberRepository;
 import kun.pomondor.repository.member.MemberRepositoryImpl;
 import kun.pomondor.repository.time.TimeRepository;
 import kun.pomondor.repository.time.TimeRepositoryImpl;
+import kun.pomondor.service.etc.food.FoodCommentService;
+import kun.pomondor.service.etc.food.FoodCommentServiceImpl;
 import kun.pomondor.service.etc.food.FoodPostService;
 import kun.pomondor.service.etc.food.FoodPostServiceImpl;
 import kun.pomondor.service.member.MemberService;
@@ -66,6 +68,11 @@ public class JdbcTemplateConfig {
 	@Bean
 	public FoodCommentRepository foodCommentRepository() {
 		return new FoodCommentRepositoryImpl(dataSource);
+	}
+
+	@Bean
+	public FoodCommentService foodCommentService() {
+		return new FoodCommentServiceImpl(foodCommentRepository());
 	}
 }
 

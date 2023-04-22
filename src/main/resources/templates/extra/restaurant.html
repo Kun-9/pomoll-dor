@@ -98,7 +98,7 @@
         <div class="flex-col-container shadow-lg align-top">
             <div class="flex-row-container-inner">
                 <div class="profile-bundle">
-                    <img class="profile" src="../../static/picture/default.png" style="object-fit: cover">
+                    <img class="profile" src="/picture/default.png" style="object-fit: cover">
                     <div class="status"></div>
                 </div>
                 <div class="comment-input comment-input-expand" id="expand">
@@ -145,52 +145,47 @@
         </div>
     </div>
 
-    <div class="container-fluid mt-5 mb-5">
+    <div th:each="comment : ${comments}" class="container-fluid mt-5 mb-5">
         <div class="flex-col-container shadow-lg align-top">
             <div class="flex-row-container-inner">
                 <div class="profile-bundle">
-                    <img class="profile" src="../../static/picture/default.png" style="object-fit: cover">
+                    <img class="profile" src="/picture/default.png" style="object-fit: cover">
                     <div class="status"></div>
                 </div>
                 <div class="comment-input comment-input-expand">
                     <div class="commenter-info">
-                        <div class="commenter-name">KUN</div>
-                        <div class="commenter-etc">2023.04.02</div>
-                        <div class="commenter-etc">16:42</div>
+                        <div class="commenter-name" th:text="${comment.writerId}">KUN</div>
+                        <div class="commenter-etc" th:text="${#strings.arraySplit(comment.createdDate, 'T')[0]}">2023.04.02</div>
+                        <div class="commenter-etc" th:text="${#strings.arraySplit(comment.createdDate, 'T')[1]}">16:42</div>
                     </div>
-                    <div>텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 </div>
+                    <div th:text="${comment.content}">텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 </div>
                 </div>
             </div>
 
             <div class="rating-container-bundle" style="display: flex">
                 <div class="rating-container">
                     <div class="badge rating-label">Taste</div>
-                    <div class="starBundle">
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
+                    <div class="starBundle" th:with="score=${comment.score.taste}">
+                        <i th:each="i : ${#numbers.sequence(1, #numbers.formatInteger(score,0) - 1)}" class="fa-solid fa-star"></i>
+                        <i th:if="${#numbers.formatInteger(score, 0) - score == 0}" class="fa-solid fa-star"></i>
+                        <i th:if="${#numbers.formatInteger(score, 0) - score < 0}" class="fa-solid fa-star-half-stroke"></i>
+<!--                        <i th:each="i : ${#numbers.sequence(1, 5 - #numbers.formatInteger(score,0))}" class="fa-regular fa-star"></i>-->
                     </div>
                 </div>
                 <div class="rating-container">
                     <div class="badge rating-label">Price</div>
-                    <div class="starBundle">
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
+                    <div class="starBundle" th:with="score=${comment.score.price}">
+                        <i th:each="i : ${#numbers.sequence(1, #numbers.formatInteger(score,0) - 1)}" class="fa-solid fa-star"></i>
+                        <i th:if="${#numbers.formatInteger(score, 0) - score == 0}" class="fa-solid fa-star"></i>
+                        <i th:if="${#numbers.formatInteger(score, 0) - score < 0}" class="fa-solid fa-star-half-stroke"></i>
                     </div>
                 </div>
                 <div class="rating-container">
                     <div class="badge rating-label">Distance</div>
-                    <div class="starBundle">
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
-                        <i class="fa-regular fa-star rate"></i>
+                    <div class="starBundle" th:with="score=${comment.score.distance}">
+                        <i th:each="i : ${#numbers.sequence(1, #numbers.formatInteger(score,0) - 1)}" class="fa-solid fa-star"></i>
+                        <i th:if="${#numbers.formatInteger(score, 0) - score == 0}" class="fa-solid fa-star"></i>
+                        <i th:if="${#numbers.formatInteger(score, 0) - score < 0}" class="fa-solid fa-star-half-stroke"></i>
                     </div>
                 </div>
             </div>

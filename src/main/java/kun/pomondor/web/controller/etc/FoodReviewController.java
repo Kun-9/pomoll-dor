@@ -1,8 +1,10 @@
 package kun.pomondor.web.controller.etc;
 
+import kun.pomondor.repository.etc.food.comment.FoodComment;
 import kun.pomondor.repository.etc.food.post.FoodPost;
 import kun.pomondor.repository.etc.food.post.FoodPostForCreate;
 import kun.pomondor.repository.member.Member;
+import kun.pomondor.service.etc.food.FoodCommentService;
 import kun.pomondor.service.etc.food.FoodPostService;
 import kun.pomondor.service.member.MemberService;
 import kun.pomondor.web.SessionConst;
@@ -27,6 +29,7 @@ import java.util.*;
 public class FoodReviewController {
 	private final MemberService memberService;
 	private final FoodPostService foodPostService;
+	private final FoodCommentService foodCommentService;
 	private final S3Handler s3Handler;
 
 	@GetMapping
@@ -40,6 +43,7 @@ public class FoodReviewController {
 		return "extra/food";
 	}
 
+	// 포스트 폼 반환
 	@GetMapping("post")
 	public String postRestaurantForm(
 			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember,
@@ -52,6 +56,7 @@ public class FoodReviewController {
 		return "extra/restaurant-form";
 	}
 
+	// 포스트 등록
 	@PostMapping("post")
 	public String postToBoard(
 			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember,
@@ -160,6 +165,7 @@ public class FoodReviewController {
 		return null;
 	}
 
+	// 포스트 상세 페이지 리턴
 	@GetMapping("post/{postId}")
 	public String viewPost(
 			@PathVariable Long postId,
@@ -171,9 +177,12 @@ public class FoodReviewController {
 		Long writerId = post.getWriterId();
 		Member writerMember = memberService.findById(writerId);
 
+		List<FoodComment> comments = foodCommentService.findCommentsByPostId(postId);
+
 		model.addAttribute("writerMember", writerMember);
 		model.addAttribute("member", member);
 		model.addAttribute("post", post);
+		model.addAttribute("comments", comments);
 
 		return "extra/restaurant";
 	}
