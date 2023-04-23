@@ -4,16 +4,15 @@ import kun.pomondor.repository.etc.food.comment.FoodCommentRepository;
 import kun.pomondor.repository.etc.food.comment.FoodCommentRepositoryImpl;
 import kun.pomondor.repository.etc.food.post.FoodPostRepository;
 import kun.pomondor.repository.etc.food.post.FoodPostRepositoryImpl;
+import kun.pomondor.repository.etc.food.score.ScoreRepository;
+import kun.pomondor.repository.etc.food.score.ScoreRepositoryImpl;
 import kun.pomondor.repository.friend.FriendRepository;
 import kun.pomondor.repository.friend.FriendRepositoryImpl;
 import kun.pomondor.repository.member.MemberRepository;
 import kun.pomondor.repository.member.MemberRepositoryImpl;
 import kun.pomondor.repository.time.TimeRepository;
 import kun.pomondor.repository.time.TimeRepositoryImpl;
-import kun.pomondor.service.etc.food.FoodCommentService;
-import kun.pomondor.service.etc.food.FoodCommentServiceImpl;
-import kun.pomondor.service.etc.food.FoodPostService;
-import kun.pomondor.service.etc.food.FoodPostServiceImpl;
+import kun.pomondor.service.etc.food.*;
 import kun.pomondor.service.member.MemberService;
 import kun.pomondor.service.member.MemberServiceImpl;
 import kun.pomondor.service.time.TimeService;
@@ -73,6 +72,16 @@ public class JdbcTemplateConfig {
 	@Bean
 	public FoodCommentService foodCommentService() {
 		return new FoodCommentServiceImpl(foodCommentRepository());
+	}
+
+	@Bean
+	public ScoreRepository scoreRepository() {
+		return new ScoreRepositoryImpl(dataSource);
+	}
+
+	@Bean
+	public ScoreService scoreService() {
+		return new ScoreServiceImpl(scoreRepository());
 	}
 }
 

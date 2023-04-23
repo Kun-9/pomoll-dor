@@ -1,11 +1,11 @@
-package kun.pomondor.repository.etc.food.score;
+package kun.pomondor.service.etc.food;
 
-import org.springframework.stereotype.Repository;
+import kun.pomondor.repository.etc.food.score.Score;
 
 import java.util.List;
 import java.util.Map;
 
-public interface ScoreRepository {
+public interface ScoreService {
 	Score findScoreByCommentId(Long commentId);
 
 	List<Score> findScoreByPostId(Long commentId);

@@ -7,6 +7,7 @@ import kun.pomondor.repository.etc.food.score.Score;
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.service.etc.food.FoodCommentService;
 import kun.pomondor.service.etc.food.FoodPostService;
+import kun.pomondor.service.etc.food.ScoreService;
 import kun.pomondor.service.member.MemberService;
 import kun.pomondor.web.SessionConst;
 import kun.pomondor.web.controller.s3.S3Handler;
@@ -31,6 +32,7 @@ public class FoodReviewController {
 	private final MemberService memberService;
 	private final FoodPostService foodPostService;
 	private final FoodCommentService foodCommentService;
+	private final ScoreService scoreService;
 	private final S3Handler s3Handler;
 
 	@GetMapping
@@ -39,8 +41,12 @@ public class FoodReviewController {
 			Model model) {
 		Member member = memberService.findById(loginMember);
 		List<FoodPost> posts = foodPostService.findAllPosts();
+		Map<Long, Float> allRate = scoreService.getAllAverageRate();
+
 		model.addAttribute("member", member);
 		model.addAttribute("posts", posts);
+		model.addAttribute("allRate", allRate);
+
 		return "extra/food";
 	}
 
@@ -179,13 +185,23 @@ public class FoodReviewController {
 		Member writerMember = memberService.findById(writerId);
 
 		List<FoodComment> comments = foodCommentService.findCommentsByPostId(postId);
+		Float avrRateVal = scoreService.getAverageRateByPost(postId);
 
+		// 0.5 단위로 반올림
+		double avrRate = roundRate(avrRateVal);
+
+		model.addAttribute("avrRateVal", avrRateVal);
+		model.addAttribute("avrRate", avrRate);
 		model.addAttribute("writerMember", writerMember);
 		model.addAttribute("member", member);
 		model.addAttribute("post", post);
 		model.addAttribute("comments", comments);
 
 		return "extra/restaurant";
+	}
+
+	private static double roundRate(Float avrRateVal) {
+		return Math.round(avrRateVal * 2) / 2.0;
 	}
 
 	@PostMapping(value = "post/{postId}/delete")
