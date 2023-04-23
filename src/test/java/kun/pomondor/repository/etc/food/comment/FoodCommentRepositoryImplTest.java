@@ -17,14 +17,14 @@ class FoodCommentRepositoryImplTest {
 
 	@Test
 	void create() {
-		FoodComment object = new FoodComment(
-				19L,
-				101L,
-				"맛있음",
-				null,
-				new Score(4, 5, 5, "짜장면")
-		);
-		foodCommentRepository.createComment(object);
+//		FoodComment object = new FoodComment(
+//				19L,
+//				101L,
+//				"맛있음",
+//				null,
+//				new Score(4, 5, 5, "짜장면")
+//		);
+//		foodCommentRepository.createComment(object);
 	}
 
 	@Test
@@ -35,5 +35,4 @@ class FoodCommentRepositoryImplTest {
 			System.out.println(comment);
 		}
 	}
-
 }

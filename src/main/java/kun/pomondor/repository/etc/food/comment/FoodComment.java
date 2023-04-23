@@ -13,17 +13,26 @@ import java.time.LocalDateTime;
 public class FoodComment {
 	private Long commentId;
 	private Long writerId;
+	private String username;
 	private Long boardId;
 	private LocalDateTime createdDate;
 	private String content;
 	private String picture;
 	private Score score;
 
-	public FoodComment(Long writerId, Long boardId, String content, String picture, Score score) {
+	public FoodComment(Long writerId, String username, Long boardId, String content, String picture, Score score) {
 		this.writerId = writerId;
+		this.username = username;
 		this.boardId = boardId;
 		this.content = content;
 		this.picture = picture;
+		this.score = score;
+	}
+
+	public FoodComment(Long writerId, Long boardId, String content, Score score) {
+		this.writerId = writerId;
+		this.boardId = boardId;
+		this.content = content;
 		this.score = score;
 	}
 }

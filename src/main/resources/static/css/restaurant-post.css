@@ -174,7 +174,7 @@ body {
     padding: 2.5%;
 }
 
-.rate {
+.rating-bundle > i {
     display: inline-block;
     font-size: 18px;
     padding: 0;
@@ -198,7 +198,9 @@ body {
     grid-auto-rows: 40px;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
+
 
 .flex-row-container {
 
@@ -225,7 +227,7 @@ body {
     flex-direction: column;
     align-items: center;
     border-radius: 5px;
-    background: white;
+    background: #f6f6f6;
     padding: 5%;
     gap: 5%;
 }
@@ -245,6 +247,7 @@ body {
     display: flex;
     flex-direction: column;
     /*gap: 5%;*/
+    transition: 0.5s;
 }
 
 .comment-input > textarea {
@@ -253,12 +256,6 @@ body {
     padding: 5px 15px;
     overflow: auto;
 }
-
-.comment-input-expand {
-    /*height: 500px;*/
-    height: 100%;
-}
-
 
 .align-top {
     justify-content: start;
@@ -312,6 +309,7 @@ body {
 }
 
 .commenter-name {
+    margin-top: auto;
     font-size: 22px;
     font-weight: 600;
 }

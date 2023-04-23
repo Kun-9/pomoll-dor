@@ -95,20 +95,22 @@
 <!--    </div>-->
 
     <div class="container-fluid mt-5 mb-5">
-        <div class="flex-col-container shadow-lg align-top">
+        <form method="post" th:action="@{${#httpServletRequest.requestURI} + '/comment'}"
+                class="flex-col-container shadow-lg align-top" name="commentForm" id="commentForm">
             <div class="flex-row-container-inner">
                 <div class="profile-bundle">
                     <img class="profile" src="/picture/default.png" style="object-fit: cover">
                     <div class="status"></div>
                 </div>
-                <div class="comment-input comment-input-expand" id="expand">
-                    <textarea type="text" class="w-100 h-100" style="width: 100%" placeholder="write a comment..."></textarea>
+                <div class="comment-input" id="expand">
+                    <textarea name="content" class="w-100 h-100" style="width: 100%" placeholder="write a comment..."></textarea>
                 </div>
             </div>
 
             <div class="rating-container-bundle" id="rate-container">
                 <div class="rating-container">
                     <div class="badge rating-label">Taste</div>
+                    <input type="hidden" name="taste" id="taste-rate" value="0">
                     <div class="starBundle">
                         <i class="fa-regular fa-star rate"></i>
                         <i class="fa-regular fa-star rate"></i>
@@ -119,6 +121,7 @@
                 </div>
                 <div class="rating-container">
                     <div class="badge rating-label">Price</div>
+                    <input type="hidden" name="price" id="price-rate" value="0">
                     <div class="starBundle">
                         <i class="fa-regular fa-star rate"></i>
                         <i class="fa-regular fa-star rate"></i>
@@ -129,6 +132,7 @@
                 </div>
                 <div class="rating-container">
                     <div class="badge rating-label">Distance</div>
+                    <input type="hidden" name="distance" id="distance-rate" value="0">
                     <div class="starBundle">
                         <i class="fa-regular fa-star rate"></i>
                         <i class="fa-regular fa-star rate"></i>
@@ -139,12 +143,13 @@
                 </div>
             </div>
             <div id="comment-btn-container" class="w-100" style="text-align: right">
-                <button class="btn btn-danger" id="foldBtn" style="width: 100px; height: 45px">Cancel</button>
-                <button class="btn btn-success" onclick="getRating()" style="width: 100px; height: 45px; margin-left: 5px">Submit</button>
+                <button class="btn btn-danger" type="reset" id="foldBtn" style="width: 100px; height: 45px">Cancel</button>
+                <button class="btn btn-success" type="button" onclick="submitComment()" style="width: 100px; height: 45px; margin-left: 5px">Submit</button>
             </div>
-        </div>
+        </form>
     </div>
 
+    <!-- 댓글 개수만큼 반복 -->
     <div th:each="comment : ${comments}" class="container-fluid mt-5 mb-5">
         <div class="flex-col-container shadow-lg align-top">
             <div class="flex-row-container-inner">
@@ -154,7 +159,7 @@
                 </div>
                 <div class="comment-input comment-input-expand">
                     <div class="commenter-info">
-                        <div class="commenter-name" th:text="${comment.writerId}">KUN</div>
+                        <div class="commenter-name" th:text="${comment.username}">KUN</div>
                         <div class="commenter-etc" th:text="${#strings.arraySplit(comment.createdDate, 'T')[0]}">2023.04.02</div>
                         <div class="commenter-etc" th:text="${#strings.arraySplit(comment.createdDate, 'T')[1]}">16:42</div>
                     </div>
@@ -165,27 +170,35 @@
             <div class="rating-container-bundle" style="display: flex">
                 <div class="rating-container">
                     <div class="badge rating-label">Taste</div>
-                    <div class="starBundle" th:with="score=${comment.score.taste}">
+                    <div class="starBundle" th:with="score=${comment.score.taste}" style="text-align: center">
                         <i th:each="i : ${#numbers.sequence(1, #numbers.formatInteger(score,0) - 1)}" class="fa-solid fa-star"></i>
-                        <i th:if="${#numbers.formatInteger(score, 0) - score == 0}" class="fa-solid fa-star"></i>
-                        <i th:if="${#numbers.formatInteger(score, 0) - score < 0}" class="fa-solid fa-star-half-stroke"></i>
-<!--                        <i th:each="i : ${#numbers.sequence(1, 5 - #numbers.formatInteger(score,0))}" class="fa-regular fa-star"></i>-->
+                        <i th:if="${#strings.arraySplit(score, '.')[1].equals('0')}" class="fa-solid fa-star"></i>
+                        <i th:if="${#strings.arraySplit(score, '.')[1].equals('5')}" class="fa-solid fa-star-half-stroke"></i>
+                        <i th:if="${!#strings.arraySplit(score, '.')[0].equals('5')}"
+                           th:each="i : ${#numbers.sequence(4, #numbers.formatInteger(score,0))}"
+                           class="fa-regular fa-star"></i>
                     </div>
                 </div>
                 <div class="rating-container">
                     <div class="badge rating-label">Price</div>
-                    <div class="starBundle" th:with="score=${comment.score.price}">
+                    <div class="starBundle" th:with="score=${comment.score.price}" style="text-align: center">
                         <i th:each="i : ${#numbers.sequence(1, #numbers.formatInteger(score,0) - 1)}" class="fa-solid fa-star"></i>
-                        <i th:if="${#numbers.formatInteger(score, 0) - score == 0}" class="fa-solid fa-star"></i>
-                        <i th:if="${#numbers.formatInteger(score, 0) - score < 0}" class="fa-solid fa-star-half-stroke"></i>
+                        <i th:if="${#strings.arraySplit(score, '.')[1].equals('0')}" class="fa-solid fa-star"></i>
+                        <i th:if="${#strings.arraySplit(score, '.')[1].equals('5')}" class="fa-solid fa-star-half-stroke"></i>
+                        <i th:if="${!#strings.arraySplit(score, '.')[0].equals('5')}"
+                           th:each="i : ${#numbers.sequence(4, #numbers.formatInteger(score,0))}"
+                           class="fa-regular fa-star"></i>
                     </div>
                 </div>
                 <div class="rating-container">
                     <div class="badge rating-label">Distance</div>
-                    <div class="starBundle" th:with="score=${comment.score.distance}">
+                    <div class="starBundle" th:with="score=${comment.score.distance}" style="text-align: center">
                         <i th:each="i : ${#numbers.sequence(1, #numbers.formatInteger(score,0) - 1)}" class="fa-solid fa-star"></i>
-                        <i th:if="${#numbers.formatInteger(score, 0) - score == 0}" class="fa-solid fa-star"></i>
-                        <i th:if="${#numbers.formatInteger(score, 0) - score < 0}" class="fa-solid fa-star-half-stroke"></i>
+                        <i th:if="${#strings.arraySplit(score, '.')[1].equals('0')}" class="fa-solid fa-star"></i>
+                        <i th:if="${#strings.arraySplit(score, '.')[1].equals('5')}" class="fa-solid fa-star-half-stroke"></i>
+                        <i th:if="${!#strings.arraySplit(score, '.')[0].equals('5')}"
+                           th:each="i : ${#numbers.sequence(4, #numbers.formatInteger(score,0))}"
+                           class="fa-regular fa-star"></i>
                     </div>
                 </div>
             </div>
@@ -308,21 +321,40 @@
     let starBundles = document.getElementsByClassName('starBundle');
     let STAR_COLOR_DEFAULT = '#74778c'
     let STAR_COLOR_HOVER = '#5a5b6c'
-
+    let taste = document.getElementById('taste-rate');
+    let price = document.getElementById('price-rate');
+    let distance = document.getElementById('distance-rate');
+    let ratingArr = [taste, price, distance];
+    let commentForm = document.getElementById('commentForm');
 
     // let starBundle = document.getElementsByClassName('rate');
     // let rating=0, lastStarIsFull
 
-    let rating = [0, 0, 0];
+    let rating = [-1, -1, -1];
     lastStarIsFull = [true, true, true]
 
+    function submitComment() {
+        for (const rate of ratingArr) {
+            if (rate.value === '0') {
+                alert('점수를 입력해주세요.')
+                return
+            }
+        }
+        if (!commentForm.content.value) {
+            if (!confirm('내용이 없습니다. 평점만 등록하시겠습니까?')) {
+                return
+            }
+        }
+        commentForm.submit();
+    }
+
     function getRating() {
-        let result = []
         for (let i = 0; i < 3; i++) {
-            result.push(rating[i] + (lastStarIsFull[i]?1:0.5))
+            // result.push(rating[i] + (lastStarIsFull[i]?1:0.5))
+            ratingArr[i].value = rating[i] + (lastStarIsFull[i] ? 1 : 0.5);
         }
 
-        alert('맛 : ' + result[0] + ' 가격 : ' + result[1] + ' 거리 : ' + result[2])
+        // alert('맛 : ' + ratingArr[0].value + ' 가격 : ' + ratingArr[1].value + ' 거리 : ' + ratingArr[2].value)
     }
 
     for(let k = 0; k < 3; k++) {
@@ -361,15 +393,19 @@
                     star.classList.replace('fa-star-half-stroke', 'fa-star');
                     star.style.color = STAR_COLOR_DEFAULT
                 }
-                if (rating[k] === 0) return;
+                if (rating[k] === -1) return;
 
                 for (let j = 0; j <= rating[k]; j++) {
                     starBundle[j].classList.replace('fa-regular', 'fa-solid')
                 }
 
-                if (!lastStarIsFull[k]) starBundle[rating[k]].classList.replace('fa-star', 'fa-star-half-stroke');
+                // lastStarIsFull이 true라면 마지막 별을 변경
+                if (!lastStarIsFull[k]) {
+                    starBundle[rating[k]].classList.replace('fa-star', 'fa-star-half-stroke');
+                }
             });
 
+            // 실제로 클릭했을 때 이벤트
             starBundle[i].addEventListener('click', function (e) {
                 // 현재 별 등급을 유지
                 // i가 눌렸다면 i+1점
@@ -377,13 +413,15 @@
                 rating[k] = i
                 lastStarIsFull[k] = true
                 lastStarIsFull[k] = !starBundle[i].classList.contains('fa-star-half-stroke')
+
+                getRating();
             });
         }
     }
 
 </script>
 <script>
-    let comment = document.getElementsByClassName('comment-input-expand')[0];
+    let comment = document.getElementsByClassName('comment-input')[0];
     let ratingCon = document.getElementsByClassName('rating-container-bundle')[0];
     let commentBtnCon = document.getElementById('comment-btn-container')
     let foldBtn = document.getElementById('foldBtn');
@@ -398,7 +436,7 @@
     foldBtn.addEventListener('click', function () {
         ratingCon.style.display = 'none';
         commentBtnCon.style.display = 'none';
-        comment.style.height = '100px';
+        comment.style.height = '45px';
     })
 
     // function foldComment() {

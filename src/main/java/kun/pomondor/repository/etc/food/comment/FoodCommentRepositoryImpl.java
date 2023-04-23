@@ -53,14 +53,16 @@ public class FoodCommentRepositoryImpl implements FoodCommentRepository {
 
 	@Override
 	public List<FoodComment> findCommentsByPostId(Long postId) {
-		String sql = "SELECT cm.id, member_id, board_id, created_date, content, menu, picture, taste, price, distance, TRUNC((taste + price + distance)/3,1) avr " +
+		String sql = "SELECT cm.id, member_id, board_id, username, created_date, content, menu, cm.picture, taste, price, distance, TRUNC((taste + price + distance)/3,1) avr " +
 				"FROM food_review_comment cm " +
 				"JOIN comment_score cs ON cm.id = cs.id " +
+				"JOIN member m ON cm.member_id = m.id " +
 				"WHERE board_id = ? " +
 				"ORDER BY created_date DESC ";
 		return template.query(sql, (rs, rowNum) -> new FoodComment(
 				rs.getLong("id"),
 				rs.getLong("member_id"),
+				rs.getString("username"),
 				rs.getLong("board_id"),
 				rs.getTimestamp("created_date").toLocalDateTime(),
 				rs.getString("content"),

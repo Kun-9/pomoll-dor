@@ -3,6 +3,7 @@ package kun.pomondor.web.controller.etc;
 import kun.pomondor.repository.etc.food.comment.FoodComment;
 import kun.pomondor.repository.etc.food.post.FoodPost;
 import kun.pomondor.repository.etc.food.post.FoodPostForCreate;
+import kun.pomondor.repository.etc.food.score.Score;
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.service.etc.food.FoodCommentService;
 import kun.pomondor.service.etc.food.FoodPostService;
@@ -196,6 +197,36 @@ public class FoodReviewController {
 		int result = foodPostService.deletePost(loginMember, postId);
 
 		return "redirect:/etc/food";
+	}
+
+	@PostMapping(value = "post/{postId}/comment")
+	public String createComment(
+			@PathVariable Long postId,
+			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember,
+			HttpServletRequest request) {
+
+		log.info("comment");
+		String content = request.getParameter("content");
+		float taste = Float.parseFloat(request.getParameter("taste"));
+		float price = Float.parseFloat(request.getParameter("price"));
+		float distance = Float.parseFloat(request.getParameter("distance"));
+
+		FoodComment foodComment = new FoodComment(
+				loginMember,
+				postId,
+				content,
+				new Score(
+						taste,
+						price,
+						distance,
+						null
+				)
+		);
+
+		log.info("new comment = {}", foodComment);
+		foodCommentService.createComment(foodComment);
+
+		return "redirect:/etc/food/post/" + postId;
 	}
 
 	private void deleteImg(Long postId) {
