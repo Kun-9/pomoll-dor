@@ -210,12 +210,24 @@ public class FoodReviewController {
 	@PostMapping(value = "post/{postId}/delete")
 	public String deletePost(
 			@PathVariable Long postId,
-			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember) throws FileNotFoundException {
+			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember) {
 
 		deleteImg(postId);
 		int result = foodPostService.deletePost(loginMember, postId);
 
 		return "redirect:/etc/food";
+	}
+
+	@PostMapping(value = "post/delete/comment")
+	public String deleteComment(
+			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember,
+			HttpServletRequest request) {
+
+		Long commentId = Long.valueOf(request.getParameter("commentId"));
+		String postId = request.getParameter("postId");
+		foodCommentService.deleteComment(loginMember, commentId);
+
+		return "redirect:/etc/food/post/" + postId;
 	}
 
 	@PostMapping(value = "post/{postId}/comment")

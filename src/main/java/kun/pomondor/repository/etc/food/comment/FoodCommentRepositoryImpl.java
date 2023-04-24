@@ -60,7 +60,8 @@ public class FoodCommentRepositoryImpl implements FoodCommentRepository {
 
 	@Override
 	public void deleteComment(Long memberId, Long commentId) {
-
+		String sql = "CALL delete_comment_procedure(?, ?)";
+		template.update(sql, memberId, commentId);
 	}
 
 	@Override

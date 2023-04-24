@@ -47,7 +47,7 @@
             <img class="main-img card-img-overlay shadow-lg" th:if="${post.picture} != null"
                  th:src="${post.picture}"
                  src="../../static/picture/hamburger.jpeg">
-<!--            <img class="main-img card-img-overlay shadow-lg" alt="" th:if="${post.picture} == null" style="background: white">-->
+            <img class="main-img card-img-overlay shadow-lg" alt="" th:if="${post.picture} == null" style="background: white">
 
             <div style="z-index: 2; color: white; text-shadow: 0 5px 10px black">
                 <h1 class="restaurant-name" th:text="${post.restaurantName}">다운타우너</h1>
@@ -165,6 +165,17 @@
     <!-- 댓글 개수만큼 반복 -->
     <div th:each="comment : ${comments}" class="container-fluid mt-5 mb-5">
         <div class="flex-col-container shadow-lg align-top">
+            <form id="commentDeleteForm" th:if="${comment.writerId == member.id}" style="display: flex; justify-content: end; width: 100%"
+                 th:action="@{'delete/comment'}" method="post">
+                <input type="hidden" th:value="${comment.commentId}" name="commentId">
+                <input type="hidden" th:value="${post.postId}" name="postId">
+                <button type="button" onclick="deleteComment(this)" class="btn btn-danger" style="">삭제</button>
+
+<!--                <form id="delForm" th:action="@{${#httpServletRequest.requestURI} + '/delete'}" method="post">-->
+<!--                    <button type="button" class="btn btn-danger" id="deleteCommentBtn">삭제</button>-->
+<!--                    -->
+<!--                </form>-->
+            </form>
             <div class="flex-row-container-inner">
                 <div class="profile-bundle">
                     <img class="profile" src="/picture/default.png" style="object-fit: cover">
@@ -175,6 +186,7 @@
                         <div class="commenter-name" th:text="${comment.username}">KUN</div>
                         <div class="commenter-etc" th:text="${#strings.arraySplit(comment.createdDate, 'T')[0]}">2023.04.02</div>
                         <div class="commenter-etc" th:text="${#strings.arraySplit(comment.createdDate, 'T')[1]}">16:42</div>
+
                     </div>
                     <div th:text="${comment.content}">텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 </div>
                 </div>
@@ -525,6 +537,14 @@
         commentBtnCon.style.display = 'none';
         comment.style.height = '45px';
     })
+
+
+    function deleteComment(element) {
+        if (confirm("댓글을 삭제합니다.")) {
+            let form = element.closest('form');
+            form.submit();
+        }
+    }
 
 </script>
 </body>

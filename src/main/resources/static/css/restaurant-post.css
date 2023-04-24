@@ -112,7 +112,7 @@ body {
 
 .main-content-card {
     text-align: center;
-    background: none;
+    background: #8a8a8a;
     border: none;
     border-radius: 20px;
     /*min-height: 400px;*/
@@ -155,6 +155,7 @@ body {
     filter: brightness(65%);
     z-index: 1;
     padding: 0;
+    background: #7e89a1;
     /*padding: 15px;*/
     /* object-fit: cover; 를 사용하여 이미지를 요소 크기에 맞게 확대 또는 축소합니다. */
 }
