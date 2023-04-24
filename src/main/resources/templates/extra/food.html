@@ -99,7 +99,13 @@
 
         .card-text {
             font-size: 1.2rem;
+            overflow-y: auto;
         }
+
+        .card-text::-webkit-scrollbar {
+            display: none;
+        }
+
 
         .badge {
             margin-bottom: 8px;
@@ -133,7 +139,7 @@
 <div th:replace="fragment/menubar.html :: login-menubar"></div>
 
 <div class="container mt-5">
-    <div class="p-3 row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 gap-container">
+    <div class="p-3 row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row">
 
         <div class="card">
             <a class="card-add shadow" th:href="@{'/etc/food/post'}">
@@ -143,6 +149,13 @@
             </a>
         </div>
 
+<!--        유튜브 재생 -->
+<!--        <div class="card" style="row-span: 2">-->
+<!--            <div class="card-add shadow">-->
+<!--                <iframe width="560" height="315" style="border-radius: 50px" src="https://www.youtube.com/embed/7UIU1ZWhgL8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>-->
+<!--            </div>-->
+<!--        </div>-->
+
         <a class="card btn" th:each="post:${posts}" th:href="@{'/etc/food/post/' + ${post.postId}}">
             <div class="card-container">
                 <img class="card-img shadow" th:src="${post.picture}" alt="" th:if="${post.picture} != null">
@@ -151,7 +164,7 @@
                     <span th:if="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd') == #strings.arraySplit(post.createdDate, 'T')[0]}"
                           class="badge bg-danger" style="width: 50px; padding: 7px">New</span>
                     <h3 class="card-title" th:text="${post.restaurantName}">다운타우너</h3>
-                    <p class="card-text" th:text="${post.content}">수제버거</p>
+                    <p class="card-text" th:text="${post.content}">수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거v</p>
 
                     <div class="w-100 star-container" th:if="${allRate.get(post.postId) != null}">
                         <div class="starBundle-main"

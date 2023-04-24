@@ -33,8 +33,9 @@ public class FriendController {
 
 		List<FriendMemberForm> receiveList = friendRequestToMemberObject(friendService.findReceiveRequest(memberId));
 		List<FriendMemberForm> friendList = friendRequestToMemberObject(friendService.findFriends(memberId));
+		List<FriendMemberForm> sentList = friendRequestToMemberObject(friendService.findSentRequestById(memberId));
 
-
+		model.addAttribute("sentList", sentList);
 		model.addAttribute("receiveRequests", receiveList);
 		model.addAttribute("friendList", friendList);
 		model.addAttribute("member", member);

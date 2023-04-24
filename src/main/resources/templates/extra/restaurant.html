@@ -109,12 +109,17 @@
                     <img class="profile" src="/picture/default.png" style="object-fit: cover">
                     <div class="status"></div>
                 </div>
-                <div class="comment-input" id="expand">
-                    <textarea name="content" class="w-100 h-100" style="width: 100%" placeholder="write a comment..."></textarea>
+                <div class="comment-input" style="height: 45px;" id="expand">
+                    <textarea name="content" class="w-100 h-100" style="width: 100%;" placeholder="write a comment..."></textarea>
                 </div>
             </div>
 
-            <div class="rating-container-bundle" id="rate-container">
+            <div class="btn" style="background: #bebebe ;margin: 15px auto; display: none" id="rating-btn">
+                <div class="w-100" style="text-align: center">평점 남기기</div>
+            </div>
+            <div class="line"></div>
+<!--            <div class="p-3 row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 gap-container">-->
+            <div class="rating-container-bundle " id="rate-container">
                 <div class="rating-container">
                     <div class="badge rating-label">Taste</div>
                     <input type="hidden" name="taste" id="taste-rate" value="0">
@@ -149,6 +154,7 @@
                     </div>
                 </div>
             </div>
+            <div class="line"></div>
             <div id="comment-btn-container" class="w-100" style="text-align: right">
                 <button class="btn btn-danger" type="reset" id="foldBtn" style="width: 100px; height: 45px">Cancel</button>
                 <button class="btn btn-success" type="button" onclick="submitComment()" style="width: 100px; height: 45px; margin-left: 5px">Submit</button>
@@ -221,6 +227,8 @@
             </div>
         </div>
     </div>
+
+
 
 <!--    <div class="container-fluid">-->
 <!--        <div class="reply-container card bg-secondary">-->
@@ -306,8 +314,11 @@
         <!--                <div class="comment-content">맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음</div>-->
         <!--            </a>-->
         <!--        </div>-->
-    </div>
 </div>
+
+
+
+
 <th:block>
     <script>
         window.addEventListener('load', function () {
@@ -351,15 +362,32 @@
     lastStarIsFull = [true, true, true]
 
     function submitComment() {
-        for (const rate of ratingArr) {
-            if (rate.value === '0') {
-                alert('점수를 입력해주세요.')
-                return
+
+        // 평점 댓글일 때,
+        if (ratingBtn_status === true) {
+            for (const rate of ratingArr) {
+                if (rate.value === '0') {
+                    alert('점수를 입력해주세요.')
+                    return
+                }
             }
-        }
-        if (!commentForm.content.value) {
-            if (!confirm('내용이 없습니다. 평점만 등록하시겠습니까?')) {
-                return
+
+            if (!commentForm.content.value) {
+                if (!confirm('내용이 없습니다. 평점만 등록하시겠습니까?')) {
+                    return
+                }
+            }
+        } else {
+        // 일반 댓글일 때,
+            // 내용이 없을 때,
+            if (!commentForm.content.value) {
+                alert('내용이 없습니다. 내용을 입력해 주세요.')
+                commentForm.content.focus();
+                return;
+            } else {
+                if (!confirm('평점 없이 댓글만 등록합니다.')) {
+                    return
+                }
             }
         }
         commentForm.submit();
@@ -379,11 +407,13 @@
         for (let i = 0; i < 5; i++) {
             starBundle[i].addEventListener('mousemove', function (e) {
                 // 별 원상복구
-                for (const star of starBundle) {
-                    star.classList.replace('fa-solid', 'fa-regular')
-                    star.classList.replace('fa-star-half-stroke', 'fa-star');
-                    // star.style.color = 'rgb(143,143,143)';
-                }
+                resetStar(starBundle)
+
+                // for (const star of starBundle) {
+                //     star.classList.replace('fa-solid', 'fa-regular')
+                //     star.classList.replace('fa-star-half-stroke', 'fa-star');
+                //     // star.style.color = 'rgb(143,143,143)';
+                // }
 
                 for (let j = 0; j <= i; j++) {
                     starBundle[j].classList.replace('fa-regular', 'fa-solid')
@@ -405,11 +435,8 @@
 
             // 마우스 땠을때 초기화
             starBundle[i].addEventListener('mouseout', function (e) {
-                for (const star of starBundle) {
-                    star.classList.replace('fa-solid', 'fa-regular')
-                    star.classList.replace('fa-star-half-stroke', 'fa-star');
-                    star.style.color = STAR_COLOR_DEFAULT
-                }
+                resetStar(starBundle)
+
                 if (rating[k] === -1) return;
 
                 for (let j = 0; j <= rating[k]; j++) {
@@ -434,6 +461,14 @@
                 getRating();
             });
         }
+
+        function resetStar(starBundle) {
+            for (const star of starBundle) {
+                star.classList.replace('fa-solid', 'fa-regular')
+                star.classList.replace('fa-star-half-stroke', 'fa-star');
+                star.style.color = STAR_COLOR_DEFAULT
+            }
+        }
     }
 
 </script>
@@ -442,25 +477,55 @@
     let ratingCon = document.getElementsByClassName('rating-container-bundle')[0];
     let commentBtnCon = document.getElementById('comment-btn-container')
     let foldBtn = document.getElementById('foldBtn');
+    let ratingBtn = document.getElementById('rating-btn');
+    let line = document.getElementsByClassName('line');
+    let ratingBtn_status = false;
 
     comment.addEventListener('click', function () {
         comment.style.height = '250px';
-        ratingCon.style.display = 'flex';
+        // ratingCon.style.display = 'flex';
+        ratingBtn.style.display = 'block';
         commentBtnCon.style.display = 'block';
     });
-    //
-    //
+
+    ratingBtn.addEventListener('click', function () {
+        if (ratingBtn_status === false) {
+            ratingBtn_status = true
+
+            ratingBtn.innerText = '일반 댓글 남기기'
+            ratingCon.style.display = 'flex';
+            for (const lineElement of line) {
+                lineElement.style.display = 'block';
+            }
+
+        } else  {
+            ratingBtn_status = false
+
+            ratingBtn.innerText = '평점 남기기'
+            ratingCon.style.display = 'none';
+
+            for (const lineElement of line) {
+                lineElement.style.display = 'none';
+            }
+
+            for (const rate of ratingArr) {
+                rate.value = '0'
+            }
+
+            for(let k = 0; k < 3; k++) {
+                let starBundle = starBundles[k].getElementsByTagName('i');
+                // 별 원상복구
+                resetStar(starBundle)
+            }
+        }
+    });
+
     foldBtn.addEventListener('click', function () {
         ratingCon.style.display = 'none';
         commentBtnCon.style.display = 'none';
         comment.style.height = '45px';
     })
 
-    // function foldComment() {
-    //     comment.style.height = '100px';
-    //     ratingCon.style.display = 'none';
-    //     commentBtnCon.style.display = 'none';
-    // }
 </script>
 </body>
 </html>

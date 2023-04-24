@@ -78,6 +78,7 @@ public class FoodReviewController {
 
 		log.info("등록");
 		FoodPostForCreate foodPost = new FoodPostForCreate(restaurantName, loginMember, content, distance);
+		log.info("등록 : {}" ,foodPost);
 		postId = foodPostService.createPost(foodPost);
 
 		// postId.확장자로 s3에 저장
@@ -223,6 +224,7 @@ public class FoodReviewController {
 
 		log.info("comment");
 		String content = request.getParameter("content");
+//		content = content.replace("\r\n", "<br>");
 		float taste = Float.parseFloat(request.getParameter("taste"));
 		float price = Float.parseFloat(request.getParameter("price"));
 		float distance = Float.parseFloat(request.getParameter("distance"));

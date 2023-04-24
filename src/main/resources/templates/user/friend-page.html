@@ -28,10 +28,31 @@
             display: grid;
             justify-content: center;
             grid-template-columns: 400px 400px;
-            min-height: 600px;
-            /*grid-template-rows: 1vh;*/
-            height: 100vh;
-            grid-gap: 50px;
+            grid-template-rows: 300px 300px;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                display: flex;
+                flex-direction: column;
+                width: 400px;
+                /*min-height: 600px;*/
+                grid-template-rows: 300px 300px 300px;
+            }
+
+            .receive-container {
+                margin-bottom: 20px;
+            }
+
+        }
+
+        .friend-container-grid {
+            grid-column: 2/3;
+            grid-row: 1/span2;
+            width: 100%;
+            height: 640px;
+
         }
 
         .username-label {
@@ -69,13 +90,23 @@
             padding: 25px;
             border-radius: 15px;
             /*flex: 1;*/
-            height: 100%;
+            /*height: 80vh;*/
             /*border: 2px solid white;*/
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-auto-rows: 100px;
             align-items: center;
-            overflow: scroll;
+            overflow-y: scroll;
+            height: 100%;
+            margin-bottom: 20px;
+        }
+
+        .friend-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .receive-container::-webkit-scrollbar {
+            display: none;
         }
 
         .receive-bundle {
@@ -95,6 +126,7 @@
             height: 80px;
             margin: 0 5px;
             grid-column: 1/span2;
+
         }
 
         .friend-bundle > a {
@@ -147,15 +179,17 @@
         }
 
         .flex-container {
+            /*width: 100%;*/
             display: flex;
             flex-direction: column;
-            height: 100%;
         }
 
         .no-content-msg {
             color: white;
             grid-column: 1/span2;
         }
+
+
     </style>
 </head>
 
@@ -181,10 +215,11 @@
         </div>
     </div>
 
-    <div class="flex-container">
+    <div class="flex-container friend-container-grid">
         <h2 class="container-label">친구 목록</h2>
         <div class="friend-container shadow">
             <div th:if="${friendList.isEmpty()}" class="no-content-msg">등록된 친구가 없습니다.</div>
+
             <form class="friend-bundle" th:each="friend : ${friendList}">
                 <a class="shadow btn" type="submit" th:href="@{'/member/info/' + ${friend.getSendMember().getId()}}">
                     <div class="profile-bundle">
@@ -194,7 +229,27 @@
                     <span class="username-label" th:text="${friend.sendMember.username}">kun</span>
                 </a>
             </form>
+
+        </div>
     </div>
+
+    <div class="flex-container">
+        <h2 class="container-label">보낸 신청 목록</h2>
+
+        <div class="receive-container shadow">
+            <div th:if="${sentList.isEmpty()}" class="no-content-msg">보낸 친구 신청이 없습니다.</div>
+            <div class="receive-bundle shadow" th:each="sent : ${sentList}">
+                <span class="username-label" th:text="${sent.receiveMember.username}">kun</span>
+                <div>
+                    <button class="btn btn-warning" th:data-parameter="${sent.receiveMember.id}"
+                            onclick="cancelRequest(this.getAttribute('data-parameter'), this)">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
 
 
@@ -221,8 +276,20 @@
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         request.send('targetMemberId=' + targetMemberId);
-        a.style.display = 'none';
+        a.closest('.receive-bundle').style.display = 'none';
         alert("친구 요청을 거절하였습니다..");
+    }
+
+    function cancelRequest(targetMemberId, a) {
+        // 서버에 친구 요청 전송
+        const request = new XMLHttpRequest();
+
+        request.open('post', '/friend/cancel-friend', 'true');
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        request.send('targetMemberId=' + targetMemberId);
+        a.closest('.receive-bundle').style.display = 'none';
+        alert("친구 요청을 취소하였습니다..");
     }
 
 </script>

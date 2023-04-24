@@ -11,6 +11,9 @@
 </head>
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
 
     html, body {
         height: 100%;
@@ -43,14 +46,14 @@
     .timer {
         /*margin-bottom: 50px;*/
         font-weight: bold;
-        font-size: 60px;
+        font-size: 45px;
         color: white;
         /*line-height: 480px*/
     }
 
     .restTime {
         color: #96deb4;
-        font-size: 25px;
+        font-size: 20px;
         position: absolute;
         bottom: -40px;
         width: 100%;
@@ -73,48 +76,82 @@
         justify-items: center;
     }
 
+    .circle-container {
+        width: 380px;
+        height: 380px;
+        padding: 0;
+
+    }
+
+
+    /*@media (min-width: 700px) {*/
+    /*    .circle-container {*/
+    /*        !*padding: 40px;*!*/
+    /*        width: 450px;*/
+    /*        height: 450px;*/
+    /*    }*/
+    /*    .circle {*/
+    /*        width: 450px;*/
+    /*        height: 450px;*/
+    /*    }*/
+    /*    .timer {*/
+    /*        font-size: 40px;*/
+    /*    }*/
+
+    /*    .restTime {*/
+    /*        font-size: 20px;*/
+    /*    }*/
+    /*}*/
+
+    .main-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
 </style>
 
 <body>
 
-<!--menubar-->
-<!--<div class="container-fluid text-center">-->
-<div th:if="${loginInfo} == 0">
-    <div th:replace="fragment/menubar.html :: not-login-menubar"></div>
-    <script th:inline="javascript">
-        document.getElementById('home').classList.add('text-secondary');
-    </script>
-</div>
+<div class="main-container">
+    <!--menubar-->
+    <div th:if="${loginInfo} == 0">
+        <div th:replace="fragment/menubar.html :: not-login-menubar"></div>
+        <script th:inline="javascript">
+            document.getElementById('home').classList.add('text-secondary');
+        </script>
+    </div>
 
-<div th:if="${loginInfo} == 1">
-    <div th:replace="fragment/menubar.html :: login-menubar"></div>
-    <script th:inline="javascript">
-        document.getElementById('home').classList.add('text-secondary');
-    </script>
-</div>
+    <div th:if="${loginInfo} == 1">
+        <div th:replace="fragment/menubar.html :: login-menubar"></div>
+        <script th:inline="javascript">
+            document.getElementById('home').classList.add('text-secondary');
+        </script>
+    </div>
 
-<div th:if="${loginInfo} == 2">
-    <div th:replace="fragment/menubar.html :: admin-menubar"></div>
-    <script th:inline="javascript">
-        document.getElementById('home').classList.add('text-secondary');
-    </script>
-</div>
+    <div th:if="${loginInfo} == 2">
+        <div th:replace="fragment/menubar.html :: admin-menubar"></div>
+        <script th:inline="javascript">
+            document.getElementById('home').classList.add('text-secondary');
+        </script>
+    </div>
 
 
 
-<!--contents-->
-<!--<div th:replace="fragment/body.html :: body"></div>-->
+    <!--contents-->
+    <!--<div th:replace="fragment/body.html :: body"></div>-->
+    <div style="margin: auto">
+        <!--contents-->
+        <div style="display: flex; flex-direction: column; align-items: center; margin: auto">
 
-<!--contents-->
-<div style="margin: auto; display: flex; flex-direction: column; align-items: center" class="container">
-
-    <!--타이머-->
-    <div class="text-center">
-        <div class="container-fluid" style="aspect-ratio: 1 / 1;">
-            <div class="circle shadow-lg btn" id="circle">
-                <div class="timer-bundle">
-                    <div class="timer" id="remainTime">00 : 30 : 00</div>
-                    <div class="restTime" id="restTimeLabel"> 5 : 00 </div>
+            <!--타이머-->
+            <div class="container circle-container">
+                <div class="circle shadow-lg btn" id="circle">
+                    <div class="timer-bundle">
+                        <div class="timer" id="remainTime">00 : 30 : 00</div>
+                        <div class="restTime" id="restTimeLabel"> 5 : 00 </div>
+                    </div>
                 </div>
             </div>
 
@@ -130,57 +167,57 @@
                 </button>
             </div>
 
-<!--            <div style="margin-top: 20px; display:none;">-->
-<!--                <label class="label label-info" style="font-size: 22px">REST TIME</label>-->
-<!--                <p id="restTimeLabel" style="margin-top: 20px; color: white; font-size: 22px">0</p>-->
+    <!--                <div style="margin-top: 20px; display:none;">-->
+    <!--                    <label class="label label-info" style="font-size: 22px">REST TIME</label>-->
+    <!--                    <p id="restTimeLabel" style="margin-top: 20px; color: white; font-size: 22px">0</p>-->
 
-<!--            </div>-->
+    <!--                </div>-->
         </div>
     </div>
+</div>
+<div class="modal fade" style="" id="modal" tabindex="-1" role="dialog" aria-labelledby="selectTimeModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="width: 400px; margin: auto" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Setting</h5>
+            </div>
 
-    <div class="modal fade" style="" id="modal" tabindex="-1" role="dialog" aria-labelledby="selectTimeModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="width: 400px; margin: auto" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Setting</h5>
+            <!--시간 선택 버튼들-->
+            <div class="modal-body text-center button-container w-100">
+                <label style="margin-bottom: 15px; margin-top: 10px">Set POMO Time</label>
+                <div class="btn-group w-75">
+                    <input type="radio" class="btn-check" name="setPomoTime" id="setPomoTime1" value="15">
+                    <label class="btn btn-outline-primary radio-btn" for="setPomoTime1">15</label>
+                    <input type="radio" class="btn-check" name="setPomoTime" id="setPomoTime2" value="30">
+                    <label class="btn btn-outline-primary radio-btn" for="setPomoTime2">30</label>
+                    <input type="radio" class="btn-check" name="setPomoTime" id="setPomoTime3" value="60" checked="checked">
+                    <label class="btn btn-outline-primary radio-btn" for="setPomoTime3">60</label>
+                    <input type="radio" class="btn-check" name="setPomoTime" id="setPomoTime4" value="120">
+                    <label class="btn btn-outline-primary radio-btn" for="setPomoTime4">120</label>
                 </div>
 
-                <!--시간 선택 버튼들-->
-                <div class="modal-body text-center button-container w-100">
-                    <label style="margin-bottom: 15px; margin-top: 10px">Set POMO Time</label>
-                    <div class="btn-group w-75">
-                        <input type="radio" class="btn-check" name="setPomoTime" id="setPomoTime1" value="15">
-                        <label class="btn btn-outline-primary radio-btn" for="setPomoTime1">15</label>
-                        <input type="radio" class="btn-check" name="setPomoTime" id="setPomoTime2" value="30">
-                        <label class="btn btn-outline-primary radio-btn" for="setPomoTime2">30</label>
-                        <input type="radio" class="btn-check" name="setPomoTime" id="setPomoTime3" value="60" checked="checked">
-                        <label class="btn btn-outline-primary radio-btn" for="setPomoTime3">60</label>
-                        <input type="radio" class="btn-check" name="setPomoTime" id="setPomoTime4" value="120">
-                        <label class="btn btn-outline-primary radio-btn" for="setPomoTime4">120</label>
-                    </div>
+                <label style="margin-bottom: 15px; margin-top: 40px">Set REST Time</label>
+                <div class="btn-group w-75" >
+                    <input type="radio" class="btn-check" name="setRestTime" id="setRestTime1" value="5">
+                    <label class="btn btn-outline-success radio-btn" for="setRestTime1">5</label>
+                    <input type="radio" class="btn-check" name="setRestTime" id="setRestTime2" value="10" checked="checked">
+                    <label class="btn btn-outline-success radio-btn" for="setRestTime2">10</label>
+                    <input type="radio" class="btn-check" name="setRestTime" id="setRestTime3" value="15">
+                    <label class="btn btn-outline-success radio-btn" for="setRestTime3">15</label>
+                    <input type="radio" class="btn-check" name="setRestTime" id="setRestTime4" value="20">
+                    <label class="btn btn-outline-success radio-btn" for="setRestTime4">20</label>
+                </div>
 
-                    <label style="margin-bottom: 15px; margin-top: 40px">Set REST Time</label>
-                    <div class="btn-group w-75" >
-                        <input type="radio" class="btn-check" name="setRestTime" id="setRestTime1" value="5">
-                        <label class="btn btn-outline-success radio-btn" for="setRestTime1">5</label>
-                        <input type="radio" class="btn-check" name="setRestTime" id="setRestTime2" value="10" checked="checked">
-                        <label class="btn btn-outline-success radio-btn" for="setRestTime2">10</label>
-                        <input type="radio" class="btn-check" name="setRestTime" id="setRestTime3" value="15">
-                        <label class="btn btn-outline-success radio-btn" for="setRestTime3">15</label>
-                        <input type="radio" class="btn-check" name="setRestTime" id="setRestTime4" value="20">
-                        <label class="btn btn-outline-success radio-btn" for="setRestTime4">20</label>
-                    </div>
-
-                    <div class="modal-footer" style="margin-top: 50px">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button id="setTimeBtn" onclick="getSelectedTime();" data-bs-dismiss="modal" type="button"
-                                class="btn btn-primary">Save changes
-                        </button>
-                    </div>
+                <div class="modal-footer" style="margin-top: 50px">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="setTimeBtn" onclick="getSelectedTime();" data-bs-dismiss="modal" type="button"
+                            class="btn btn-primary">Save changes
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <!--bottom-->
 <div></div>
