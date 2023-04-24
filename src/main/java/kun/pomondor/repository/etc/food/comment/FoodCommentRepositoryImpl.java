@@ -22,8 +22,9 @@ public class FoodCommentRepositoryImpl implements FoodCommentRepository {
 	}
 
 	@Override
-	public void createComment(FoodComment foodComment) {
+	public void createRatingComment(FoodComment foodComment) {
 		String sql = "CALL create_comment_procedure(?,?,?,?,?,?,?,?)";
+
 		template.update(sql,
 				foodComment.getWriterId(),
 				foodComment.getBoardId(),
@@ -33,7 +34,23 @@ public class FoodCommentRepositoryImpl implements FoodCommentRepository {
 				foodComment.getScore().getTaste(),
 				foodComment.getScore().getPrice(),
 				foodComment.getScore().getDistance()
-				);
+		);
+	}
+
+	@Override
+	public void createNomalComment(FoodComment foodComment) {
+		String sql = "CALL create_comment_procedure(?,?,?,?,?,?,?,?)";
+
+		template.update(sql,
+				foodComment.getWriterId(),
+				foodComment.getBoardId(),
+				foodComment.getContent(),
+				foodComment.getPicture(),
+				null,
+				null,
+				null,
+				null
+		);
 	}
 
 	@Override
@@ -59,6 +76,7 @@ public class FoodCommentRepositoryImpl implements FoodCommentRepository {
 				"JOIN member m ON cm.member_id = m.id " +
 				"WHERE board_id = ? " +
 				"ORDER BY created_date DESC ";
+
 		return template.query(sql, (rs, rowNum) -> new FoodComment(
 				rs.getLong("id"),
 				rs.getLong("member_id"),

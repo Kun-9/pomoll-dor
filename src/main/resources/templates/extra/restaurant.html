@@ -180,7 +180,7 @@
                 </div>
             </div>
 
-            <div class="rating-container-bundle" style="display: flex">
+            <div th:if="${comment.score.taste != 0.0}" class="rating-container-bundle" style="display: flex">
                 <div class="rating-container">
                     <div class="badge rating-label">Taste</div>
                     <div class="starBundle"

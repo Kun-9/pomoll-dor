@@ -35,6 +35,8 @@ public class FoodReviewController {
 	private final ScoreService scoreService;
 	private final S3Handler s3Handler;
 
+
+	// 게시글 목록 반환
 	@GetMapping
 	public String foodReviewIndex(
 			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember,
@@ -222,24 +224,35 @@ public class FoodReviewController {
 			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember,
 			HttpServletRequest request) {
 
-		log.info("comment");
 		String content = request.getParameter("content");
 //		content = content.replace("\r\n", "<br>");
 		float taste = Float.parseFloat(request.getParameter("taste"));
-		float price = Float.parseFloat(request.getParameter("price"));
-		float distance = Float.parseFloat(request.getParameter("distance"));
+		FoodComment foodComment;
+		// 일반 댓글일 경우
+		if (taste == 0) {
+			foodComment = new FoodComment(
+					loginMember,
+					postId,
+					content,
+					null
+			);
+		} else {
+			// 평점 포함 댓글일 경우
+			float price = Float.parseFloat(request.getParameter("price"));
+			float distance = Float.parseFloat(request.getParameter("distance"));
 
-		FoodComment foodComment = new FoodComment(
-				loginMember,
-				postId,
-				content,
-				new Score(
-						taste,
-						price,
-						distance,
-						null
-				)
-		);
+			foodComment = new FoodComment(
+					loginMember,
+					postId,
+					content,
+					new Score(
+							taste,
+							price,
+							distance,
+							null
+					)
+			);
+		}
 
 		log.info("new comment = {}", foodComment);
 		foodCommentService.createComment(foodComment);

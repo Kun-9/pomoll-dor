@@ -49,7 +49,7 @@ public class FoodPostRepositoryImpl implements FoodPostRepository {
 
 	@Override
 	public int deletePost(Long memberId, Long postId) {
-		String sql = "DELETE food_review_board WHERE id = ? AND member_id = ?";
+		String sql = "CALL delete_post_procedure(?,?)";
 		return  template.update(sql, postId, memberId);
 	}
 

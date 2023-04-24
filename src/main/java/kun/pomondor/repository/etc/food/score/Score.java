@@ -8,10 +8,10 @@ import lombok.ToString;
 @Getter @Setter @ToString
 public class Score {
 	private Long commentId;
-	private float taste;
-	private float price;
-	private float distance;
-	private float average;
+	private Float taste;
+	private Float price;
+	private Float distance;
+	private Float average;
 	private String menuName;
 
 	public Score(Long commentId, float taste, float price, float distance, float average, String menuName) {

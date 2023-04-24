@@ -1,11 +1,11 @@
 package kun.pomondor.repository.etc.food.comment;
 
-import kun.pomondor.repository.etc.food.post.FoodPost;
-
 import java.util.List;
 
 public interface FoodCommentRepository {
-	void createComment(FoodComment foodComment);
+	void createRatingComment(FoodComment foodComment);
+
+	void createNomalComment(FoodComment foodComment);
 
 	void editComment(FoodComment foodComment);
 

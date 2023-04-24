@@ -18,7 +18,11 @@ public class FoodCommentServiceImpl implements FoodCommentService {
 
 	@Override
 	public void createComment(FoodComment foodComment) {
-		foodCommentRepository.createComment(foodComment);
+		if (foodComment.getScore() == null) {
+			foodCommentRepository.createNomalComment(foodComment);
+		} else {
+			foodCommentRepository.createRatingComment(foodComment);
+		}
 	}
 
 	@Override
