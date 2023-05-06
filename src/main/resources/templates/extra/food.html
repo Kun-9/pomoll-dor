@@ -33,12 +33,13 @@
 
         .card {
             position: relative;
-            height: 350px; /* 적당한 높이 값으로 설정합니다. */
+            /*height: 350px; !* 적당한 높이 값으로 설정합니다. *!*/
             border-radius: 50px;
             background: rgba(79, 85, 255, 0);
             border: none;
             padding: 20px;
             text-align: left;
+            aspect-ratio: 5 / 4.5;
         }
 
         .card img {
@@ -188,7 +189,9 @@
     </div>
 </div>
 <script>
-
+    window.onload = () => {
+        document.getElementById('food').classList.add('text-secondary');
+    }
 </script>
 </body>
 </html>

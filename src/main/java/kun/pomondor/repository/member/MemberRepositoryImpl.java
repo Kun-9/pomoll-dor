@@ -36,7 +36,7 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public Member findById(Long id) {
-		String sql = "SELECT id, email, password, username FROM member WHERE id = ?";
+		String sql = "SELECT id, email, password, username, picture FROM member WHERE id = ?";
 		List<Member> results = getMembers(sql, id);
 
 		return results.isEmpty() ? null : results.get(0);
@@ -44,16 +44,64 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public List<Member> findAll() {
-		String sql = "SELECT id, email, password, username FROM member";
-
+		String sql = "SELECT id, email, password, username, picture FROM member";
 		return getMembers(sql);
 	}
 
 	@Override
 	public Member findByEmail(String email) {
-		String sql = "SELECT id, email, password, username FROM member WHERE email = ?";
+		String sql = "SELECT id, email, password, username, picture FROM member WHERE email = ?";
 		List<Member> results = getMembers(sql, email);
 		return results.isEmpty() ? null : results.get(0);
+	}
+
+	@Override
+	public List<Member> findByUsername(String keyword) {
+		String sql = "SELECT id, email, username, PASSWORD, PICTURE FROM member WHERE INSTR(UPPER(username), UPPER(?)) > 0";
+		return template.query(sql, (rs, rowNum) -> getMember(rs), keyword);
+	}
+
+	@Override
+	public int deleteMember(long userId) {
+		return 0;
+	}
+
+	@Override
+	public int getRenameCnt(long userId) {
+		String sql = "SELECT RENAME_CNT FROM MEMBER WHERE ID = ? ";
+		List<Integer> renameCnt = template.query(sql, (rs, rowNum) -> rs.getInt("rename_cnt"), userId);
+		return renameCnt.isEmpty() ? null : renameCnt.get(0);
+	}
+
+	@Override
+	public boolean validUsernameExist(String username) {
+		String sql = "SELECT count(*) cnt FROM member WHERE username = ?";
+		List<Integer> cnt = template.query(sql, (rs, rowNum) -> rs.getInt("cnt"), username);
+		return cnt.get(0) != 0;
+	}
+
+	@Override
+	public void subtractRenameCnt(long userId) {
+		String sql = "UPDATE member SET rename_cnt = rename_cnt - 1 WHERE id = ?";
+		template.update(sql, userId);
+	}
+
+	@Override
+	public int changeName(long userId, String username) {
+		String sql = "UPDATE member SET username = ? WHERE id = ?";
+		return template.update(sql, username, userId);
+	}
+
+	@Override
+	public void setProfileImg(long userId, String path) {
+		String sql = "UPDATE MEMBER SET PICTURE = ? WHERE id = ?";
+		template.update(sql, path, userId);
+	}
+
+	@Override
+	public void deleteProfileImg(long userId) {
+		String sql = "UPDATE MEMBER SET PICTURE = null WHERE id = ?";
+		template.update(sql, userId);
 	}
 
 	private static Member getMember(ResultSet rs) throws SQLException {
@@ -61,7 +109,8 @@ public class MemberRepositoryImpl implements MemberRepository {
 				rs.getLong("id"),
 				rs.getString("email"),
 				rs.getString("username"),
-				rs.getString("password")
+				rs.getString("password"),
+				rs.getString("picture")
 		);
 	}
 
@@ -70,25 +119,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 	}
 
 	private List<Member> getMembers(String sql) {
-//		List<Member> results = template.query(sql, new RowMapper<Member>() {
-//			@Override
-//			public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
-//				return getMember(rs);
-//			}
-//		});
-//		return results;
-
 		return template.query(sql, (rs, rowNum) -> getMember(rs));
-	}
-
-	@Override
-	public List<Member> findByUsername(String keyword) {
-		String sql = "SELECT id, email, username, PASSWORD FROM member WHERE INSTR(UPPER(username), UPPER(?)) > 0";
-		return template.query(sql, (rs, rowNum) -> getMember(rs), keyword);
-	}
-
-	@Override
-	public int deleteMember(long userId) {
-		return 0;
 	}
 }

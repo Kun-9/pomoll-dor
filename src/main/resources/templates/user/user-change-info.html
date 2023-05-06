@@ -29,13 +29,14 @@
 
     .setting-card {
         /*width: 400px;*/
-        aspect-ratio: 3 / 2.5;
+        aspect-ratio: 3 / 2;
         padding: 10px;
+
     }
 
     .main-card {
         height: 100%;
-        padding: 25px;
+        padding: 45px 25px;
         justify-content: space-between;
     }
 
@@ -55,52 +56,149 @@
     }
 
     .input-container > input {
-        width: 70%;
+        width: 90%;
     }
 
     .input-container > button {
-        width: 30%;
+        width: 10%;
     }
+
 </style>
 <body>
+<!--menubar-->
+<div th:replace="fragment/menubar.html :: login-menubar"></div>
+
 <div class="container" style="margin-top: 150px">
     <div style="display: flex; flex-direction: column; justify-items: center; margin: auto">
         <div class="row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row main-container">
             <div class="setting-card">
-                <div class="card main-card">
-                    <p class="badge bg-dark rounded-pill setting-label">닉네임 변경</p>
-                    <div class="input-container">
-                        <input type="text">
-                        <button class="btn btn-secondary">v</button>
+                <form class="card main-card" id="nameChangeForm" method="post" action="/member/profile/change/username">
+                    <p class="" style="font-weight: 600; font-size: 20px; text-align: center">닉네임 변경</p>
+                    <div>
+                        <div class="">
+                            <label for="username" class="form-label badge bg-success" th:text="'남은 변경 횟수 : ' + ${renameCnt}">남은 변경 횟수 : 1 </label>
+<!--                            <div class="input-container">-->
+<!--                                <input type="text" class="form-control" th:attr="disabled=${renameCnt == 0}" name="username" id="username" placeholder="변경할 닉네임">-->
+<!--                                <button type="button" id="renameBtn" class="btn btn-primary"><i class="fa-solid fa-check"></i></button>-->
+<!--                            </div>-->
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="변경 할 이름" name="username" aria-label="username" id="username"
+                                       aria-describedby="username">
+                                <button class="btn btn-outline-secondary" type="button" id="renameBtn">check</button>
+                            </div>
+                        </div>
+
                     </div>
-                    <button class="btn btn-success">확인</button>
-                </div>
+<!--                    <button class="btn btn-success">확인</button>-->
+                </form>
             </div>
 
             <div class="setting-card">
-                <div class="card main-card">
-                    <div style="text-align: center; padding: 8px; width: 60px" class="badge bg-danger">준비중</div>
-                    <p class="badge bg-dark rounded-pill setting-label">프로필 사진 변경</p>
-                    <div class="input-container" style="border: 1px solid #b4b4b4; padding: 5px; border-radius: 5px">
-                        <input type="file">
+                <form class="card main-card" id="changeImgForm" method="post" action="/member/profile/change/profile-img" enctype="multipart/form-data">
+<!--                    <div style="text-align: center; padding: 8px; width: 60px" class="badge bg-danger">준비중</div>-->
+                    <p class="" style="font-weight: 600; font-size: 20px; text-align: center">프로필 사진 변경</p>
+
+                    <div class="input-group" >
+                        <input type="file" class="form-control" id="profileImgInput" aria-describedby="profileImgInput"
+                               aria-label="Upload" accept="image/jpeg,image/png,image/gif" name="img">
+                        <button class="btn btn-outline-secondary" type="submit" id="uploadImgBtn">submit</button>
                     </div>
-                    <button class="btn btn-success">확인</button>
-                </div>
+                </form>
             </div>
 
-            <div class="setting-card">
-                <div class="card main-card">
-                    <p class="badge bg-dark rounded-pill setting-label">?</p>
-    <!--                <div class="input-container">-->
-    <!--                    <input type="text">-->
-    <!--                    <button class="btn btn-secondary">v</button>-->
-    <!--                </div>-->
-    <!--                <button class="btn btn-success">확인</button>-->
-                </div>
-            </div>
+<!--            <div class="setting-card">-->
+<!--                <div class="card main-card">-->
+<!--                    <p class="badge bg-dark rounded-pill setting-label">?</p>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </div>
     </div>
 </div>
+
+<script>
+    let renameBtn = document.getElementById('renameBtn');
+    let uploadImgBtn = document.getElementById('uploadImgBtn');
+
+    renameBtn.addEventListener('click', function () {
+        let form = document.getElementById('nameChangeForm');
+        let username = document.getElementById('username').value;
+
+        let renameCnt = Number([[${renameCnt}]]);
+        console.log(renameCnt)
+        if (renameCnt === 0) {
+            alert('남은 변경 횟수가 없습니다.')
+            return
+        }
+
+        if (!validUsername(username)) {
+            alert('2-5글자 사이의 이름을 입력해 주세요.')
+            return;
+        }
+
+        const validExist = new XMLHttpRequest();
+
+        validExist.open('GET', '/member/profile/change/username?username=' + username);
+
+        validExist.onload = function () {
+            let response = validExist.response;
+
+            if (response === 'true') {
+                console.log('존재하지 않음')
+                if (confirm('사용할 수 있는 이름입니다.\n변경하시겠습니까?')) {
+                    form.submit();
+                }
+            } else {
+                console.log('존재함')
+                alert('이미 존재하는 이름입니다.')
+            }
+        };
+
+        validExist.send();
+    });
+
+    function validUsername(str) {
+        let trimmed = str.trim(); // 양옆의 공백을 제거한 문자열
+        return trimmed.length >= 2 && trimmed.length <= 5
+    }
+
+    // uploadImgBtn.addEventListener('click', function () {
+    //     let form = document.getElementById('nameChangeForm');
+    //     let username = document.getElementById('username').value;
+    //
+    //     let renameCnt = Number([[${renameCnt}]]);
+    //     console.log(renameCnt)
+    //     if (renameCnt === 0) {
+    //         alert('남은 변경 횟수가 없습니다.')
+    //         return
+    //     }
+    //
+    //     if (!validUsername(username)) {
+    //         alert('2-5글자 사이의 이름을 입력해 주세요.')
+    //         return;
+    //     }
+    //
+    //     const validExist = new XMLHttpRequest();
+    //
+    //     validExist.open('GET', '/member/profile/change/username?username=' + username);
+    //
+    //     validExist.onload = function () {
+    //         let response = validExist.response;
+    //
+    //         if (response === 'true') {
+    //             console.log('존재하지 않음')
+    //             if (confirm('사용할 수 있는 이름입니다.\n변경하시겠습니까?')) {
+    //                 form.submit();
+    //             }
+    //         } else {
+    //             console.log('존재함')
+    //             alert('이미 존재하는 이름입니다.')
+    //         }
+    //     };
+    //
+    //     validExist.send();
+    // });
+
+</script>
 </body>
 </html>

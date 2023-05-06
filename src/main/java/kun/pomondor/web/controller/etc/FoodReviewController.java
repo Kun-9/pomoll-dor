@@ -1,12 +1,15 @@
 package kun.pomondor.web.controller.etc;
 
+import kun.pomondor.domain.util.MyFileUploadUtil;
 import kun.pomondor.repository.etc.food.comment.FoodComment;
 import kun.pomondor.repository.etc.food.post.FoodPost;
 import kun.pomondor.repository.etc.food.post.FoodPostForCreate;
 import kun.pomondor.repository.etc.food.score.Score;
 import kun.pomondor.repository.member.Member;
+import kun.pomondor.repository.member.MemberMin;
 import kun.pomondor.service.etc.food.FoodCommentService;
 import kun.pomondor.service.etc.food.FoodPostService;
+import kun.pomondor.service.etc.food.LikeService;
 import kun.pomondor.service.etc.food.ScoreService;
 import kun.pomondor.service.member.MemberService;
 import kun.pomondor.web.SessionConst;
@@ -20,8 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
-import java.io.*;
 import java.util.*;
 
 @Controller
@@ -33,8 +34,9 @@ public class FoodReviewController {
 	private final FoodPostService foodPostService;
 	private final FoodCommentService foodCommentService;
 	private final ScoreService scoreService;
+	private final LikeService likeService;
 	private final S3Handler s3Handler;
-
+	private final MyFileUploadUtil myFileUploadUtil;
 
 	// 게시글 목록 반환
 	@GetMapping
@@ -86,7 +88,7 @@ public class FoodReviewController {
 		// postId.확장자로 s3에 저장
 		MultipartFile[] files = new MultipartFile[1];
 
-		String ext = validateImg(multipartRequest, files);
+		String ext = myFileUploadUtil.validateImg(multipartRequest, files);
 		if (ext == null) {
 			// 사진파일이 없을 때 경로값 null
 			foodPostService.registPicture(postId, null);
@@ -96,7 +98,7 @@ public class FoodReviewController {
 
 		try {
 			// s3에 저장 후 이미지 경로 리턴
-			String path = saveImgToS3(files, saveFileName);
+			String path = myFileUploadUtil.saveImgToS3(files, saveFileName);
 
 			// 이미지 경로를 db board table의 picture col에 할당
 			foodPostService.registPicture(postId, path);
@@ -105,12 +107,6 @@ public class FoodReviewController {
 		}
 
 		return "redirect:/etc/food/post/" + postId;
-	}
-
-	private String saveImgToS3(MultipartFile[] files, String saveFileName) throws Exception {
-		List<String> imgPathList = s3Handler.upload(files, saveFileName);
-		String path = imgPathList.get(0);
-		return path;
 	}
 
 	@PostMapping("post/{postId}/edit")
@@ -135,7 +131,7 @@ public class FoodReviewController {
 
 		MultipartFile[] files = new MultipartFile[1];
 		// 이미지 존재여부 및 이미지 파일 검증, 타입 반환
-		String ext = validateImg(multipartRequest, files);
+		String ext = myFileUploadUtil.validateImg(multipartRequest, files);
 
 		// 수정폼에 업로드 이미지가 없을 시 반환
 		if (ext == null) {
@@ -148,31 +144,12 @@ public class FoodReviewController {
 		deleteImg(postId);
 
 		try {
-			String path = saveImgToS3(files, saveFileName);
+			String path = myFileUploadUtil.saveImgToS3(files, saveFileName);
 			foodPostService.registPicture(postId, path);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		return "redirect:/etc/food/post/" + postId;
-	}
-
-	// multipartFile에 파일이 포함되어 있는지 확인하고 이미지 파일인지 검증, 이미지 파일이라면 타입 리턴
-	private String validateImg(MultipartRequest multipartRequest, MultipartFile[] files) {
-		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-
-		for (String s : fileMap.keySet()) {
-			MultipartFile multipartFile = fileMap.get(s);
-			files[0] = multipartFile;
-
-			String[] contentType = multipartFile.getContentType().split("/");
-			// 이미지 파일이 아니라면 리턴
-			if (!contentType[0].equals("image")) {
-				return null;
-			}
-			// 이미지 타입 리턴
-			return contentType[1];
-		}
-		return null;
 	}
 
 	// 포스트 상세 페이지 리턴
@@ -186,6 +163,9 @@ public class FoodReviewController {
 		FoodPost post = foodPostService.findPostsByPostId(postId);
 		Long writerId = post.getWriterId();
 		Member writerMember = memberService.findById(writerId);
+		Boolean like = likeService.isLike(loginMember, postId);
+		List<MemberMin> likeMembers = likeService.findLikeMembers(postId);
+		int likeCnt = likeMembers.size();
 
 		List<FoodComment> comments = foodCommentService.findCommentsByPostId(postId);
 		Float avrRateVal = scoreService.getAverageRateByPost(postId);
@@ -199,6 +179,9 @@ public class FoodReviewController {
 		model.addAttribute("member", member);
 		model.addAttribute("post", post);
 		model.addAttribute("comments", comments);
+		model.addAttribute("likeStatus", like);
+		model.addAttribute("likeMembers", likeMembers);
+		model.addAttribute("likeCnt", likeCnt);
 
 		return "extra/restaurant";
 	}
@@ -216,6 +199,21 @@ public class FoodReviewController {
 		int result = foodPostService.deletePost(loginMember, postId);
 
 		return "redirect:/etc/food";
+	}
+
+	@ResponseBody
+	@PostMapping("post/{postId}/like")
+	public String likePost(@PathVariable Long postId,
+	                       @SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginId) {
+		if (likeService.isLike(loginId, postId)) {
+			likeService.cancelLikePost(loginId, postId);
+			log.info("cancel like {} -> {}", loginId, postId);
+		} else {
+			likeService.likePost(loginId, postId);
+			log.info("like {} -> {}", loginId, postId);
+		}
+
+		return "ok";
 	}
 
 	@PostMapping(value = "post/delete/comment")
@@ -283,7 +281,6 @@ public class FoodReviewController {
 			s3Handler.fileDelete(fileName);
 		}
 	}
-
 
 	@GetMapping(value = "post/{postId}/edit")
 	public String editPost(

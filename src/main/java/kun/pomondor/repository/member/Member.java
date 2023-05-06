@@ -23,6 +23,14 @@ public class Member {
         this.password = password;
     }
 
+    public Member(long id, String email, String username, String password, String picture) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.picture = picture;
+    }
+
     public Member(String email, String username, String password) {
         this.email = email;
         this.username = username;

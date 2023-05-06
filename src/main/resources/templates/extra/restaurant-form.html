@@ -118,11 +118,7 @@
             <div class="w-100 mt-5 text-end">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-
         </form>
-
-
-<!--        -->
 
 
 <!--        <form method="post" enctype="multipart/form-data" class="main-content-card" th:action="@{/etc/food/post}" th:object="${foodPostForm}">-->
@@ -173,6 +169,10 @@
 </div>
 
 <script>
+    window.onload = () => {
+        document.getElementById('food').classList.add('text-secondary');
+    }
+
     let range = document.getElementById('distance');
     let rangeOutput = document.getElementById('rangeOutput');
     range.addEventListener('input', (e) => {

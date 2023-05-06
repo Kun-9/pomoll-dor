@@ -40,6 +40,7 @@ public class MemberController {
     @PostMapping("/join")
     public String addMember(@Valid @ModelAttribute JoinForm joinForm,
                             BindingResult bindingResult, Model model) {
+
         bindingResult.getAllErrors().forEach(
                 e -> log.info("error = {}", e)
         );
@@ -58,7 +59,7 @@ public class MemberController {
 
         Member member = new Member(joinForm.getEmail(), joinForm.getUsername(), joinForm.getPassword());
 
-        Member joinMember = memberService.join(member);
+        memberService.join(member);
 
         log.info("id = {} email = {} password = {}",
                 member.getId(), member.getEmail(), member.getPassword());

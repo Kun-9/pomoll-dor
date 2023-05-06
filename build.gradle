@@ -34,6 +34,10 @@ dependencies {
 	// jdbc
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
+	// Ehcache - 캐싱 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	implementation 'org.ehcache:ehcache:3.8.1'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -106,6 +106,7 @@
         }
 
         .search-input {
+            border: 1px solid #565656;
             width: 100%;
             height: 100%;
             border-radius: 10px;
@@ -113,6 +114,16 @@
             padding: 10px 30px;
         }
 
+        .members {
+        }
+
+        .ex {
+            display: none;
+        }
+
+        img {
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -121,12 +132,15 @@
 <div th:replace="fragment/menubar.html :: login-menubar"></div>
 
 <form class="search-container">
+<!--        <button class="search-btn btn btn-success">모두 조회</button>-->
     <input id="searchInput" placeholder="search name..." type="text" class="search-input">
 <!--    <button class="search-btn btn btn-success">Search</button>-->
+    <button type="button" id="search-all-btn" class="search-btn btn btn-success">All</button>
 </form>
 <div class="main-container container">
     <div id="resultForm" class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" style="margin: auto">
-<!--        <div class="col" th:each="member : ${members}">-->
+
+<!--        <div class="col members" th:each="member : ${members}">-->
 <!--            <a type="submit" class="user-card btn btn-success w-100 shadow"-->
 <!--               th:href="@{'/search/info/' + ${member.id}}">-->
 <!--                <div class="profile-bundle">-->
@@ -137,6 +151,19 @@
 <!--            </a>-->
 <!--        </div>-->
     </div>
+    <div id="resultForm2" class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 ex" style="margin: auto">
+
+        <div class="col" th:each="member : ${members}">
+            <a type="submit" class="user-card btn btn-success w-100 shadow"
+               th:href="@{'/member/info/' + ${member.id}}">
+                <div class="profile-bundle">
+                    <img class="profile" th:src="${member.picture}">
+                    <div class="status"></div>
+                </div>
+                <span class="username" th:text="${member.username}">iphone</span>
+            </a>
+        </div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -144,6 +171,20 @@
     window.onload = () => document.getElementById('search').classList.add('text-secondary');
 </script>
 <script>
+    let input = document.getElementById('searchInput');
+    let resultForm1 = document.getElementById('resultForm');
+    let resultForm2 = document.getElementById('resultForm2');
+    let check = false;
+
+    let searchAllBtn = document.getElementById('search-all-btn');
+
+    searchAllBtn.addEventListener('click', function () {
+            check = true;
+            resultForm1.innerHTML = null;
+            input.value = null
+            resultForm2.style.display = 'flex';
+    });
+
     $(document).ready(function() {
         $("#searchInput").on("input", function() {
             let query = $(this).val();
@@ -152,10 +193,13 @@
                 type: "GET",
                 data: { query: query },
                 success: function(data) {
-                    console.log(data);
+                    // 조회된 회원 정보 출력
+                    // console.log(data);
                     let members = data;
                     let resultForm = $('#resultForm');
+                    let resultForm2 = $('#resultForm2');
                     resultForm.empty();
+                    resultForm2.css('display','none')
                     $.each(members, function(i, member) {
                         let userCardTemplate = `
                             <div class="col">

@@ -51,4 +51,34 @@ public class MemberServiceImpl implements MemberService {
 	public List<Member> findByUsername(String keyword) {
 		return memberRepository.findByUsername(keyword);
 	}
+
+	@Override
+	public int getRenameCnt(long userId) {
+		return memberRepository.getRenameCnt(userId);
+	}
+
+	@Override
+	public boolean validUsernameExist(String username) {
+		return memberRepository.validUsernameExist(username);
+	}
+
+	@Override
+	public void subtractRenameCnt(long userId) {
+		memberRepository.subtractRenameCnt(userId);
+	}
+
+	@Override
+	public int changeName(long userId, String username) {
+		return memberRepository.changeName(userId, username);
+	}
+
+	@Override
+	public void setProfileImg(long userId, String path) {
+		memberRepository.setProfileImg(userId, path);
+	}
+
+	@Override
+	public void deleteProfileImg(long userId) {
+		memberRepository.deleteProfileImg(userId);
+	}
 }

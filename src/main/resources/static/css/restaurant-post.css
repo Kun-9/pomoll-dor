@@ -349,3 +349,24 @@ body {
     margin: 15px auto;
     display: none;
 }
+
+/*.like:hover {*/
+/*    */
+/*}*/
+
+.like-full {
+    color: rgba(255, 132, 144, 0);
+    text-shadow: none;
+    transition: 0.5s;
+}
+
+.like-full:hover {
+    color: #CB444A;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.like {
+    text-shadow: none;
+    color: rgba(255, 255, 255, 0.67);
+}

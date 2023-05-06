@@ -16,4 +16,16 @@ public interface MemberService {
 	Member login(String email, String password);
 
 	List<Member> findByUsername(String keyword);
+
+	int getRenameCnt(long userId);
+
+	boolean validUsernameExist(String username);
+
+	void subtractRenameCnt(long userId);
+
+	int changeName(long userId, String username);
+
+	void setProfileImg(long userId, String path);
+
+	void deleteProfileImg(long userId);
 }

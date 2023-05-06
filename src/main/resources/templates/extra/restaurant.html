@@ -84,8 +84,19 @@
                     <span>작성자 : <span th:text="${writerMember.getUsername()}">kun</span></span>
                     <span style="display: inline-block; margin-left: 20px">작성일 : <span th:text="${#strings.arraySplit(post.createdDate, 'T')[0] + ' ' + #strings.arraySplit(post.createdDate, 'T')[1]}">2023/01/01</span></span>
                 </div>
-            </div>
+                <div class="w-100 " style="text-align: right; position: relative">
+                    <div style="position: absolute; right: -20px; text-align: center;">
+                        <i class="fa-solid fa-heart fa-2xl like" id="like"></i>
+                    </div>
+                    <div style="position: absolute; right: -20px; text-align: center;">
+                        <i class="fa-solid fa-heart fa-2xl like-full" id="likeBtn"></i>
+                    </div>
 
+                    <div style="position: absolute; right: 20px; text-align: center; text-shadow: none">
+                        <span class="badge bg-danger rounded-pill p-2" id="likeCount" th:text="${likeCnt}">1220</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -239,101 +250,15 @@
             </div>
         </div>
     </div>
-
-
-
-<!--    <div class="container-fluid">-->
-<!--        <div class="reply-container card bg-secondary">-->
-<!--            <div class="flex-row-container">-->
-<!--                <div class="starBundle">-->
-<!--                    <i class="fa-regular fa-star rate"></i>-->
-<!--                    <i class="fa-regular fa-star rate"></i>-->
-<!--                    <i class="fa-regular fa-star rate"></i>-->
-<!--                    <i class="fa-regular fa-star rate"></i>-->
-<!--                    <i class="fa-regular fa-star rate"></i>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <button id="add-menu-btn" class="btn btn-success">메뉴 추가</button>-->
-<!--                    <div class="btn-group">-->
-<!--                        <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--                            메뉴선택-->
-<!--                        </button>-->
-<!--                        <ul class="dropdown-menu">-->
-<!--                            <div style="display: flex; flex-direction: row; padding: 5px 10px; gap: 5px; height: 50px">-->
-<!--                                <input type="text" style="width: 70%; border-radius: 5px; border: 1px solid black">-->
-<!--                                <button class="btn btn-success" style="width: 30%; border-radius: 5px; font-size: 13px">+</button>-->
-<!--                            </div>-->
-<!--                            <li><hr class="dropdown-divider"></li>-->
-<!--                            <li><a class="dropdown-item" href="#">메뉴1</a></li>-->
-<!--                            <li><a class="dropdown-item" href="#">메뉴2</a></li>-->
-<!--                            <li><a class="dropdown-item" href="#">메뉴3</a></li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <input class="reply-text-input" type="text">-->
-<!--            <button class="btn btn-warning">Submit</button>-->
-<!--        </div>-->
-<!--    </div>-->
-
-
-<!--    <div class="container-fluid p-5 comment-container">-->
-<!--        <div>-->
-<!--            <div class="comment-img" style="z-index: 2">-->
-<!--                <img src="../../static/picture/hamburger.jpeg" style="z-index: 2" alt="">-->
-<!--            </div>-->
-<!--            <a type="submit" class="user-card btn btn-success w-100 shadow" >-->
-<!--                <div class="profile-bundle">-->
-<!--                    <img class="profile" src="/picture/default.png" style="object-fit: cover">-->
-<!--                    <div class="status"></div>-->
-<!--                </div>-->
-<!--                <span class="username">iphone</span>-->
-<!--                <span>-->
-<!--                    <i class="fa-solid fa-star"></i>-->
-<!--                    <i class="fa-solid fa-star"></i>-->
-<!--                    <i class="fa-solid fa-star"></i>-->
-<!--                    <i class="fa-solid fa-star-half-stroke"></i>-->
-<!--                    <i class="fa-regular fa-star"></i>-->
-<!--                </span>-->
-<!--                <span class="menu">짜장면</span>-->
-<!--                <div class="comment-content">-->
-<!--                    있음맛있맛있음맛있음맛음맛있음맛맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음-->
-<!--                </div>-->
-<!--            </a>-->
-<!--        </div>-->
-
-
-
-        <!--        <div th:each="member : ${members}">-->
-        <!--            <div class="comment-img">-->
-        <!--                <img src="../../static/picture/hamburger.jpeg">-->
-        <!--            </div>-->
-        <!--            <a type="submit" class="user-card btn btn-success w-100 shadow"-->
-        <!--               th:href="@{'/search/info/' + ${member.id}}">-->
-        <!--                <div class="profile-bundle">-->
-        <!--                    <img class="profile" src="https://github.com/mdo.png">-->
-        <!--                    <div class="status"></div>-->
-        <!--                </div>-->
-        <!--                <span class="username" th:text="${member.username}">iphone</span>-->
-        <!--                <span>-->
-        <!--                    <i class="fa-solid fa-star"></i>-->
-        <!--                    <i class="fa-solid fa-star"></i>-->
-        <!--                    <i class="fa-solid fa-star"></i>-->
-        <!--                    <i class="fa-solid fa-star-half-stroke"></i>-->
-        <!--                    <i class="fa-regular fa-star"></i>-->
-        <!--                </span>-->
-        <!--                <span class="menu">짜장면</span>-->
-        <!--                <div class="comment-content">맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음맛있음</div>-->
-        <!--            </a>-->
-        <!--        </div>-->
 </div>
-
-
-
 
 <th:block>
     <script>
         window.addEventListener('load', function () {
+
+            document.getElementById('food').classList.add('text-secondary');
+
+
             let distance = document.getElementById('distance');
             let value = [[${post.distance}]] + "";
             let result
@@ -538,13 +463,89 @@
         comment.style.height = '45px';
     })
 
-
     function deleteComment(element) {
         if (confirm("댓글을 삭제합니다.")) {
             let form = element.closest('form');
             form.submit();
         }
     }
+</script>
+
+<script>
+    let likeStatus = null;
+    let likeBtn = document.getElementById('likeBtn');
+    let likeLine = document.getElementById('like')
+    let likeCnt = document.getElementById('likeCount');
+    const NONE_LIKE_COLOR = 'rgba(183,51,61,0)';
+    const LIKE_COLOR = '#CB444A';
+
+    window.onload = () => {
+        likeStatus = [[${likeStatus}]];
+        changeBtn()
+    }
+
+    likeBtn.addEventListener('click', function () {
+        likePost()
+    });
+
+    function changeBtn() {
+        if (likeStatus) {
+            // 좋아요 상태일 때
+            likeBtn.style.color = LIKE_COLOR;
+            likeLine.style.color = NONE_LIKE_COLOR;
+        } else {
+            likeBtn.style.color = NONE_LIKE_COLOR;
+            likeLine.style.color = 'rgba(255, 255, 255, 0.67)';
+        }
+    }
+
+    likeBtn.addEventListener('mouseover', function () {
+        if (likeStatus) {
+            likeBtn.style.filter = 'brightness(80%)';
+        } else {
+            likeBtn.style.color = LIKE_COLOR;
+        }
+    })
+
+    likeBtn.addEventListener('mouseout', function () {
+        if (likeStatus) {
+            likeBtn.style.filter = 'brightness(100%)';
+            likeBtn.style.color = LIKE_COLOR;
+        } else {
+            likeBtn.style.color = NONE_LIKE_COLOR;
+        }
+    })
+
+
+
+    function likePost() {
+        if (likeStatus === false) {
+            // 서버에 좋아요 요청 전송
+            const request = new XMLHttpRequest();
+            let path = document.location.pathname + '/like'
+
+            request.open('post', path, 'true');
+            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            request.send();
+
+            likeStatus = true;
+            likeCnt.innerText = Number(likeCnt.innerText) + 1
+            changeBtn()
+
+        } else {
+            // 서버에 좋아요 취소 요청 전송
+            const request = new XMLHttpRequest();
+
+            request.open('post', document.location.pathname + '/like', 'true');
+            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            request.send();
+
+            likeStatus = false
+            likeCnt.innerText = Number(likeCnt.innerText) - 1
+            changeBtn()
+        }
+    }
+
 
 </script>
 </body>

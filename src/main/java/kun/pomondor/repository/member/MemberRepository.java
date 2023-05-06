@@ -18,6 +18,18 @@ public interface MemberRepository {
 	List<Member> findByUsername(String keyword);
 
 	int deleteMember(long userId);
+
+	int getRenameCnt(long userId);
+
+	boolean validUsernameExist(String username);
+
+	void subtractRenameCnt(long userId);
+
+	int changeName(long userId, String username);
+
+	void setProfileImg(long userId, String path);
+
+	void deleteProfileImg(long userId);
 }
 
 

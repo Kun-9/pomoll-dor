@@ -83,6 +83,8 @@
             grid-template-columns: 1fr 1fr;
             grid-auto-rows: 100px;
             align-items: center;
+            /*height: 300px;*/
+            overflow: auto;
         }
 
         .friend-container {
@@ -150,7 +152,7 @@
             height: 100%;
             background: white;
             border-radius: 150px;
-            /*border: #ffffff solid 2px;*/
+            object-fit: cover;
         }
 
         .profile-bundle {
@@ -203,15 +205,32 @@
 
         <div class="receive-container shadow">
             <div th:if="${receiveRequests.isEmpty()}" class="no-content-msg">수신된 친구 신청이 없습니다.</div>
-            <div class="receive-bundle shadow" th:each="receiveRequest : ${receiveRequests}">
-                <span class="username-label" th:text="${receiveRequest.sendMember.username}">kun</span>
-                <div>
-                    <button th:data-parameter="${receiveRequest.sendMember.id}"
-                            onclick="acceptRequest(this.getAttribute('data-parameter'), this.parentNode.parentNode)" class="btn btn-success">수락</button>
-                    <button class="btn btn-danger" th:data-parameter="${receiveRequest.sendMember.id}"
-                            onclick="rejectRequest(this.getAttribute('data-parameter'), this)">거절</button>
-                </div>
-            </div>
+<!--            <div class="receive-bundle shadow" th:each="receiveRequest : ${receiveRequests}">-->
+<!--                <span class="username-label" th:text="${receiveRequest.sendMember.username}">kun</span>-->
+<!--                <div>-->
+<!--                    <button th:data-parameter="${receiveRequest.sendMember.id}"-->
+<!--                            onclick="acceptRequest(this.getAttribute('data-parameter'), this.parentNode.parentNode)" class="btn btn-success">수락</button>-->
+<!--                    <button class="btn btn-danger" th:data-parameter="${receiveRequest.sendMember.id}"-->
+<!--                            onclick="rejectRequest(this.getAttribute('data-parameter'), this)">거절</button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+            <form class="friend-bundle" th:each="receive : ${receiveRequests}">
+                <a class="shadow btn" type="submit" th:href="@{'/member/info/' + ${receive.sendMember.id}}">
+                    <div class="profile-bundle">
+                        <img class="profile-img shadow" th:src="${receive.sendMember.picture}">
+                        <div class="status shadow"></div>
+                    </div>
+                    <span class="username-label" th:text="${receive.sendMember.username}">kun</span>
+                    <div>
+                        <button th:data-parameter="${receive.sendMember.id}"
+                                onclick="acceptRequest(this.getAttribute('data-parameter'), this.parentNode.parentNode)" class="btn btn-success">수락</button>
+                        <button class="btn btn-danger" th:data-parameter="${receive.sendMember.id}"
+                                onclick="rejectRequest(this.getAttribute('data-parameter'), this)">거절</button>
+                    </div>
+                </a>
+            </form>
         </div>
     </div>
 
@@ -221,9 +240,9 @@
             <div th:if="${friendList.isEmpty()}" class="no-content-msg">등록된 친구가 없습니다.</div>
 
             <form class="friend-bundle" th:each="friend : ${friendList}">
-                <a class="shadow btn" type="submit" th:href="@{'/member/info/' + ${friend.getSendMember().getId()}}">
+                <a class="shadow btn" type="submit" th:href="@{'/member/info/' + ${friend.sendMember.id}}">
                     <div class="profile-bundle">
-                        <img class="profile-img shadow" src="/picture/default.png">
+                        <img class="profile-img shadow" th:src="${friend.sendMember.picture}">
                         <div class="status shadow"></div>
                     </div>
                     <span class="username-label" th:text="${friend.sendMember.username}">kun</span>
@@ -237,14 +256,21 @@
         <h2 class="container-label">보낸 신청 목록</h2>
 
         <div class="receive-container shadow">
+
             <div th:if="${sentList.isEmpty()}" class="no-content-msg">보낸 친구 신청이 없습니다.</div>
-            <div class="receive-bundle shadow" th:each="sent : ${sentList}">
-                <span class="username-label" th:text="${sent.receiveMember.username}">kun</span>
-                <div>
-                    <button class="btn btn-warning" th:data-parameter="${sent.receiveMember.id}"
-                            onclick="cancelRequest(this.getAttribute('data-parameter'), this)">취소</button>
-                </div>
-            </div>
+            <form class="friend-bundle" th:each="sent : ${sentList}">
+                <a class="shadow btn" type="submit" th:href="@{'/member/info/' + ${sent.receiveMember.id}}">
+                    <div class="profile-bundle">
+                        <img class="profile-img shadow" th:src="${sent.receiveMember.picture}">
+                        <div class="status shadow"></div>
+                    </div>
+                    <span class="username-label" th:text="${sent.receiveMember.username}">kun</span>
+                    <div>
+                        <button class="btn btn-warning" th:data-parameter="${sent.receiveMember.id}"
+                                onclick="cancelRequest(this.getAttribute('data-parameter'), this)">취소</button>
+                    </div>
+                </a>
+            </form>
         </div>
     </div>
 

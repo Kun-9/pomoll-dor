@@ -36,6 +36,7 @@
                     <li><a id="myPage" th:href="@{/statistics/info}" class="nav-link px-2">MyPage</a></li>
                     <li><a id="search" th:href="@{/search/all}" class="nav-link px-2">Search</a></li>
                     <li><a id="friend" th:href="@{/friend/view}" class="nav-link px-2">Friends</a></li>
+                    <li><a id="food" th:href="@{/etc/food}" class="nav-link px-2">Food</a></li>
                     <!--                <li><a href="#" class="nav-link px-2 text-white">About</a></li>-->
                 </ul>
 
@@ -85,12 +86,13 @@
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img th:src="${member.picture}" alt="mdo" width="32" height="32" class="rounded-circle">
+                        <div style="background: white; display: inline-block" width="32" height="32" class="rounded-circle">
+                            <img th:src="${member.picture}" src="../../static/picture/default.png" alt="mdo" width="32" height="32" class="rounded-circle" style="object-fit: cover;">
+                        </div>
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
                         <li><a class="dropdown-item" th:href="@{/setting}">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" th:href="@{/member/profile/change}">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" th:href="@{/member/logout}">Logout</a></li>
                     </ul>

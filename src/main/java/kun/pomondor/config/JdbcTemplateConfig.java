@@ -2,6 +2,8 @@ package kun.pomondor.config;
 
 import kun.pomondor.repository.etc.food.comment.FoodCommentRepository;
 import kun.pomondor.repository.etc.food.comment.FoodCommentRepositoryImpl;
+import kun.pomondor.repository.etc.food.like.LikeRepository;
+import kun.pomondor.repository.etc.food.like.LikeRepositoryImpl;
 import kun.pomondor.repository.etc.food.post.FoodPostRepository;
 import kun.pomondor.repository.etc.food.post.FoodPostRepositoryImpl;
 import kun.pomondor.repository.etc.food.score.ScoreRepository;
@@ -82,6 +84,16 @@ public class JdbcTemplateConfig {
 	@Bean
 	public ScoreService scoreService() {
 		return new ScoreServiceImpl(scoreRepository());
+	}
+
+	@Bean
+	public LikeRepository likeRepository() {
+		return new LikeRepositoryImpl(dataSource);
+	}
+
+	@Bean
+	public LikeService likeService() {
+		return new LikeServiceImpl(likeRepository());
 	}
 }
 
