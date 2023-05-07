@@ -1,14 +1,12 @@
-package kun.pomondor.repository.group;
+package kun.pomondor.service.group;
 
 import kun.pomondor.repository.etc.food.post.GroupMember;
-import kun.pomondor.repository.member.MemberMin;
+import kun.pomondor.repository.group.Group;
 
 import java.util.List;
 
-public interface GroupRepository {
+public interface GroupService {
 	Long createGroup(Group group);
-
-	Group findGroupById(Long groupId);
 
 	List<GroupMember> findGroupMembers(Long groupId);
 
@@ -17,8 +15,6 @@ public interface GroupRepository {
 	int getManagingGroupCnt(Long memberId);
 
 	int getMemberCnt(Long groupId);
-
-	List<Group> joinedGroup(Long memberId);
 
 	void sendJoinRequest(Long memberId, Long groupId);
 
@@ -32,7 +28,10 @@ public interface GroupRepository {
 
 	Boolean isAdmin(Long adminId, Long groupId);
 
-	Boolean getGroupStatus(Long groupId);
+	List<Group> joinedGroup(Long memberId);
 
 	void setGroupPicture(Long groupId, String URI);
+
+	Group findGroupById(Long groupId);
+
 }

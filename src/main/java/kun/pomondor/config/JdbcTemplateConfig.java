@@ -10,11 +10,15 @@ import kun.pomondor.repository.etc.food.score.ScoreRepository;
 import kun.pomondor.repository.etc.food.score.ScoreRepositoryImpl;
 import kun.pomondor.repository.friend.FriendRepository;
 import kun.pomondor.repository.friend.FriendRepositoryImpl;
+import kun.pomondor.repository.group.GroupRepository;
+import kun.pomondor.repository.group.GroupRepositoryImpl;
 import kun.pomondor.repository.member.MemberRepository;
 import kun.pomondor.repository.member.MemberRepositoryImpl;
 import kun.pomondor.repository.time.TimeRepository;
 import kun.pomondor.repository.time.TimeRepositoryImpl;
 import kun.pomondor.service.etc.food.*;
+import kun.pomondor.service.group.GroupService;
+import kun.pomondor.service.group.GroupServiceImpl;
 import kun.pomondor.service.member.MemberService;
 import kun.pomondor.service.member.MemberServiceImpl;
 import kun.pomondor.service.time.TimeService;
@@ -94,6 +98,16 @@ public class JdbcTemplateConfig {
 	@Bean
 	public LikeService likeService() {
 		return new LikeServiceImpl(likeRepository());
+	}
+
+	@Bean
+	public GroupRepository groupRepository() {
+		return new GroupRepositoryImpl(dataSource);
+	}
+
+	@Bean
+	public GroupService groupService() {
+		return new GroupServiceImpl(groupRepository());
 	}
 }
 

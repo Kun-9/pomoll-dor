@@ -53,6 +53,7 @@
         .group:hover {
             filter: brightness(80%);
         }
+
     </style>
 </head>
 <body style="background: #0a58ca; text-align: center">
@@ -61,10 +62,10 @@
 <div th:replace="fragment/menubar.html :: login-menubar"></div>
 
 <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="margin-top: 150px">
-    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
     <label class="btn btn-outline-success" for="btnradio1">내 그룹</label>
 
-    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked>
     <label class="btn btn-outline-success" for="btnradio2">그룹 검색</label>
 
     <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
@@ -73,18 +74,17 @@
 
 <div class="container-fluid">
     <div class="group-container">
-        <p style="color: white">준비중 😁</p>
-        <form class="h-100" method="get" action="" th:each="group : ${groups}">
-            <a class="group shadow btn h-100" style="padding: 0" type="submit" th:href="@{'/group/' + ${group.groupId}}">
+        <form class="h-100" method="get" action="">
+            <a class="group shadow btn h-100" style="padding: 0" type="submit" th:href="@{'/member/info/' + ${receive.sendMember.id}}">
                 <div class="h-100" style="text-align: left;">
-                    <img src="../../static/picture/1.jpeg" th:src="${group.picture}">
+                    <img src="../../static/picture/1.jpeg">
                 </div>
-                <div class="group-label" th:text="${group.groupName}">
+                <div class="group-label">
                     밥먹자 그룹
                 </div>
                 <div style="padding: 0; margin: 0 20px">
                     <div class="badge bg-warning">관리자</div>
-                    <div style="font-weight: 600; color: darkgray" th:text="${group.adminId}">동근</div>
+                    <div style="font-weight: 600; color: darkgray">동근</div>
                 </div>
             </a>
         </form>
@@ -93,6 +93,10 @@
 
 <script>
     window.onload = () => document.getElementById('group').classList.add('text-secondary');
+
+    function groupInfo() {
+
+    }
 </script>
 </body>
 </html>

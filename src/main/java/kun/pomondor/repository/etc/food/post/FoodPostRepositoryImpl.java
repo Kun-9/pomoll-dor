@@ -29,6 +29,7 @@ public class FoodPostRepositoryImpl implements FoodPostRepository {
 				"VALUES (food_review_board_seq.nextval, ?, ?, ?, ?)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder(); // KeyHolder 객체 생성
+
 		template.update(con -> { // Lambda를 이용한 ConnectionCallback 생성
 			PreparedStatement ps = con.prepareStatement(sql, new String[]{"id"}); // PreparedStatement 생성, 자동 생성 키("id") 반환 요청
 			ps.setString(1, foodPost.getRestaurantName());
@@ -61,9 +62,27 @@ public class FoodPostRepositoryImpl implements FoodPostRepository {
 
 	@Override
 	public FoodPost findPostsByPostId(Long postId) {
-		String sql = "SELECT id, restaurant_name, member_id, content, distance, picture, created_date FROM food_review_board WHERE id = ?";
+		String sql = "SELECT id, restaurant_name, member_id, content, distance, picture, created_date, NVL(cnt, 0) AS like_cnt " +
+				"FROM food_review_board f " +
+				"LEFT JOIN (SELECT board_id, count(member_id) cnt FROM post_like GROUP BY board_id) l ON f.id = l.board_id " +
+				"WHERE id = ? ";
 		List<FoodPost> result = template.query(sql, (rs, rowNum) -> getFoodPost(rs), postId);
 		return result.isEmpty() ? null : result.get(0);
+	}
+
+	@Override
+	public List<FoodPost> findAllPosts() {
+		String sql = "SELECT id, restaurant_name, f.member_id, content, distance, picture, created_date, NVL(cnt, 0) AS like_cnt " +
+				"FROM food_review_board f " +
+				"LEFT JOIN (SELECT board_id, count(member_id) cnt FROM post_like GROUP BY board_id) l ON f.id = l.board_id " +
+				"ORDER BY created_date DESC ";
+		return template.query(sql, (rs, rowNum) -> getFoodPost(rs));
+	}
+
+	@Override
+	public void registPicture(Long postId, String path) {
+		String sql = "UPDATE food_review_board SET picture = ? WHERE id = ?";
+		template.update(sql, path, postId);
 	}
 
 	private static FoodPost getFoodPost(ResultSet rs) throws SQLException {
@@ -74,19 +93,8 @@ public class FoodPostRepositoryImpl implements FoodPostRepository {
 				rs.getString("content"),
 				rs.getTimestamp("created_date").toLocalDateTime(),
 				rs.getString("picture"),
-				rs.getDouble("distance")
+				rs.getDouble("distance"),
+				rs.getInt("like_cnt")
 		);
-	}
-
-	@Override
-	public List<FoodPost> findAllPosts() {
-		String sql = "SELECT * FROM food_review_board ORDER BY created_date DESC";
-		return template.query(sql, (rs, rowNum) -> getFoodPost(rs));
-	}
-
-	@Override
-	public void registPicture(Long postId, String path) {
-		String sql = "UPDATE food_review_board SET picture = ? WHERE id = ?";
-		template.update(sql, path, postId);
 	}
 }

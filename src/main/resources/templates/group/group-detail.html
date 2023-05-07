@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/design.css}" href="../static/css/design.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <title>Group Page</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .group {
+            /*width: 20%;*/
+            height: 40px;
+            padding: 10px 15px;
+            /*aspect-ratio: 3/1;*/
+            background: #ffffff;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            /*border: #7e89a1 1px solid;*/
+            font-weight: 750;
+            color: white;
+        }
+
+        .group-container {
+            margin: 40px auto;
+            max-width: 800px;
+            padding: 30px;
+            background: #c0c0c0;
+        }
+
+        .group img {
+            object-fit: cover;
+            height: 100%;
+            aspect-ratio: 1/1;
+
+            border-radius: 100%;
+            border-right: 1px solid #7e89a1;
+        }
+
+        .group-label {
+            flex: 1;
+            /*text-shadow: 0px 3px 4px #b2b2b2;*/
+            font-weight: 400;
+            font-size: 30px;
+            color: #000000;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .member-label {
+            text-align: center;
+        }
+
+        .member-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .member-container {
+            width: 75%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+
+            overflow: auto;
+            white-space: nowrap;
+            background: #eeeeee;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .info-container {
+            background: #eeeeee;
+            padding: 30px;
+            border-radius: 5px;
+            width: 75%;
+            margin: 0 auto;
+            min-height: 150px;
+            text-align: left;
+        }
+
+    </style>
+</head>
+<body style="background: #0a58ca; text-align: center">
+
+<!--menubar-->
+<div th:replace="fragment/menubar.html :: login-menubar"></div>
+
+<div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="margin-top: 150px">
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+    <label class="btn btn-outline-success" for="btnradio1">내 그룹</label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked>
+    <label class="btn btn-outline-success" for="btnradio2">그룹 검색</label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+    <label class="btn btn-outline-success" for="btnradio3">그룹 생성</label>
+</div>
+
+<div class="container-fluid" style="">
+    <div class="m-auto mt-5" style="background: white; max-width: 700px; width: 100%; height: 100%; border-radius: 10px; display: flex; flex-direction: column; padding: 30px; gap: 20px">
+        <div>
+            <h3 style="font-size: 40px; font-weight: 800; margin-bottom: 30px" th:text="${group.groupName}">그룹 이름</h3>
+        </div>
+
+        <span class="badge bg-secondary" style="display: inline-block; width: 80px; margin: 0 auto; font-size: 20px">그룹원</span>
+        <div class="member-container">
+            <div class="group bg-primary" th:each="member : ${members}">
+                <span class="member-label" th:text="${member.username}">동근</span>
+            </div>
+        </div>
+
+        <div>
+            인원수 : <span th:text="${cnt}">1</span>
+        </div>
+
+        <div>
+            <span class="badge bg-secondary" style="display: inline-block; width: 100px; margin: 20px auto; font-size: 20px">그룹 설명</span>
+            <div class="info-container" th:text="${group.info}">
+                내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
+            </div>
+        </div>
+
+        <div>
+            <button class="btn btn-success" style="margin-top: 30px">가입 신청</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    window.onload = () => document.getElementById('group').classList.add('text-secondary');
+</script>
+</body>
+</html>

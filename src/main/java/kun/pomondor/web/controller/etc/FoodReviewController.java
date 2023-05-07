@@ -164,8 +164,8 @@ public class FoodReviewController {
 		Long writerId = post.getWriterId();
 		Member writerMember = memberService.findById(writerId);
 		Boolean like = likeService.isLike(loginMember, postId);
-		List<MemberMin> likeMembers = likeService.findLikeMembers(postId);
-		int likeCnt = likeMembers.size();
+//		List<MemberMin> likeMembers = likeService.findLikeMembers(postId);
+//		int likeCnt = likeMembers.size();
 
 		List<FoodComment> comments = foodCommentService.findCommentsByPostId(postId);
 		Float avrRateVal = scoreService.getAverageRateByPost(postId);
@@ -180,8 +180,8 @@ public class FoodReviewController {
 		model.addAttribute("post", post);
 		model.addAttribute("comments", comments);
 		model.addAttribute("likeStatus", like);
-		model.addAttribute("likeMembers", likeMembers);
-		model.addAttribute("likeCnt", likeCnt);
+//		model.addAttribute("likeMembers", likeMembers);
+//		model.addAttribute("likeCnt", likeCnt);
 
 		return "extra/restaurant";
 	}

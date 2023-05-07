@@ -17,11 +17,18 @@ public class FoodPost {
 	private LocalDateTime createdDate;
 	private String picture;
 	private Double distance;
+	private int likeCnt;
 
 	public FoodPost() {
 	}
 
-	public FoodPost(Long postId, String restaurantName, Long loginMember, String content, Double distance) {
-
+	public FoodPost(Long postId, String restaurantName, Long writerId, String content, LocalDateTime createdDate, String picture, Double distance) {
+		this.postId = postId;
+		this.restaurantName = restaurantName;
+		this.writerId = writerId;
+		this.content = content;
+		this.createdDate = createdDate;
+		this.picture = picture;
+		this.distance = distance;
 	}
 }

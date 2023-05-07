@@ -72,10 +72,17 @@
 
         .card-container:hover .card-img {
             /*cursor: pointer;*/
-            transform: scale(1.03);
-            transition: 0.5s;
+            transform: scale(1.01);
             filter: brightness(40%);
+            transition: 0.5s;
         }
+
+        /*.card-container:hover {*/
+        /*    !*cursor: pointer;*!*/
+        /*    !*transform: scale(1.03);*!*/
+        /*    filter: blur(5px);*/
+        /*    transition: 0.5s;*/
+        /*}*/
 
         .overlay {
             left: 0;
@@ -162,8 +169,12 @@
                 <img class="card-img shadow" th:src="${post.picture}" alt="" th:if="${post.picture} != null">
                 <img class="card-img shadow" alt="" th:if="${post.picture} == null" style="background: white">
                 <div class="overlay w-100 h-100" style="display: flex; flex-direction: column">
-                    <span th:if="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd') == #strings.arraySplit(post.createdDate, 'T')[0]}"
-                          class="badge bg-danger" style="width: 50px; padding: 7px">New</span>
+                    <div style="display: flex; flex-direction: row; margin: 4px 0 8px 0; gap: 5px">
+                        <span th:if="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd') == #strings.arraySplit(post.createdDate, 'T')[0]}"
+                              class="badge bg-danger" style="width: 50px; padding: 7px; margin-right: 8px">New</span>
+                        <i class="fa-solid fa-heart like-full" style="font-size: 24px; display: block; color: #CB444A"></i>
+                        <div th:text="${post.likeCnt}">1</div>
+                    </div>
                     <h3 class="card-title" th:text="${post.restaurantName}">다운타우너</h3>
                     <p class="card-text" th:text="${post.content}">수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거v</p>
 
