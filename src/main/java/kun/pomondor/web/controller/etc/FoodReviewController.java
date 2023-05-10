@@ -79,6 +79,7 @@ public class FoodReviewController {
 		String restaurantName = request.getParameter("restaurantName");
 		Double distance = Double.valueOf(request.getParameter("distance"));
 		String content = request.getParameter("content");
+		content = content.replaceAll("\n", "<br>");
 
 		log.info("등록");
 		FoodPostForCreate foodPost = new FoodPostForCreate(restaurantName, loginMember, content, distance);
@@ -119,6 +120,7 @@ public class FoodReviewController {
 		String restaurantName = request.getParameter("restaurantName");
 		Double distance = Double.valueOf(request.getParameter("distance"));
 		String content = request.getParameter("content");
+		content = content.replaceAll("\r\n", "<br>");
 
 		FoodPost editPost = new FoodPost();
 		editPost.setPostId(postId);
@@ -235,6 +237,8 @@ public class FoodReviewController {
 			HttpServletRequest request) {
 
 		String content = request.getParameter("content");
+		content = content.replaceAll("\r\n", "<br>");
+
 //		content = content.replace("\r\n", "<br>");
 		float taste = Float.parseFloat(request.getParameter("taste"));
 		FoodComment foodComment;
@@ -294,6 +298,7 @@ public class FoodReviewController {
 		}
 
 		Member member = memberService.findById(loginId);
+		post.setContent(post.getContent().replaceAll("<br>", "\r\n"));
 
 		model.addAttribute("member", member);
 		model.addAttribute("foodPostForm", post);

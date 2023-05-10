@@ -77,7 +77,10 @@
 
                 <div>
                     <div class="h5">설명</div>
-                    <p th:text="${post.content}">햄버거가 맛있음</p>
+                    <p th:utext="${post.content}">햄버거가 맛있음</p>
+<!--                    <div th:inline="text">-->
+<!--                        [[${post.content}]]-->
+<!--                    </div>-->
                 </div>
 
                 <div class="mt-5">
@@ -199,7 +202,7 @@
                         <div class="commenter-etc" th:text="${#strings.arraySplit(comment.createdDate, 'T')[1]}">16:42</div>
 
                     </div>
-                    <div th:text="${comment.content}">텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 </div>
+                    <div th:utext="${comment.content}">텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 텍스트 테스트 </div>
                 </div>
             </div>
 

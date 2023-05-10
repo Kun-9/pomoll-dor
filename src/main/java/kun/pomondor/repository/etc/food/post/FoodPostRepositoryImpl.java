@@ -72,11 +72,23 @@ public class FoodPostRepositoryImpl implements FoodPostRepository {
 
 	@Override
 	public List<FoodPost> findAllPosts() {
-		String sql = "SELECT id, restaurant_name, f.member_id, content, distance, picture, created_date, NVL(cnt, 0) AS like_cnt " +
+		String sql = "SELECT id, restaurant_name, f.member_id, content, distance, picture, created_date, NVL(like_cnt, 0) AS like_cnt, NVL(comment_cnt, 0) AS comment_cnt " +
 				"FROM food_review_board f " +
-				"LEFT JOIN (SELECT board_id, count(member_id) cnt FROM post_like GROUP BY board_id) l ON f.id = l.board_id " +
-				"ORDER BY created_date DESC ";
-		return template.query(sql, (rs, rowNum) -> getFoodPost(rs));
+				"LEFT JOIN (SELECT board_id, count(id) comment_cnt FROM food_review_comment GROUP BY board_id) c ON f.id = c.board_id " +
+				"LEFT JOIN (SELECT board_id, count(member_id) like_cnt FROM post_like GROUP BY board_id) l ON f.id = l.board_id " +
+				"ORDER BY created_date DESC";
+
+		return template.query(sql, (rs, rowNum) -> new FoodPost(
+				rs.getLong("id"),
+				rs.getString("restaurant_name"),
+				rs.getLong("member_id"),
+				rs.getString("content"),
+				rs.getTimestamp("created_date").toLocalDateTime(),
+				rs.getString("picture"),
+				rs.getDouble("distance"),
+				rs.getInt("like_cnt"),
+				rs.getInt("comment_cnt")
+		));
 	}
 
 	@Override

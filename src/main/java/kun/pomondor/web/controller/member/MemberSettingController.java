@@ -29,5 +29,4 @@ public class MemberSettingController {
 		model.addAttribute("member", member);
 		return "user/user-setting";
 	}
-
 }

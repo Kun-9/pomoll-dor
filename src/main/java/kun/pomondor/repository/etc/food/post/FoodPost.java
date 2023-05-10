@@ -18,6 +18,7 @@ public class FoodPost {
 	private String picture;
 	private Double distance;
 	private int likeCnt;
+	private int commentCnt;
 
 	public FoodPost() {
 	}
@@ -30,5 +31,16 @@ public class FoodPost {
 		this.createdDate = createdDate;
 		this.picture = picture;
 		this.distance = distance;
+	}
+
+	public FoodPost(Long postId, String restaurantName, Long writerId, String content, LocalDateTime createdDate, String picture, Double distance, int likeCnt) {
+		this.postId = postId;
+		this.restaurantName = restaurantName;
+		this.writerId = writerId;
+		this.content = content;
+		this.createdDate = createdDate;
+		this.picture = picture;
+		this.distance = distance;
+		this.likeCnt = likeCnt;
 	}
 }

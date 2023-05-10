@@ -72,7 +72,13 @@ public class MemberInfoChangeController {
 
 		String ext = myFileUploadUtil.validateImg(multipartRequest, files);
 
-		String saveFileName = loginId + "." + ext;
+		// 수정폼에 업로드 이미지가 없을 시
+		if (ext == null) {
+			memberService.setProfileImg(loginId, "/picture/default.png");
+			return "redirect:/member/profile/change";
+		}
+
+		String saveFileName = "profile_" + loginId + "." + ext;
 
 		try {
 			// s3에 저장 후 이미지 경로 리턴
