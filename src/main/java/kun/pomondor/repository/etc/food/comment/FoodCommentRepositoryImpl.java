@@ -38,7 +38,7 @@ public class FoodCommentRepositoryImpl implements FoodCommentRepository {
 	}
 
 	@Override
-	public void createNomalComment(FoodComment foodComment) {
+	public void createNormalComment(FoodComment foodComment) {
 		String sql = "CALL create_comment_procedure(?,?,?,?,?,?,?,?)";
 
 		template.update(sql,
@@ -71,7 +71,7 @@ public class FoodCommentRepositoryImpl implements FoodCommentRepository {
 
 	@Override
 	public List<FoodComment> findCommentsByPostId(Long postId) {
-		String sql = "SELECT cm.id, member_id, board_id, username, created_date, content, menu, cm.picture, taste, price, distance, TRUNC((taste + price + distance)/3,1) avr " +
+		String sql = "SELECT cm.id, member_id, board_id, username, created_date, content, menu, cm.picture, taste, price, distance, TRUNC((taste + price + distance)/3,1) avr, m.PICTURE AS profileImg " +
 				"FROM food_review_comment cm " +
 				"JOIN comment_score cs ON cm.id = cs.id " +
 				"JOIN member m ON cm.member_id = m.id " +
@@ -82,6 +82,7 @@ public class FoodCommentRepositoryImpl implements FoodCommentRepository {
 				rs.getLong("id"),
 				rs.getLong("member_id"),
 				rs.getString("username"),
+				rs.getString("profileImg"),
 				rs.getLong("board_id"),
 				rs.getTimestamp("created_date").toLocalDateTime(),
 				rs.getString("content"),

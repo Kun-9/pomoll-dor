@@ -79,4 +79,12 @@ public class LikeRepositoryImpl implements LikeRepository {
 		List<Integer> cnt = template.query(sql, (rs, rowNum) -> rs.getInt("cnt"), memberId, postId);
 		return cnt.get(0) != 0;
 	}
+
+	@Override
+	public int getLikeCnt(Long postId) {
+		String sql = "SELECT count(*) cnt FROM POST_LIKE WHERE BOARD_ID = ?";
+		List<Integer> cnt = template.query(sql, (rs, rowNum) -> rs.getInt("cnt"), postId);
+
+		return cnt.get(0);
+	}
 }

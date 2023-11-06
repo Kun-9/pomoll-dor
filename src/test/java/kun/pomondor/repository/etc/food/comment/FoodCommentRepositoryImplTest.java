@@ -35,4 +35,13 @@ class FoodCommentRepositoryImplTest {
 			System.out.println(comment);
 		}
 	}
+
+	@Test
+	void findCommentsByPostId() {
+		List<FoodComment> commentsByPostId = foodCommentRepository.findCommentsByPostId(143L);
+
+		for (FoodComment foodComment : commentsByPostId) {
+			System.out.println(foodComment);
+		}
+	}
 }

@@ -18,6 +18,15 @@
 
     <title>Food Review</title>
 
+    <style>
+        .toast-theme {
+            background-color: #303438;
+            padding: 5px 15px;
+            color: white;
+            transition: 0.5s;
+        }
+    </style>
+
 </head>
 <body>
 <div th:replace="fragment/menubar.html :: login-menubar"></div>
@@ -78,9 +87,6 @@
                 <div>
                     <div class="h5">설명</div>
                     <p th:utext="${post.content}">햄버거가 맛있음</p>
-<!--                    <div th:inline="text">-->
-<!--                        [[${post.content}]]-->
-<!--                    </div>-->
                 </div>
 
                 <div class="mt-5">
@@ -120,7 +126,7 @@
                 class="flex-col-container shadow-lg align-top" name="commentForm" id="commentForm">
             <div class="flex-row-container-inner">
                 <div class="profile-bundle">
-                    <img class="profile" src="/picture/default.png" style="object-fit: cover">
+                    <img class="profile" src="/picture/default.png" th:src="${member.picture}" style="object-fit: cover">
                     <div class="status"></div>
                 </div>
                 <div class="comment-input" style="height: 45px;" id="expand">
@@ -192,7 +198,9 @@
             </form>
             <div class="flex-row-container-inner">
                 <div class="profile-bundle">
-                    <img class="profile" src="/picture/default.png" style="object-fit: cover">
+                    <a class="profile" th:href="@{/member/info/{boardId}(boardId = ${comment.writerId})}">
+                        <img class="profile" src="/picture/default.png" th:src="${comment.profileImg}" style="object-fit: cover">
+                    </a>
                     <div class="status"></div>
                 </div>
                 <div class="comment-input comment-input-expand">
@@ -284,6 +292,8 @@
         })
     </script>
 </th:block>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
     let starBundles = document.getElementsByClassName('starBundle');
@@ -478,20 +488,15 @@
     let likeStatus = null;
     let likeBtn = document.getElementById('likeBtn');
     let likeLine = document.getElementById('like')
-    let likeCnt = document.getElementById('likeCount');
-    const NONE_LIKE_COLOR = 'rgba(183,51,61,0)';
     const LIKE_COLOR = '#CB444A';
+    const NONE_LIKE_COLOR = 'rgba(255, 255, 255, 0.67)';
 
     window.onload = () => {
         likeStatus = [[${likeStatus}]];
-        changeBtn()
+        changeLikeBtn()
     }
 
-    likeBtn.addEventListener('click', function () {
-        likePost()
-    });
-
-    function changeBtn() {
+    function changeLikeBtn() {
         if (likeStatus) {
             // 좋아요 상태일 때
             likeBtn.style.color = LIKE_COLOR;
@@ -519,38 +524,92 @@
         }
     })
 
+    likeBtn.addEventListener('click', function () {
+        scrapProduct()
+    });
 
+    // 게시글 좋아요
+    function scrapProduct() {
 
-    function likePost() {
-        if (likeStatus === false) {
-            // 서버에 좋아요 요청 전송
-            const request = new XMLHttpRequest();
-            let path = document.location.pathname + '/like'
+        likeStatus = !likeStatus;
+        changeLikeBtn();
 
-            request.open('post', path, 'true');
-            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            request.send();
-
-            likeStatus = true;
-            likeCnt.innerText = Number(likeCnt.innerText) + 1
-            changeBtn()
-
-        } else {
-            // 서버에 좋아요 취소 요청 전송
-            const request = new XMLHttpRequest();
-
-            request.open('post', document.location.pathname + '/like', 'true');
-            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            request.send();
-
-            likeStatus = false
-            likeCnt.innerText = Number(likeCnt.innerText) - 1
-            changeBtn()
-        }
+        $.ajax({
+            url: document.location.pathname + '/like',
+            type: 'POST',
+            dataType: 'json',
+            success: function(response) {
+                $('#likeCount').text(response.likeCnt)
+                showToast()
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패했을 때 실행되는 코드
+                alert("서버와의 연결이 불안정합니다.");
+            }
+        });
     }
 
+    // function likePost() {
+    //     if (likeStatus === false) {
+    //         // 서버에 좋아요 요청 전송
+    //         const request = new XMLHttpRequest();
+    //         let path = document.location.pathname + '/like'
+    //
+    //         request.open('post', path, 'true');
+    //         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    //         request.send();
+    //
+    //         likeStatus = true;
+    //         likeCnt.innerText = Number(likeCnt.innerText) + 1
+    //         changeLikeBtn()
+    //
+    //     } else {
+    //         // 서버에 좋아요 취소 요청 전송
+    //         const request = new XMLHttpRequest();
+    //
+    //         request.open('post', document.location.pathname + '/like', 'true');
+    //         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    //         request.send();
+    //
+    //         likeStatus = false
+    //         likeCnt.innerText = Number(likeCnt.innerText) - 1
+    //         changeLikeBtn()
+    //     }
+    // }
+
+
+    function showToast() {
+        let elementById
+
+        if (!likeStatus) {
+            elementById = document.getElementById('deleteScrapToast');
+        } else {
+            elementById = document.getElementById('insertScrapToast');
+        }
+        let instance = bootstrap.Toast.getOrCreateInstance(elementById);
+        instance.show()
+    }
 
 </script>
+
+
+<!--좋아요 토스트-->
+<div class="position-fixed bottom-0 start-50 translate-middle-x toast-container p-3" style="z-index: 11;">
+    <div id="insertScrapToast" data-bs-delay="3000" class="toast hide toast-theme" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body flex-row" style="justify-content: space-between">
+            <div>
+                좋아요가 완료되었습니다.
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteScrapToast" style="transition: 0.5s" data-bs-delay="3000" class="toast hide toast-theme" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">
+            좋아요가 취소되었습니다.
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 

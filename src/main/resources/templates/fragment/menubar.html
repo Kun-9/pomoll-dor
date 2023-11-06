@@ -23,13 +23,15 @@
         }
     </style>
 </head>
-<body>
+
+<body th:fragment="menubar">
 <!--not login menubar-->
-<div class="menubar" th:fragment="not-login-menubar" style="width: 100%">
+
+
+<div class="menubar" th:fragment="not-login-menubar" style="width: 100%" th:if="${session.loginMember == null}">
     <header class="p-3 text-white" style="width: 100%; background: #212e4b">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a id="home" th:href="@{/home}" class="nav-link px-2">Home</a></li>
                     <li><a id="group" th:href="@{/group/index}" class="nav-link px-2">Group</a></li>
@@ -51,12 +53,10 @@
             </div>
         </div>
     </header>
-
-
 </div>
 
 <!--login menubar-->
-<div class="menubar" th:fragment="login-menubar" style="width: 100%">
+<div class="menubar" th:fragment="login-menubar" style="width: 100%" th:if="${session.loginMember != null}">
     <header class="p-3 text-white" style="width: 100%; background: #212e4b">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -80,19 +80,20 @@
                 <!--        </div>-->
 
                 <div class="text-end">
-                    <label class="" style="margin-right: 15px" th:text="${member.username}">Username</label>
+                    <label class="" style="margin-right: 15px" th:text="${session.currentMember.username}">Username</label>
                 </div>
 
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         <div style="background: white; display: inline-block" width="32" height="32" class="rounded-circle">
-                            <img th:src="${member.picture}" src="../../static/picture/default.png" alt="mdo" width="32" height="32" class="rounded-circle" style="object-fit: cover;">
+                            <img th:src="${session.currentMember.picture}" src="../../static/picture/default.png" alt="mdo" width="32" height="32" class="rounded-circle" style="object-fit: cover;">
                         </div>
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" th:href="@{/setting}">Settings</a></li>
-                        <li><a class="dropdown-item" th:href="@{/member/profile/change}">Profile</a></li>
+<!--                        <li><a class="dropdown-item" th:href="@{/setting}">Settings</a></li>-->
+                        <li><a class="dropdown-item" th:href="@{/member/profile/change}">Settings</a></li>
+                        <li><a class="dropdown-item" th:href="@{/member/info/{memberId}(memberId = ${session.currentMember.id})}">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" th:href="@{/member/logout}">Logout</a></li>
                     </ul>
@@ -103,28 +104,28 @@
 </div>
 
 <!--admin login menubar-->
-<div th:fragment="admin-menubar" class="container m-auto menubar">
-    <div>
-        <label class="btn btn-warning"
-               th:text="Admin">Admin</label>
+<!--<div th:fragment="admin-menubar" class="container m-auto menubar">-->
+<!--    <div>-->
+<!--        <label class="btn btn-warning"-->
+<!--               th:text="Admin">Admin</label>-->
 
-        <label class="btn btn-menu"
-               th:onclick="|location.href='@{/admin/index}'|">AdminPage</label>
+<!--        <label class="btn btn-menu"-->
+<!--               th:onclick="|location.href='@{/admin/index}'|">AdminPage</label>-->
 
-        <label class="btn btn-menu"
-               th:onclick="|location.href='@{/group/index}'|">MyGroup</label>
+<!--        <label class="btn btn-menu"-->
+<!--               th:onclick="|location.href='@{/group/index}'|">MyGroup</label>-->
 
-        <label class="btn btn-menu"
-               th:onclick="|location.href='@{/statistics/info}'|"
-               data-toggle="modal" data-target="#login">MyPage</label>
+<!--        <label class="btn btn-menu"-->
+<!--               th:onclick="|location.href='@{/statistics/info}'|"-->
+<!--               data-toggle="modal" data-target="#login">MyPage</label>-->
 
-        <form style="display: inline"
-              method="post"
-              th:action="@{/member/logout}">
-            <button type="submit" class="btn btn-danger">Logout</button>
-        </form>
-    </div>
-</div>
+<!--        <form style="display: inline"-->
+<!--              method="post"-->
+<!--              th:action="@{/member/logout}">-->
+<!--            <button type="submit" class="btn btn-danger">Logout</button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
 
 </body>
 </html>

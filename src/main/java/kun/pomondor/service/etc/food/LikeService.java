@@ -17,4 +17,6 @@ public interface LikeService {
 	List<FoodPost> findLikePost(Long memberId);
 
 	Boolean isLike(Long memberId, Long postId);
+
+	int getLikeCnt(Long postId);
 }

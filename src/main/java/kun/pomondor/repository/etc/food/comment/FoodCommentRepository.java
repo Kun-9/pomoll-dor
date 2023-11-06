@@ -5,7 +5,7 @@ import java.util.List;
 public interface FoodCommentRepository {
 	void createRatingComment(FoodComment foodComment);
 
-	void createNomalComment(FoodComment foodComment);
+	void createNormalComment(FoodComment foodComment);
 
 	void editComment(FoodComment foodComment);
 

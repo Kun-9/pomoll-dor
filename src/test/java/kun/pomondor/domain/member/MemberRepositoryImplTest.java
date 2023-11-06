@@ -25,11 +25,11 @@ class MemberRepositoryImplTest {
 //		memberRepository.join(member);
 //	}
 //
-//	@Test
-//	void findById() {
-//		Member member = memberRepository.findById(18L);
-//		System.out.println(member);
-//	}
+	@Test
+	void findById() {
+		Member member = memberRepository.findById(19L);
+		System.out.println(member);
+	}
 //
 //	@Test
 //	void findByEmail() {

@@ -32,6 +32,7 @@ public class HomeController {
             return "index";
         }
 
+
         Member loginMember = memberService.findById(memberId);
 
         model.addAttribute("member", loginMember);

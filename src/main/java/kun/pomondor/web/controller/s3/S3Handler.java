@@ -11,14 +11,13 @@ import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Component
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class S3Handler {
 
-	private String S3Bucket = "kun-buket-test";
-	private String filePath = "pomondor/post-img";
+	private final String S3Bucket = "kun-buket-test";
+	private final String filePath = "pomondor/post-img";
 
 	private final AmazonS3Client amazonS3Client;
 
@@ -51,7 +50,7 @@ public class S3Handler {
 	//파일 삭제
 	public void fileDelete(String fileName) {
 		String id = "arn:aws:iam::784296835500:user/test-user";
-		String objectKey = filePath.endsWith("/") ? filePath + fileName : filePath + "/" + fileName;
+		String objectKey = filePath + "/" + fileName;
 //		log.info(objectKey);
 
 		try {

@@ -117,31 +117,39 @@
 
 <div class="main-container">
     <!--menubar-->
-    <div th:if="${loginInfo} == 0">
-        <div th:replace="fragment/menubar.html :: not-login-menubar"></div>
-        <script th:inline="javascript">
-            document.getElementById('home').classList.add('text-secondary');
-        </script>
+
+    <div>
+        <div th:replace="fragment/menubar.html :: menubar"></div>
     </div>
 
-    <div th:if="${loginInfo} == 1">
-        <div th:replace="fragment/menubar.html :: login-menubar"></div>
-        <script th:inline="javascript">
-            document.getElementById('home').classList.add('text-secondary');
-        </script>
-    </div>
+<!--    <div th:if="${session.loginMember == null}">-->
+<!--        <div th:replace="fragment/menubar.html :: not-login-menubar"></div>-->
+<!--        <script th:inline="javascript">-->
+<!--            document.getElementById('home').classList.add('text-secondary');-->
+<!--        </script>-->
+<!--    </div>-->
 
-    <div th:if="${loginInfo} == 2">
-        <div th:replace="fragment/menubar.html :: admin-menubar"></div>
-        <script th:inline="javascript">
-            document.getElementById('home').classList.add('text-secondary');
-        </script>
-    </div>
+<!--    <div th:if="${loginInfo} == 1">-->
+<!--    <div th:if="${session.loginMember != null}">-->
+<!--        <div th:replace="fragment/menubar.html :: login-menubar"></div>-->
+<!--        <script th:inline="javascript">-->
+<!--            document.getElementById('home').classList.add('text-secondary');-->
+<!--        </script>-->
+<!--    </div>-->
+
+<!--    <div th:if="${loginInfo} == 2">-->
+<!--        <div th:replace="fragment/menubar.html :: admin-menubar"></div>-->
+<!--        <script th:inline="javascript">-->
+<!--            document.getElementById('home').classList.add('text-secondary');-->
+<!--        </script>-->
+<!--    </div>-->
 
 
 <!--    <div class="alert alert-success" role="alert">-->
 <!--        <h4 class="alert-heading">Update</h4>-->
 <!--        <p>친구창 개편 (보낸 신청 추가), 일반 댓글 추가 (별점 없는 댓글), 댓글 삭제 추가 (수정은 없음), 전체 멤버 보기 추가 <span>/ 2023.4.24</span></p>-->
+<!--    <p>닉네임 변경, 프로필 사진 변경 기능 추가 <span>/ 2023.5.7</span></p>-->
+
 <!--        <hr>-->
 <!--        <p class="mb-0">더 추가할거 아래 오른쪽에 동그란걸로 ^-^</p>-->
 <!--    </div>-->
@@ -152,7 +160,7 @@
             <h4 class="alert-heading">Update</h4>
             <button type="button" class="btn-close" aria-label="Close" id="closeAlert"></button>
         </div>
-        <p>닉네임 변경, 프로필 사진 변경 기능 추가 <span>/ 2023.5.7</span></p>
+        <p>댓글 수 표시 / 글, 댓글 줄바꿈 수정. <span>/ 2023.5.10</span></p>
     </div>
 
     <!--contents-->

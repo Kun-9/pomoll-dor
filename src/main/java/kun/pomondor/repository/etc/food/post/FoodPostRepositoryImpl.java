@@ -92,6 +92,43 @@ public class FoodPostRepositoryImpl implements FoodPostRepository {
 	}
 
 	@Override
+	public List<FoodPost> findPartialPosts(int startRow, int endRow) {
+		String sql = "SELECT * " +
+				"FROM (SELECT t.*, rownum AS rn " +
+				"      FROM (SELECT id, " +
+				"                   restaurant_name, " +
+				"                   f.member_id, " +
+				"                   content, " +
+				"                   distance, " +
+				"                   picture, " +
+				"                   created_date, " +
+				"                   NVL(like_cnt, 0)    AS like_cnt, " +
+				"                   NVL(comment_cnt, 0) AS comment_cnt " +
+				"            FROM food_review_board f " +
+				"                     LEFT JOIN (SELECT board_id, COUNT(id) comment_cnt FROM food_review_comment GROUP BY board_id) c " +
+				"                               ON f.id = c.board_id " +
+				"                     LEFT JOIN (SELECT board_id, COUNT(member_id) like_cnt FROM post_like GROUP BY board_id) l " +
+				"                               ON f.id = l.board_id " +
+				"            ORDER BY created_date DESC) t " +
+				"      WHERE rownum <= :endRow) " +
+				"WHERE rn > :startRow";
+
+		Object[] params = new Object[]{endRow, startRow};
+
+		return template.query(sql, params, (rs, rowNum) -> new FoodPost(
+				rs.getLong("id"),
+				rs.getString("restaurant_name"),
+				rs.getLong("member_id"),
+				rs.getString("content"),
+				rs.getTimestamp("created_date").toLocalDateTime(),
+				rs.getString("picture"),
+				rs.getDouble("distance"),
+				rs.getInt("like_cnt"),
+				rs.getInt("comment_cnt")
+		));
+	}
+
+	@Override
 	public void registPicture(Long postId, String path) {
 		String sql = "UPDATE food_review_board SET picture = ? WHERE id = ?";
 		template.update(sql, path, postId);

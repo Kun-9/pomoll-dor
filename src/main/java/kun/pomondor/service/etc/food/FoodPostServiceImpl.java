@@ -5,6 +5,7 @@ import kun.pomondor.repository.etc.food.post.FoodPostForCreate;
 import kun.pomondor.repository.etc.food.post.FoodPostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,6 +45,11 @@ public class FoodPostServiceImpl implements FoodPostService {
 	@Override
 	public List<FoodPost> findAllPosts() {
 		return foodPostRepository.findAllPosts();
+	}
+
+	@Override
+	public List<FoodPost> findPartialPosts(int startRow, int endRow) {
+		return foodPostRepository.findPartialPosts(startRow, endRow);
 	}
 
 	@Override

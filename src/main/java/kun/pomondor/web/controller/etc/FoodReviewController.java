@@ -6,7 +6,6 @@ import kun.pomondor.repository.etc.food.post.FoodPost;
 import kun.pomondor.repository.etc.food.post.FoodPostForCreate;
 import kun.pomondor.repository.etc.food.score.Score;
 import kun.pomondor.repository.member.Member;
-import kun.pomondor.repository.member.MemberMin;
 import kun.pomondor.service.etc.food.FoodCommentService;
 import kun.pomondor.service.etc.food.FoodPostService;
 import kun.pomondor.service.etc.food.LikeService;
@@ -16,6 +15,9 @@ import kun.pomondor.web.SessionConst;
 import kun.pomondor.web.controller.s3.S3Handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,16 +40,19 @@ public class FoodReviewController {
 	private final S3Handler s3Handler;
 	private final MyFileUploadUtil myFileUploadUtil;
 
+
 	// 게시글 목록 반환
 	@GetMapping
 	public String foodReviewIndex(
-			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember,
+//			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember,
 			Model model) {
-		Member member = memberService.findById(loginMember);
-		List<FoodPost> posts = foodPostService.findAllPosts();
+//		Member member = memberService.findById(loginMember);
+
+//		List<FoodPost> posts = foodPostService.findAllPosts();
+		List<FoodPost> posts = foodPostService.findPartialPosts(0,8);
 		Map<Long, Float> allRate = scoreService.getAllAverageRate();
 
-		model.addAttribute("member", member);
+//		model.addAttribute("member", member);
 		model.addAttribute("posts", posts);
 		model.addAttribute("allRate", allRate);
 
@@ -205,17 +210,30 @@ public class FoodReviewController {
 
 	@ResponseBody
 	@PostMapping("post/{postId}/like")
-	public String likePost(@PathVariable Long postId,
-	                       @SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginId) {
+	public ResponseEntity<String> likePost(@PathVariable Long postId,
+	                               @SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Long loginId) {
+
+		JSONObject jsonObject = new JSONObject();
+
+		if (loginId == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject.toString());
+		}
+
 		if (likeService.isLike(loginId, postId)) {
 			likeService.cancelLikePost(loginId, postId);
+			int likeCnt = likeService.getLikeCnt(postId);
+			jsonObject.put("likeCnt", likeCnt);
+
 			log.info("cancel like {} -> {}", loginId, postId);
 		} else {
 			likeService.likePost(loginId, postId);
+			int likeCnt = likeService.getLikeCnt(postId);
+			jsonObject.put("likeCnt", likeCnt);
+
 			log.info("like {} -> {}", loginId, postId);
 		}
 
-		return "ok";
+		return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
 	}
 
 	@PostMapping(value = "post/delete/comment")
@@ -306,5 +324,4 @@ public class FoodReviewController {
 
 		return "extra/restaurant-form";
 	}
-
 }

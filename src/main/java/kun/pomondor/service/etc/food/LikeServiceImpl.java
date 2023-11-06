@@ -44,4 +44,9 @@ public class LikeServiceImpl implements LikeService {
 	public Boolean isLike(Long memberId, Long postId) {
 		return likeRepository.isLike(memberId, postId);
 	}
+
+	@Override
+	public int getLikeCnt(Long postId) {
+		return likeRepository.getLikeCnt(postId);
+	}
 }

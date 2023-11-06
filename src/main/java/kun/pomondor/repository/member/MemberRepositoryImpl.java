@@ -104,6 +104,14 @@ public class MemberRepositoryImpl implements MemberRepository {
 		template.update(sql, userId);
 	}
 
+	private List<Member> getMembers(String sql, Object param) {
+		return template.query(sql, (rs, rowNum) -> getMember(rs), param);
+	}
+
+	private List<Member> getMembers(String sql) {
+		return template.query(sql, (rs, rowNum) -> getMember(rs));
+	}
+
 	private static Member getMember(ResultSet rs) throws SQLException {
 		return new Member(
 				rs.getLong("id"),
@@ -112,13 +120,5 @@ public class MemberRepositoryImpl implements MemberRepository {
 				rs.getString("password"),
 				rs.getString("picture")
 		);
-	}
-
-	private List<Member> getMembers(String sql, Object param) {
-		return template.query(sql, (rs, rowNum) -> getMember(rs), param);
-	}
-
-	private List<Member> getMembers(String sql) {
-		return template.query(sql, (rs, rowNum) -> getMember(rs));
 	}
 }

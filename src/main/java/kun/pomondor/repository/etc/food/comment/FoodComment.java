@@ -14,6 +14,7 @@ public class FoodComment {
 	private Long commentId;
 	private Long writerId;
 	private String username;
+	private String profileImg;
 	private Long boardId;
 	private LocalDateTime createdDate;
 	private String content;

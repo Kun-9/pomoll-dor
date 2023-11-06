@@ -18,4 +18,6 @@ public interface LikeRepository {
 	List<FoodPost> findLikePost(Long memberId);
 
 	Boolean isLike(Long memberId, Long postId);
+
+	int getLikeCnt(Long postId);
 }

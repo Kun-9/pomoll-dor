@@ -19,4 +19,6 @@ public interface FoodPostService {
 	List<FoodPost> findAllPosts();
 
 	void registPicture(Long postId, String path);
+
+	List<FoodPost> findPartialPosts(int startRow, int endRow);
 }

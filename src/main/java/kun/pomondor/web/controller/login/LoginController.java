@@ -65,6 +65,7 @@ public class LoginController {
         }
 
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
+        session.setAttribute("currentMember", loginMember);
         session.setAttribute(SessionConst.LOGIN_LEVEL, memberLevel);
 
         return "redirect:" + redirectURL;

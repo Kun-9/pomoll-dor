@@ -57,7 +57,7 @@ body {
 /*}*/
 
 body {
-    transition: all 0.3s linear;
+    /*transition: all 0.3s linear;*/
 }
 
 .error-field {
