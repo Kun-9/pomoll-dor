@@ -184,9 +184,9 @@
                     <h3 class="card-title" th:text="${post.restaurantName}">다운타우너</h3>
                     <p class="card-text" th:text="${post.content}">수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거v</p>
 
-                    <div class="w-100 star-container" th:if="${allRate.get(post.postId) != null}">
+                    <div class="w-100 star-container" th:if="${post.avrRating != null}">
                         <div class="starBundle-main"
-                             th:with="first=${#strings.arraySplit(allRate.get(post.postId), '.')[0]}, second=${#strings.arraySplit(allRate.get(post.postId), '.')[1]}">
+                             th:with="first=${#strings.arraySplit(post.avrRating, '.')[0]}, second=${#strings.arraySplit(post.avrRating, '.')[1]}">
 
                             <!-- 3.4라면 1~3자리까지 꽉찬 별로 채움 -->
                             <i th:if="${!first.equals('0')}" th:each="i : ${#numbers.sequence(1, first)}" class="fa-solid fa-star"></i>
@@ -212,3 +212,23 @@
 </script>
 </body>
 </html>
+
+<script>
+    // function loadNextPosts() {
+    //
+    //
+    //     $.ajax({
+    //         url: document.location.pathname + '/like',
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         success: function(response) {
+    //             $('#likeCount').text(response.likeCnt)
+    //             showToast()
+    //         },
+    //         error: function(xhr, status, error) {
+    //             // 요청이 실패했을 때 실행되는 코드
+    //             alert("서버와의 연결이 불안정합니다.");
+    //         }
+    //     });
+    // }
+</script>

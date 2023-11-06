@@ -78,17 +78,18 @@ public class FoodPostRepositoryImpl implements FoodPostRepository {
 				"LEFT JOIN (SELECT board_id, count(member_id) like_cnt FROM post_like GROUP BY board_id) l ON f.id = l.board_id " +
 				"ORDER BY created_date DESC";
 
-		return template.query(sql, (rs, rowNum) -> new FoodPost(
-				rs.getLong("id"),
-				rs.getString("restaurant_name"),
-				rs.getLong("member_id"),
-				rs.getString("content"),
-				rs.getTimestamp("created_date").toLocalDateTime(),
-				rs.getString("picture"),
-				rs.getDouble("distance"),
-				rs.getInt("like_cnt"),
-				rs.getInt("comment_cnt")
-		));
+//		return template.query(sql, (rs, rowNum) -> new FoodPost(
+//				rs.getLong("id"),
+//				rs.getString("restaurant_name"),
+//				rs.getLong("member_id"),
+//				rs.getString("content"),
+//				rs.getTimestamp("created_date").toLocalDateTime(),
+//				rs.getString("picture"),
+//				rs.getDouble("distance"),
+//				rs.getInt("like_cnt"),
+//				rs.getInt("comment_cnt")
+//		));
+		return null;
 	}
 
 	@Override
@@ -103,12 +104,18 @@ public class FoodPostRepositoryImpl implements FoodPostRepository {
 				"                   picture, " +
 				"                   created_date, " +
 				"                   NVL(like_cnt, 0)    AS like_cnt, " +
-				"                   NVL(comment_cnt, 0) AS comment_cnt " +
+				"                   NVL(comment_cnt, 0) AS comment_cnt, " +
+				"                   r.avr AS avr_rating " +
 				"            FROM food_review_board f " +
 				"                     LEFT JOIN (SELECT board_id, COUNT(id) comment_cnt FROM food_review_comment GROUP BY board_id) c " +
 				"                               ON f.id = c.board_id " +
 				"                     LEFT JOIN (SELECT board_id, COUNT(member_id) like_cnt FROM post_like GROUP BY board_id) l " +
 				"                               ON f.id = l.board_id " +
+				"                     LEFT JOIN (SELECT board_id, TRUNC(AVG((taste + price + distance))/3,1) avr " +
+				"                                   FROM food_review_comment cm " +
+				"                                   JOIN comment_score cs ON cm.id = cs.id " +
+				"                                   GROUP BY board_id) r " +
+				"                               ON f.id = r.board_id " +
 				"            ORDER BY created_date DESC) t " +
 				"      WHERE rownum <= :endRow) " +
 				"WHERE rn > :startRow";
@@ -124,7 +131,8 @@ public class FoodPostRepositoryImpl implements FoodPostRepository {
 				rs.getString("picture"),
 				rs.getDouble("distance"),
 				rs.getInt("like_cnt"),
-				rs.getInt("comment_cnt")
+				rs.getInt("comment_cnt"),
+				rs.getFloat("avr_rating")
 		));
 	}
 

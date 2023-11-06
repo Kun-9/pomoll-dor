@@ -19,6 +19,7 @@ public class FoodPost {
 	private Double distance;
 	private int likeCnt;
 	private int commentCnt;
+	private float avrRating;
 
 	public FoodPost() {
 	}

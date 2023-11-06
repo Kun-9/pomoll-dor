@@ -50,11 +50,26 @@ public class FoodReviewController {
 
 //		List<FoodPost> posts = foodPostService.findAllPosts();
 		List<FoodPost> posts = foodPostService.findPartialPosts(0,8);
-		Map<Long, Float> allRate = scoreService.getAllAverageRate();
+//		Map<Long, Float> allRate = scoreService.getAllAverageRate();
 
 //		model.addAttribute("member", member);
 		model.addAttribute("posts", posts);
-		model.addAttribute("allRate", allRate);
+//		model.addAttribute("allRate", allRate);
+
+		return "extra/food";
+	}
+
+	@GetMapping("next-post/{index}")
+	public String nextPost(@PathVariable int index) {
+		int startRow = 8 * index;
+		int endRow = 8 * (index + 1);
+
+		List<FoodPost> posts = foodPostService.findPartialPosts(startRow, endRow);
+
+//		Map<Long, Float> allRate = scoreService.getAllAverageRate();
+
+//		model.addAttribute("posts", posts);
+//		model.addAttribute("allRate", allRate);
 
 		return "extra/food";
 	}
