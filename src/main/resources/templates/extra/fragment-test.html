@@ -1,0 +1,39 @@
+
+
+    <a class="card btn" th:each="post:${posts}" th:href="@{'/etc/food/post/' + ${post.postId}}" id="frag" th:fragment="frag">
+        <div class="card-container">
+            <img class="card-img shadow" th:src="${post.picture}" alt="" th:if="${post.picture} != null">
+            <img class="card-img shadow" alt="" th:if="${post.picture} == null" style="background: white">
+            <div class="overlay w-100 h-100" style="display: flex; flex-direction: column">
+                <div style="display: flex; flex-direction: row; margin: 4px 0 8px 0; gap: 5px">
+                            <span th:if="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd') == #strings.arraySplit(post.createdDate, 'T')[0]}"
+                                  class="badge bg-danger" style="width: 50px; padding: 7px; margin-right: 8px">New</span>
+                    <!--좋아요 수-->
+                    <i class="fa-solid fa-heart like-full" style="font-size: 24px; display: block; color: #CB444A; margin-right: 5px"></i>
+                    <div th:text="${post.likeCnt}" style="margin-right: 15px">1</div>
+                    <!-- 댓글 수 -->
+                    <i class="fa-solid fa-comment-dots" style="color: #e8e8e8; font-size: 24px; margin-right: 5px"></i>
+                    <div th:text="${post.commentCnt}" >1</div>
+                </div>
+                <h3 class="card-title" th:text="${post.restaurantName}">다운타우너</h3>
+                <p class="card-text" th:text="${post.content}">내용</p>
+
+                <div class="w-100 star-container" th:if="${post.avrRating != null}">
+                    <div class="starBundle-main"
+                         th:with="first=${#strings.arraySplit(post.avrRating, '.')[0]}, second=${#strings.arraySplit(post.avrRating, '.')[1]}">
+
+                        <!-- 3.4라면 1~3자리까지 꽉찬 별로 채움 -->
+                        <i th:if="${!first.equals('0')}" th:each="i : ${#numbers.sequence(1, first)}" class="fa-solid fa-star"></i>
+                        <th:block th:if="${!first.equals('5')}">
+                            <!-- 소숫점 숫자가 0이 아니라면 반별 -->
+                            <i th:if="${!second.equals('0')}" class="fa-solid fa-star-half-stroke"></i>
+                            <!-- 0이라면 빈별 -->
+                            <i th:if="${second.equals('0')}" class="fa-regular fa-star"></i>
+                            <!-- 5 - (앞자리+1) -->
+                            <i th:if="${!first.equals('4')}" th:each="i : ${#numbers.sequence(3, first)}" class="fa-regular fa-star"></i>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>

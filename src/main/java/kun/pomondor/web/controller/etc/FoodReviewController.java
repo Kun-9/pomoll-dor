@@ -49,29 +49,31 @@ public class FoodReviewController {
 //		Member member = memberService.findById(loginMember);
 
 //		List<FoodPost> posts = foodPostService.findAllPosts();
-		List<FoodPost> posts = foodPostService.findPartialPosts(0,8);
+		List<FoodPost> posts = foodPostService.findPartialPosts(0,14);
 //		Map<Long, Float> allRate = scoreService.getAllAverageRate();
+
+		int i = 1;
+		for (FoodPost post : posts) {
+			System.out.println(i++ + " " + post);
+		}
 
 //		model.addAttribute("member", member);
 		model.addAttribute("posts", posts);
 //		model.addAttribute("allRate", allRate);
 
-		return "extra/food";
+		return "extra/restaurant-list";
 	}
 
 	@GetMapping("next-post/{index}")
-	public String nextPost(@PathVariable int index) {
-		int startRow = 8 * index;
-		int endRow = 8 * (index + 1);
+	public String nextPost(@PathVariable int index, Model model) {
+		int currentRow = 14;
+		int startRow = currentRow + 9 * (index - 1);
+		int endRow = currentRow + 9 * index;
 
 		List<FoodPost> posts = foodPostService.findPartialPosts(startRow, endRow);
 
-//		Map<Long, Float> allRate = scoreService.getAllAverageRate();
-
-//		model.addAttribute("posts", posts);
-//		model.addAttribute("allRate", allRate);
-
-		return "extra/food";
+		model.addAttribute("posts", posts);
+		return "extra/restaurant-list :: #card";
 	}
 
 	// 포스트 폼 반환
@@ -178,14 +180,18 @@ public class FoodReviewController {
 	@GetMapping("post/{postId}")
 	public String viewPost(
 			@PathVariable Long postId,
-			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember,
+			@SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Long loginMember,
 			Model model) {
 
-		Member member = memberService.findById(loginMember);
+		Member member = new Member(null);
+		Boolean like = false;
+		if (loginMember != null) {
+			member = memberService.findById(loginMember);
+			like = likeService.isLike(loginMember, postId);
+		}
 		FoodPost post = foodPostService.findPostsByPostId(postId);
 		Long writerId = post.getWriterId();
 		Member writerMember = memberService.findById(writerId);
-		Boolean like = likeService.isLike(loginMember, postId);
 //		List<MemberMin> likeMembers = likeService.findLikeMembers(postId);
 //		int likeCnt = likeMembers.size();
 
@@ -205,7 +211,7 @@ public class FoodReviewController {
 //		model.addAttribute("likeMembers", likeMembers);
 //		model.addAttribute("likeCnt", likeCnt);
 
-		return "extra/restaurant";
+		return "extra/restaurant-detail";
 	}
 
 	private static double roundRate(Float avrRateVal) {

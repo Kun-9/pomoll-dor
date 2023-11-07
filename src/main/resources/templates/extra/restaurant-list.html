@@ -13,6 +13,7 @@
           rel="stylesheet">
     <link th:href="@{/css/design.css}" href="../../static/css/design.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <title>Food Review</title>
 
@@ -149,7 +150,7 @@
 <div th:replace="fragment/menubar.html :: menubar"></div>
 
 <div class="container mt-5">
-    <div class="p-3 row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row">
+    <div class="p-3 row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row restaurant-container">
 
         <div class="card">
             <a class="card-add shadow" th:href="@{'/etc/food/post'}">
@@ -166,7 +167,7 @@
 <!--            </div>-->
 <!--        </div>-->
 
-        <a class="card btn" th:each="post:${posts}" th:href="@{'/etc/food/post/' + ${post.postId}}">
+        <a class="card btn" th:each="post:${posts}" th:href="@{'/etc/food/post/' + ${post.postId}}" id="card" th:fragment="card" th:if="${!posts.isEmpty()}">
             <div class="card-container">
                 <img class="card-img shadow" th:src="${post.picture}" alt="" th:if="${post.picture} != null">
                 <img class="card-img shadow" alt="" th:if="${post.picture} == null" style="background: white">
@@ -182,7 +183,7 @@
                         <div th:text="${post.commentCnt}" >1</div>
                     </div>
                     <h3 class="card-title" th:text="${post.restaurantName}">다운타우너</h3>
-                    <p class="card-text" th:text="${post.content}">수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거수제버거v</p>
+                    <p class="card-text" th:text="${post.content}">내용</p>
 
                     <div class="w-100 star-container" th:if="${post.avrRating != null}">
                         <div class="starBundle-main"
@@ -204,6 +205,8 @@
             </div>
         </a>
     </div>
+    <div class="end"></div>
+    <button onclick="loadNextPosts()">temp</button>
 </div>
 <script>
     window.onload = () => {
@@ -214,21 +217,41 @@
 </html>
 
 <script>
-    // function loadNextPosts() {
-    //
-    //
-    //     $.ajax({
-    //         url: document.location.pathname + '/like',
-    //         type: 'POST',
-    //         dataType: 'json',
-    //         success: function(response) {
-    //             $('#likeCount').text(response.likeCnt)
-    //             showToast()
-    //         },
-    //         error: function(xhr, status, error) {
-    //             // 요청이 실패했을 때 실행되는 코드
-    //             alert("서버와의 연결이 불안정합니다.");
-    //         }
-    //     });
-    // }
+    let index = 1
+
+    function loadNextPosts() {
+        $.ajax({
+            url: 'food/next-post/' + index,
+            type: 'GET',
+            dataType: 'text',
+            success: function(response) {
+                console.log(response)
+
+                if (response !== "") {
+                    $(".restaurant-container").append(response);
+                    index++
+                }
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패했을 때 실행되는 코드
+                alert("서버와의 연결이 불안정합니다.");
+            }
+        });
+    }
+
+    const container = document.querySelector(".container");
+    const end = document.querySelector(".end");
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if(entry.isIntersecting) {
+                loadNextPosts()
+                // container.appendChild(end);
+            }
+        })
+    });
+
+    io.observe(end);
+
+
 </script>

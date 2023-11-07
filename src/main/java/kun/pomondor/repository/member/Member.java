@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Getter @Setter @ToString
 public class Member {
-    private long id;
+    private Long id;
     private String email;
     private String username;
     private String nickname;
@@ -16,14 +16,18 @@ public class Member {
     public Member() {
     }
 
-    public Member(long id, String email, String username, String password) {
+    public Member(Long id) {
+        this.id = id;
+    }
+
+    public Member(Long id, String email, String username, String password) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.password = password;
     }
 
-    public Member(long id, String email, String username, String password, String picture) {
+    public Member(Long id, String email, String username, String password, String picture) {
         this.id = id;
         this.email = email;
         this.username = username;
