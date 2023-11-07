@@ -4,6 +4,7 @@ const restTimeLabel = document.getElementById("restTimeLabel")
 const endBtn = document.getElementById("endBtn")
 const settingBtn = document.getElementById("settingBtn")
 
+let isFirst = true;
 let pomoInterval;
 let restInterval;
 let pomoTime = 1800;
@@ -50,6 +51,18 @@ function numberToTime(pomoTime) {
 }
 
 function pomoStart() {
+
+    if (isFirst) {
+        if (!isLogin) {
+            if(!confirm("로그인하지 않고 진행시 기록되지 않습니다.\n계속 하시겠습니까?")) return
+            isFirst = false
+        }
+    }
+
+
+    window.onbeforeunload = function(){
+        return '';
+    };
 
     if (!isRunning()) {
         // startTime = new Date().toLocaleString();
@@ -123,6 +136,10 @@ function stopTimer() {
     // 버튼 변경
     settingBtn.style.display = 'block'
     endBtn.style.display = 'none'
+
+    window.onbeforeunload = function(){
+
+    };
 }
 
 function changeStopColor() {

@@ -290,6 +290,10 @@
 
             distance.innerText = result + " / " + dowon + '\n' + '1도원 = 약 50m'
         })
+
+        let isLogin = [[${member.id != null}]]
+
+
     </script>
 </th:block>
 
@@ -431,7 +435,17 @@
     let line = document.getElementsByClassName('line');
     let ratingBtn_status = false;
 
+    function returnNotLogin() {
+        if (!isLogin) {
+            alert("로그인 후 이용 가능합니다.")
+            return true;
+        }
+        return false
+    }
+
     comment.addEventListener('click', function () {
+        if (returnNotLogin()) return
+
         comment.style.height = '250px';
         // ratingCon.style.display = 'flex';
         ratingBtn.style.display = 'block';
@@ -439,6 +453,7 @@
     });
 
     ratingBtn.addEventListener('click', function () {
+
         if (ratingBtn_status === false) {
             ratingBtn_status = true
 
@@ -530,6 +545,8 @@
 
     // 게시글 좋아요
     function scrapProduct() {
+
+        if (returnNotLogin()) return
 
         likeStatus = !likeStatus;
         changeLikeBtn();

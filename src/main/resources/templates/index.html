@@ -118,30 +118,8 @@
 <div class="main-container">
     <!--menubar-->
 
-    <div>
+<!--    <div>-->
         <div th:replace="fragment/menubar.html :: menubar"></div>
-    </div>
-
-<!--    <div th:if="${session.loginMember == null}">-->
-<!--        <div th:replace="fragment/menubar.html :: not-login-menubar"></div>-->
-<!--        <script th:inline="javascript">-->
-<!--            document.getElementById('home').classList.add('text-secondary');-->
-<!--        </script>-->
-<!--    </div>-->
-
-<!--    <div th:if="${loginInfo} == 1">-->
-<!--    <div th:if="${session.loginMember != null}">-->
-<!--        <div th:replace="fragment/menubar.html :: login-menubar"></div>-->
-<!--        <script th:inline="javascript">-->
-<!--            document.getElementById('home').classList.add('text-secondary');-->
-<!--        </script>-->
-<!--    </div>-->
-
-<!--    <div th:if="${loginInfo} == 2">-->
-<!--        <div th:replace="fragment/menubar.html :: admin-menubar"></div>-->
-<!--        <script th:inline="javascript">-->
-<!--            document.getElementById('home').classList.add('text-secondary');-->
-<!--        </script>-->
 <!--    </div>-->
 
 
@@ -244,11 +222,13 @@
 </div>
 
 <!--bottom-->
-<div></div>
+<div>
+</div>
 
 <script th:inline="javascript">
     var memberId = /*[[${member.id}]]*/ + '';
     var username = /*[[${member.username}]]*/ + '';
+    let isLogin = [[${session.loginMember != null}]]
     let closeBtn = document.getElementById('closeAlert');
     let updateAlert = document.getElementById('updateAlert');
 </script>
@@ -261,15 +241,16 @@
 
     ChannelIO('boot', {
         "pluginKey": "dc32ed6f-da76-4433-af5d-0bfde4bd126b",
-        "memberId": memberId, // fill user's member id
-        "profile": { // fill user's profile
-            "name": username, // fill user's name
+        "memberId": memberId,
+        "profile": {
+            "name": username,
         }
     });
 
     closeBtn.addEventListener('click', function () {
         updateAlert.style.display = 'none';
     });
+
 
 </script>
 <!--타임리프-->
