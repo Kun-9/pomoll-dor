@@ -52,11 +52,6 @@ public class FoodReviewController {
 		List<FoodPost> posts = foodPostService.findPartialPosts(0,14);
 //		Map<Long, Float> allRate = scoreService.getAllAverageRate();
 
-		int i = 1;
-		for (FoodPost post : posts) {
-			System.out.println(i++ + " " + post);
-		}
-
 //		model.addAttribute("member", member);
 		model.addAttribute("posts", posts);
 //		model.addAttribute("allRate", allRate);
