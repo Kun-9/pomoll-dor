@@ -43,7 +43,7 @@ jobs:
     #   shell: bash
 
     - name: Build with Gradle
-      run: ./gradlew bootJar
+      run: ./gradlew build -x test -x ktlintCheck -x ktlintTestSourceSetCheck -x ktlintMainSourceSetCheck -x ktlintKotlinScriptCheck
 
       
 
@@ -51,7 +51,7 @@ jobs:
     - name: web docker build and push
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build --platform linux/amd64 --tag ${{ secrets.DOCKER_REPO }} .
+        docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}
         docker push ${{ secrets.DOCKER_REPO }}
          
     ## 서버에 접속하여 도커 이미지를 pull 받고 실행하기
