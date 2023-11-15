@@ -43,7 +43,7 @@ jobs:
     #   shell: bash
 
     - name: Build with Gradle
-      run: ./gradlew build -x test -x ktlintCheck -x ktlintTestSourceSetCheck -x ktlintMainSourceSetCheck -x ktlintKotlinScriptCheck
+      run: ./gradlew build -x test
 
       
 
