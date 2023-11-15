@@ -51,7 +51,7 @@ jobs:
     - name: web docker build and push
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }} .
+        docker build --platform linux/amd64 -f Dockerfile -t ${{ secrets.DOCKER_REPO }} .
         docker push ${{ secrets.DOCKER_REPO }}
          
     ## 서버에 접속하여 도커 이미지를 pull 받고 실행하기
