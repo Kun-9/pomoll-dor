@@ -39,7 +39,7 @@ class FoodPostRepositoryImplTest {
 	@Test
 	void findPartialPosts() {
 		List<FoodPost> allPosts = foodPostRepository.findPartialPosts(10, 20);
-		// te
+		//
 		for (FoodPost allPost : allPosts) {
 			System.out.println(allPost);
 		}
