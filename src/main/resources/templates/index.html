@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>MainPage</title>
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-<!--    <link th:href="@{/css/design.css}" href="../../static/css/design.css" rel="stylesheet">-->
-    <link th:href="@{/vendor/bootstrap5/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/vendor/bootstrap5/js/bootstrap.bundle.min.js.map}" rel="stylesheet">
-<!--    <link th:href="@{/vendor/}" href="../../static/css/design.css" rel="stylesheet">-->
-<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
+
+    <th:block th:replace="fragment/config::configFragment"></th:block>
+
+    <script src="../../static/js/timer.js" th:src="@{/js/timer.js}" type="text/javascript"></script>
 </head>
 
 <style>
@@ -201,13 +198,14 @@
 <!--    </div>-->
 <!--    <p>좋아요 추가 <span>/ 2023.5.1</span></p>-->
 
-    <div class="alert alert-success" role="alert" id="updateAlert">
-        <div style="display: flex; flex-direction: row; justify-content: space-between">
-            <h4 class="alert-heading">Update</h4>
-            <button type="button" class="btn-close" aria-label="Close" id="closeAlert"></button>
-        </div>
-        <p>댓글 수 표시 / 글, 댓글 줄바꿈 수정. <span>/ 2023.5.10</span></p>
-    </div>
+<!--    공지 사항 -->
+<!--    <div class="alert alert-success" role="alert" id="updateAlert">-->
+<!--        <div style="display: flex; flex-direction: row; justify-content: space-between">-->
+<!--            <h4 class="alert-heading">Update</h4>-->
+<!--            <button type="button" class="btn-close" aria-label="Close" id="closeAlert"></button>-->
+<!--        </div>-->
+<!--        <p>댓글 수 표시 / 글, 댓글 줄바꿈 수정. <span>/ 2023.5.10</span></p>-->
+<!--    </div>-->
 
     <!--contents-->
     <!--<div th:replace="fragment/body.html :: body"></div>-->
@@ -322,6 +320,5 @@
 
 </script>
 <!--타임리프-->
-<script src="../../static/js/timer.js" th:src="@{/js/timer.js}" type="text/javascript"></script>
 </body>
 </html>
