@@ -78,10 +78,15 @@ jobs:
         key: ${{ secrets.KEY }}
         port: 22
         script: |
-
-          docker stop ${{ secrets.DOCKER_REPO }} && docker rm ${{ secrets.DOCKER_REPO }} && docker rmi ${{ secrets.DOCKER_REPO }}:latest
-          # sudo docker stop prod-server
-          # sudo docker rm prod-server
-          # sudo docker image rm ${{ secrets.DOCKER_REPO }}
+          # 가장 최신의 컨테이너 중지 및 삭제, 이 컨테이너에 사용된 이미지 삭제
+          CONTAINER_ID=$(docker ps -q --latest)
+          if [[ -n "$CONTAINER_ID" ]]; then
+            IMAGE_ID=$(docker inspect --format='{{.Image}}' "$CONTAINER_ID")
+            docker stop "$CONTAINER_ID"
+            docker rm "$CONTAINER_ID"
+            docker rmi "$IMAGE_ID"
+          fi
+          
+          # 도커에서 이미지 pull 후 run
           sudo docker pull ${{ secrets.DOCKER_REPO }}
           sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_REPO }}
