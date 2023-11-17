@@ -8,7 +8,6 @@
 
     <th:block th:replace="fragment/config::configFragment"></th:block>
 
-    <script src="../../static/js/timer.js" th:src="@{/js/timer.js}" type="text/javascript"></script>
 </head>
 
 <style>
@@ -295,7 +294,7 @@
     var memberId = /*[[${member.id}]]*/ + '';
     var username = /*[[${member.username}]]*/ + '';
     let isLogin = [[${session.loginMember != null}]]
-    let closeBtn = document.getElementById('closeAlert');
+    // let closeBtn = document.getElementById('closeAlert');
     let updateAlert = document.getElementById('updateAlert');
 </script>
 <script>
@@ -313,12 +312,14 @@
         }
     });
 
-    closeBtn.addEventListener('click', function () {
-        updateAlert.style.display = 'none';
-    });
-
+    // closeBtn.addEventListener('click', function () {
+    //     updateAlert.style.display = 'none';
+    // });
 
 </script>
-<!--타임리프-->
+
+<script src="../../static/js/timer.js" th:src="@{/js/timer.js}" type="text/javascript"></script>
+
+
 </body>
 </html>
