@@ -19,6 +19,8 @@ public interface MemberRepository {
 
 	int deleteMember(long userId);
 
+	int deleteMember(String email);
+
 	int getRenameCnt(long userId);
 
 	boolean validUsernameExist(String username);

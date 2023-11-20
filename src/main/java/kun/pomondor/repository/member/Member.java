@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Objects;
+
 @Getter @Setter @ToString
 public class Member {
     private Long id;
@@ -45,4 +47,13 @@ public class Member {
         this.email = email;
         this.password = password;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Member member = (Member) o;
+        return Objects.equals(id, member.id) && Objects.equals(email, member.email) && Objects.equals(username, member.username) && Objects.equals(nickname, member.nickname) && Objects.equals(password, member.password) && Objects.equals(picture, member.picture);
+    }
+
 }

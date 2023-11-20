@@ -3,9 +3,12 @@ package kun.pomondor.repository.member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,9 +30,18 @@ public class MemberRepositoryImpl implements MemberRepository {
 		String sql = "INSERT INTO member (ID, EMAIL, PASSWORD, USERNAME) " +
 				"VALUES (member_id_seq.nextval, ?, ?, ?)";
 
-		template.update(sql, member.getEmail(),
-				member.getPassword(),
-				member.getUsername());
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		template.update(connection -> {
+			PreparedStatement ps = connection.prepareStatement(sql, new String[]{"ID"});
+			ps.setString(1, member.getEmail());
+			ps.setString(2, member.getPassword());
+			ps.setString(3, member.getUsername());
+			return ps;
+		}, keyHolder);
+
+		// 얻어진 ID를 Member 객체에 설정
+		member.setId(keyHolder.getKey().longValue());
 
 		return member;
 	}
@@ -67,10 +79,17 @@ public class MemberRepositoryImpl implements MemberRepository {
 	}
 
 	@Override
+	public int deleteMember(String email) {
+		String sql = "DELETE MEMBER WHERE EMAIL = ?";
+
+		return template.update(sql, email);
+	}
+
+	@Override
 	public int getRenameCnt(long userId) {
 		String sql = "SELECT RENAME_CNT FROM MEMBER WHERE ID = ? ";
 		List<Integer> renameCnt = template.query(sql, (rs, rowNum) -> rs.getInt("rename_cnt"), userId);
-		return renameCnt.isEmpty() ? null : renameCnt.get(0);
+		return renameCnt.isEmpty() ? 0 : renameCnt.get(0);
 	}
 
 	@Override
