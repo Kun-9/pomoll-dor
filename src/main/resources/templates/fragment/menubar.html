@@ -85,7 +85,7 @@
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         <div style="background: white; display: inline-block" width="32" height="32" class="rounded-circle">
-                            <img th:src="${session.currentMember.picture}" src="../../static/picture/default.png" alt="mdo" width="32" height="32" class="rounded-circle" style="object-fit: cover;">
+                            <img th:src="'https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/profile-img/thumbnail_' + ${session.currentMember.picture}" src="../../static/picture/default.png" alt="mdo" width="32" height="32" class="rounded-circle" style="object-fit: cover;">
                         </div>
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">

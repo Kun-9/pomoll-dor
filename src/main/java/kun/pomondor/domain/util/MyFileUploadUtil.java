@@ -3,7 +3,6 @@ package kun.pomondor.domain.util;
 import kun.pomondor.web.controller.s3.S3Handler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
@@ -34,9 +33,31 @@ public class MyFileUploadUtil {
 		return null;
 	}
 
-	public String saveImgToS3(MultipartFile[] files, String saveFileName) throws Exception {
-		List<String> imgPathList = s3Handler.upload(files, saveFileName);
-		String path = imgPathList.get(0);
-		return path;
+	public String saveRestaurantPostImgToS3(MultipartFile[] files, String saveFileName) throws Exception {
+		String filePath = "pomondor/post-img";
+
+		s3Handler.uploadThumbnail(files, saveFileName, filePath, 400, 800);
+		List<String> imgPathList = s3Handler.upload(files, saveFileName, filePath);
+		return imgPathList.get(0);
+	}
+
+	public String saveProfileImgToS3(MultipartFile[] files, String saveFileName) throws Exception {
+		String filePath = "pomondor/profile-img";
+
+		s3Handler.uploadThumbnail(files, saveFileName, filePath, 100, 200);
+		List<String> imgPathList = s3Handler.upload(files, saveFileName, filePath);
+		return imgPathList.get(0);
+	}
+
+	public void deleteRestaurantImg(String fileName) {
+		String filePath = "pomondor/post-img";
+
+		s3Handler.fileDelete(fileName, filePath);
+	}
+
+	public void deleteProfileImg(String fileName) {
+		String filePath = "pomondor/profile-img";
+
+		s3Handler.fileDelete(fileName, filePath);
 	}
 }

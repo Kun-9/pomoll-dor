@@ -5,10 +5,15 @@ import com.amazonaws.services.s3.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.websocket.server.PathParam;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +23,11 @@ import java.util.List;
 public class S3Handler {
 
 	private final String S3Bucket = "kun-buket-test";
-	private final String filePath = "pomondor/post-img";
 
 	private final AmazonS3Client amazonS3Client;
 
 	// 업로드
-	public List<String> upload(MultipartFile[] multipartFiles, String name) throws Exception {
+	public List<String> upload(MultipartFile[] multipartFiles, String name, String filePath) throws Exception {
 		List<String> imagePathList = new ArrayList<>();
 
 		for (MultipartFile multipartFile : multipartFiles) {
@@ -50,22 +54,32 @@ public class S3Handler {
 
 
 
-	public List<String> uploadThumbnail(MultipartFile[] multipartFiles, String name) throws Exception {
+	public List<String> uploadThumbnail(MultipartFile[] multipartFiles, String name, String filePath, int width, int height) throws Exception {
+
 		List<String> imagePathList = new ArrayList<>();
 
 		for (MultipartFile multipartFile : multipartFiles) {
-			long size = multipartFile.getSize();
 
+			name = "thumbnail_" + name;
+
+			// Thumbnails를 사용하여 썸네일 생성
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			Thumbnails.of(multipartFile.getInputStream())
+					.size(width, height)
+					.toOutputStream(os);
+
+			byte[] thumbnailBytes = os.toByteArray();
+
+			// ObjectMetaData 설정
 			ObjectMetadata objectMetadata = new ObjectMetadata();
 			objectMetadata.setContentType(multipartFile.getContentType());
-			objectMetadata.setContentLength(size);
+			objectMetadata.setContentLength(thumbnailBytes.length);
 
-//			Thumbnailator.createThumbnail();
 
 			String fullPath = S3Bucket + "/" + filePath;
 
 			amazonS3Client.putObject(
-					new PutObjectRequest(fullPath, name, multipartFile.getInputStream(), objectMetadata)
+					new PutObjectRequest(fullPath, name, new ByteArrayInputStream(thumbnailBytes), objectMetadata)
 							.withCannedAcl(CannedAccessControlList.PublicRead)
 			);
 
@@ -77,7 +91,7 @@ public class S3Handler {
 	}
 
 	//파일 삭제
-	public void fileDelete(String fileName) {
+	public void fileDelete(String fileName, String filePath) {
 		String id = "arn:aws:iam::784296835500:user/test-user";
 		String objectKey = filePath + "/" + fileName;
 //		log.info(objectKey);

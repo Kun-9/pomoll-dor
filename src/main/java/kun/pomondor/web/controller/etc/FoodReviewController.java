@@ -116,10 +116,10 @@ public class FoodReviewController {
 
 		try {
 			// s3에 저장 후 이미지 경로 리턴
-			String path = myFileUploadUtil.saveImgToS3(files, saveFileName);
+			String path = myFileUploadUtil.saveRestaurantPostImgToS3(files, saveFileName);
 
 			// 이미지 경로를 db board table의 picture col에 할당
-			foodPostService.registPicture(postId, path);
+			foodPostService.registPicture(postId, saveFileName);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -149,7 +149,7 @@ public class FoodReviewController {
 		foodPostService.editPost(editPost);
 
 		MultipartFile[] files = new MultipartFile[1];
-		// 이미지 존재여부 및 이미지 파일 검증, 타입 반환
+		// 이미지 존재 여부 및 이미지 파일 검증, 타입 반환
 		String ext = myFileUploadUtil.validateImg(multipartRequest, files);
 
 		// 수정폼에 업로드 이미지가 없을 시 반환
@@ -163,8 +163,8 @@ public class FoodReviewController {
 		deleteImg(postId);
 
 		try {
-			String path = myFileUploadUtil.saveImgToS3(files, saveFileName);
-			foodPostService.registPicture(postId, path);
+			String path = myFileUploadUtil.saveRestaurantPostImgToS3(files, saveFileName);
+			foodPostService.registPicture(postId, saveFileName);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -316,7 +316,8 @@ public class FoodReviewController {
 			String[] split = picURI.split("\\.");
 			String ext = split[split.length - 1];
 			String fileName = postId + "." + ext;
-			s3Handler.fileDelete(fileName);
+//			s3Handler.fileDelete(fileName);
+			myFileUploadUtil.deleteRestaurantImg(fileName);
 		}
 	}
 

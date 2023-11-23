@@ -1,17 +1,14 @@
-2023-11-23 22:19:24.657  WARN 13616 --- [main] ory$DuplicateJsonObjectContextCustomizer : 
-
-Found multiple occurrences of org.json.JSONObject on the class path:
-
-	jar:file:/Users/kun/.gradle/caches/modules-2/files-2.1/org.json/json/20230227/7a0d4aca76513d8ce81f9b044ce8126b84809ad8/json-20230227.jar!/org/json/JSONObject.class
-	jar:file:/Users/kun/.gradle/caches/modules-2/files-2.1/com.vaadin.external.google/android-json/0.0.20131108.vaadin1/fa26d351fe62a6a17f5cda1287c1c6110dec413f/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
-
-You may wish to exclude one of them to ensure predictable runtime behavior
-
-2023-11-23 22:19:24.723  INFO 13616 --- [main] k.p.d.member.MemberRepositoryImplTest    : Starting MemberRepositoryImplTest using Java 11.0.12 on KUN-MacBook.local with PID 13616 (started by kun in /Users/kun/Documents/doc/project/pomondor)
-2023-11-23 22:19:24.726  INFO 13616 --- [main] k.p.d.member.MemberRepositoryImplTest    : No active profile set, falling back to 1 default profile: "default"
-2023-11-23 22:29:16.508  INFO 13950 --- [main] kun.pomondor.PomonDorApplication         : Starting PomonDorApplication using Java 11.0.12 on KUN-MacBook.local with PID 13950 (/Users/kun/Documents/doc/project/pomondor/out/production/classes started by kun in /Users/kun/Documents/doc/project/pomondor)
-2023-11-23 22:29:16.513  INFO 13950 --- [main] kun.pomondor.PomonDorApplication         : No active profile set, falling back to 1 default profile: "default"
-2023-11-23 22:29:24.659  WARN 13950 --- [main] com.amazonaws.util.EC2MetadataUtils      : Unable to retrieve the requested metadata (/latest/meta-data/instance-id). Failed to connect to service endpoint: 
+2023-11-24 00:00:03.613  INFO 15964 --- [http-nio-8080-exec-3] k.p.w.controller.login.LoginController   : 로그인 시도 : LoginForm(email=user1@naver.com, password=123123)
+2023-11-24 00:00:03.700  INFO 15964 --- [http-nio-8080-exec-3] k.p.w.controller.login.LoginController   : 로그인 진행 로그
+2023-11-24 00:00:03.700  INFO 15964 --- [http-nio-8080-exec-3] k.p.w.controller.login.LoginController   : 일반 사용자 로그인 성공 email = user1@naver.com
+2023-11-24 00:00:31.196  INFO 15964 --- [http-nio-8080-exec-8] k.p.w.c.etc.FoodReviewController         : 등록
+2023-11-24 00:00:31.198  INFO 15964 --- [http-nio-8080-exec-8] k.p.w.c.etc.FoodReviewController         : 등록 : FoodPostForCreate(restaurantName=썸네일 테스트 3, writerId=19, content=화질 개선, distance=29.0)
+2023-11-24 00:03:38.939  WARN 15964 --- [http-nio-8080-exec-6] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: "148.jpeg"]
+2023-11-24 00:05:17.135  INFO 15964 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-24 00:05:17.202  INFO 15964 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-24 00:05:24.306  INFO 16097 --- [main] kun.pomondor.PomonDorApplication         : Starting PomonDorApplication using Java 11.0.12 on KUN-MacBook.local with PID 16097 (/Users/kun/Documents/doc/project/pomondor/out/production/classes started by kun in /Users/kun/Documents/doc/project/pomondor)
+2023-11-24 00:05:24.311  INFO 16097 --- [main] kun.pomondor.PomonDorApplication         : No active profile set, falling back to 1 default profile: "default"
+2023-11-24 00:05:33.317  WARN 16097 --- [main] com.amazonaws.util.EC2MetadataUtils      : Unable to retrieve the requested metadata (/latest/meta-data/instance-id). Failed to connect to service endpoint: 
 
 com.amazonaws.SdkClientException: Failed to connect to service endpoint: 
 	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:100) ~[aws-java-sdk-core-1.12.13.jar:na]
@@ -59,28 +56,33 @@ Caused by: java.net.ConnectException: Host is down (connect failed)
 	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:80) ~[aws-java-sdk-core-1.12.13.jar:na]
 	... 24 common frames omitted
 
-2023-11-23 22:29:24.905  INFO 13950 --- [main] trationDelegate$BeanPostProcessorChecker : Bean '(inner bean)#6c6017b9' of type [com.amazonaws.auth.EC2ContainerCredentialsProviderWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:29:24.923  INFO 13950 --- [main] trationDelegate$BeanPostProcessorChecker : Bean '(inner bean)#370c1968' of type [com.amazonaws.auth.profile.ProfileCredentialsProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:29:24.928  INFO 13950 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'credentialsProvider' of type [org.springframework.cloud.aws.core.credentials.CredentialsProviderFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:29:24.928  INFO 13950 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'credentialsProvider' of type [com.amazonaws.auth.AWSCredentialsProviderChain] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:29:25.281  INFO 13950 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2023-11-23 22:29:25.289  INFO 13950 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-11-23 22:29:25.290  INFO 13950 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.70]
-2023-11-23 22:29:25.420  INFO 13950 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-11-23 22:29:25.421  INFO 13950 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7137 ms
-2023-11-23 22:29:26.316  INFO 13950 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2023-11-23 22:29:26.689  INFO 13950 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2023-11-23 22:29:26.705  INFO 13950 --- [main] kun.pomondor.PomonDorApplication         : Started PomonDorApplication in 10.839 seconds (JVM running for 11.806)
-2023-11-23 22:29:42.015  INFO 13950 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-11-23 22:29:42.021  INFO 13950 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-11-23 22:29:42.026  INFO 13950 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
-2023-11-23 22:30:44.566  INFO 13950 --- [http-nio-8080-exec-3] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-11-23 22:30:44.980  INFO 13950 --- [http-nio-8080-exec-3] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-11-23 22:31:31.964  INFO 13950 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2023-11-23 22:31:32.012  INFO 13950 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2023-11-23 22:31:38.036  INFO 13977 --- [main] kun.pomondor.PomonDorApplication         : Starting PomonDorApplication using Java 11.0.12 on KUN-MacBook.local with PID 13977 (/Users/kun/Documents/doc/project/pomondor/out/production/classes started by kun in /Users/kun/Documents/doc/project/pomondor)
-2023-11-23 22:31:38.042  INFO 13977 --- [main] kun.pomondor.PomonDorApplication         : No active profile set, falling back to 1 default profile: "default"
-2023-11-23 22:31:47.422  WARN 13977 --- [main] com.amazonaws.util.EC2MetadataUtils      : Unable to retrieve the requested metadata (/latest/meta-data/instance-id). Failed to connect to service endpoint: 
+2023-11-24 00:05:33.546  INFO 16097 --- [main] trationDelegate$BeanPostProcessorChecker : Bean '(inner bean)#7add838c' of type [com.amazonaws.auth.EC2ContainerCredentialsProviderWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-11-24 00:05:33.564  INFO 16097 --- [main] trationDelegate$BeanPostProcessorChecker : Bean '(inner bean)#6af5bbd0' of type [com.amazonaws.auth.profile.ProfileCredentialsProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-11-24 00:05:33.568  INFO 16097 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'credentialsProvider' of type [org.springframework.cloud.aws.core.credentials.CredentialsProviderFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-11-24 00:05:33.568  INFO 16097 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'credentialsProvider' of type [com.amazonaws.auth.AWSCredentialsProviderChain] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-11-24 00:05:33.895  INFO 16097 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-24 00:05:33.902  INFO 16097 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-24 00:05:33.902  INFO 16097 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-11-24 00:05:33.995  INFO 16097 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-24 00:05:33.995  INFO 16097 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 8047 ms
+2023-11-24 00:05:34.869  INFO 16097 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-11-24 00:05:35.205  INFO 16097 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-24 00:05:35.221  INFO 16097 --- [main] kun.pomondor.PomonDorApplication         : Started PomonDorApplication in 11.548 seconds (JVM running for 12.643)
+2023-11-24 00:05:46.041  INFO 16097 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-24 00:05:46.044  INFO 16097 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-24 00:05:46.057  INFO 16097 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 12 ms
+2023-11-24 00:05:46.113  INFO 16097 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-24 00:05:46.582  INFO 16097 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-24 00:05:55.786  WARN 16097 --- [http-nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: "136.jpeg"]
+2023-11-24 00:06:04.705  INFO 16097 --- [http-nio-8080-exec-5] k.p.w.controller.login.LoginController   : 로그인 시도 : LoginForm(email=user1@naver.com, password=123123)
+2023-11-24 00:06:04.729  INFO 16097 --- [http-nio-8080-exec-5] k.p.w.controller.login.LoginController   : 로그인 진행 로그
+2023-11-24 00:06:04.730  INFO 16097 --- [http-nio-8080-exec-5] k.p.w.controller.login.LoginController   : 일반 사용자 로그인 성공 email = user1@naver.com
+2023-11-24 00:06:16.322  WARN 16097 --- [http-nio-8080-exec-10] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: "148.jpeg"]
+2023-11-24 00:32:36.025  INFO 16097 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-24 00:32:36.101  INFO 16097 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-24 00:36:31.609  INFO 16674 --- [main] kun.pomondor.PomonDorApplication         : Starting PomonDorApplication using Java 11.0.12 on KUN-MacBook.local with PID 16674 (/Users/kun/Documents/doc/project/pomondor/out/production/classes started by kun in /Users/kun/Documents/doc/project/pomondor)
+2023-11-24 00:36:31.619  INFO 16674 --- [main] kun.pomondor.PomonDorApplication         : No active profile set, falling back to 1 default profile: "default"
+2023-11-24 00:36:40.875  WARN 16674 --- [main] com.amazonaws.util.EC2MetadataUtils      : Unable to retrieve the requested metadata (/latest/meta-data/instance-id). Failed to connect to service endpoint: 
 
 com.amazonaws.SdkClientException: Failed to connect to service endpoint: 
 	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:100) ~[aws-java-sdk-core-1.12.13.jar:na]
@@ -128,87 +130,33 @@ Caused by: java.net.ConnectException: Host is down (connect failed)
 	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:80) ~[aws-java-sdk-core-1.12.13.jar:na]
 	... 24 common frames omitted
 
-2023-11-23 22:31:47.731  INFO 13977 --- [main] trationDelegate$BeanPostProcessorChecker : Bean '(inner bean)#404db674' of type [com.amazonaws.auth.EC2ContainerCredentialsProviderWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:31:47.748  INFO 13977 --- [main] trationDelegate$BeanPostProcessorChecker : Bean '(inner bean)#4fe64d23' of type [com.amazonaws.auth.profile.ProfileCredentialsProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:31:47.752  INFO 13977 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'credentialsProvider' of type [org.springframework.cloud.aws.core.credentials.CredentialsProviderFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:31:47.753  INFO 13977 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'credentialsProvider' of type [com.amazonaws.auth.AWSCredentialsProviderChain] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:31:48.071  INFO 13977 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2023-11-23 22:31:48.080  INFO 13977 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-11-23 22:31:48.080  INFO 13977 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.70]
-2023-11-23 22:31:48.178  INFO 13977 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-11-23 22:31:48.179  INFO 13977 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 8205 ms
-2023-11-23 22:31:49.098  INFO 13977 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2023-11-23 22:31:49.460  INFO 13977 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2023-11-23 22:31:49.475  INFO 13977 --- [main] kun.pomondor.PomonDorApplication         : Started PomonDorApplication in 12.039 seconds (JVM running for 13.212)
-2023-11-23 22:32:29.104  INFO 13977 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-11-23 22:32:29.111  INFO 13977 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-11-23 22:32:29.116  INFO 13977 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
-2023-11-23 22:32:29.210  INFO 13977 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-11-23 22:32:29.538  INFO 13977 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-11-23 22:32:56.876  INFO 13977 --- [http-nio-8080-exec-2] k.p.w.controller.login.LoginController   : 로그인 시도 : LoginForm(email=user1@naver.com, password=123123)
-2023-11-23 22:32:56.901  INFO 13977 --- [http-nio-8080-exec-2] k.p.w.controller.login.LoginController   : 로그인 진행 로그
-2023-11-23 22:32:56.902  INFO 13977 --- [http-nio-8080-exec-2] k.p.w.controller.login.LoginController   : 일반 사용자 로그인 성공 email = user1@naver.com
-2023-11-23 22:37:10.266  INFO 13977 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2023-11-23 22:37:10.324  INFO 13977 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2023-11-23 22:37:13.743  INFO 14059 --- [main] kun.pomondor.PomonDorApplication         : Starting PomonDorApplication using Java 11.0.12 on KUN-MacBook.local with PID 14059 (/Users/kun/Documents/doc/project/pomondor/out/production/classes started by kun in /Users/kun/Documents/doc/project/pomondor)
-2023-11-23 22:37:13.752  INFO 14059 --- [main] kun.pomondor.PomonDorApplication         : No active profile set, falling back to 1 default profile: "default"
-2023-11-23 22:37:22.992  WARN 14059 --- [main] com.amazonaws.util.EC2MetadataUtils      : Unable to retrieve the requested metadata (/latest/meta-data/instance-id). Failed to connect to service endpoint: 
-
-com.amazonaws.SdkClientException: Failed to connect to service endpoint: 
-	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:100) ~[aws-java-sdk-core-1.12.13.jar:na]
-	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:70) ~[aws-java-sdk-core-1.12.13.jar:na]
-	at com.amazonaws.internal.InstanceMetadataServiceResourceFetcher.readResource(InstanceMetadataServiceResourceFetcher.java:75) ~[aws-java-sdk-core-1.12.13.jar:na]
-	at com.amazonaws.internal.EC2ResourceFetcher.readResource(EC2ResourceFetcher.java:66) ~[aws-java-sdk-core-1.12.13.jar:na]
-	at com.amazonaws.util.EC2MetadataUtils.getItems(EC2MetadataUtils.java:403) ~[aws-java-sdk-core-1.12.13.jar:na]
-	at com.amazonaws.util.EC2MetadataUtils.getData(EC2MetadataUtils.java:372) ~[aws-java-sdk-core-1.12.13.jar:na]
-	at org.springframework.cloud.aws.context.support.env.AwsCloudEnvironmentCheckUtils.isRunningOnCloudEnvironment(AwsCloudEnvironmentCheckUtils.java:38) ~[spring-cloud-aws-context-2.2.6.RELEASE.jar:2.2.6.RELEASE]
-	at org.springframework.cloud.aws.context.annotation.OnAwsCloudEnvironmentCondition.matches(OnAwsCloudEnvironmentCondition.java:38) ~[spring-cloud-aws-context-2.2.6.RELEASE.jar:2.2.6.RELEASE]
-	at org.springframework.context.annotation.ConditionEvaluator.shouldSkip(ConditionEvaluator.java:108) ~[spring-context-5.3.24.jar:5.3.24]
-	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader$TrackedConditionEvaluator.shouldSkip(ConfigurationClassBeanDefinitionReader.java:489) ~[spring-context-5.3.24.jar:5.3.24]
-	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass(ConfigurationClassBeanDefinitionReader.java:140) ~[spring-context-5.3.24.jar:5.3.24]
-	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions(ConfigurationClassBeanDefinitionReader.java:129) ~[spring-context-5.3.24.jar:5.3.24]
-	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:343) ~[spring-context-5.3.24.jar:5.3.24]
-	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247) ~[spring-context-5.3.24.jar:5.3.24]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311) ~[spring-context-5.3.24.jar:5.3.24]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112) ~[spring-context-5.3.24.jar:5.3.24]
-	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:746) ~[spring-context-5.3.24.jar:5.3.24]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564) ~[spring-context-5.3.24.jar:5.3.24]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147) ~[spring-boot-2.7.7.jar:2.7.7]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731) ~[spring-boot-2.7.7.jar:2.7.7]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408) ~[spring-boot-2.7.7.jar:2.7.7]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307) ~[spring-boot-2.7.7.jar:2.7.7]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303) ~[spring-boot-2.7.7.jar:2.7.7]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292) ~[spring-boot-2.7.7.jar:2.7.7]
-	at kun.pomondor.PomonDorApplication.main(PomonDorApplication.java:10) ~[classes/:na]
-Caused by: java.net.ConnectException: Host is down (connect failed)
-	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
-	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
-	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
-	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:224) ~[na:na]
-	at java.base/java.net.Socket.connect(Socket.java:608) ~[na:na]
-	at java.base/sun.net.NetworkClient.doConnect(NetworkClient.java:177) ~[na:na]
-	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:474) ~[na:na]
-	at java.base/sun.net.www.http.HttpClient.openServer(HttpClient.java:569) ~[na:na]
-	at java.base/sun.net.www.http.HttpClient.<init>(HttpClient.java:242) ~[na:na]
-	at java.base/sun.net.www.http.HttpClient.New(HttpClient.java:341) ~[na:na]
-	at java.base/sun.net.www.http.HttpClient.New(HttpClient.java:362) ~[na:na]
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1253) ~[na:na]
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1232) ~[na:na]
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1081) ~[na:na]
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:1015) ~[na:na]
-	at com.amazonaws.internal.ConnectionUtils.connectToEndpoint(ConnectionUtils.java:52) ~[aws-java-sdk-core-1.12.13.jar:na]
-	at com.amazonaws.internal.EC2ResourceFetcher.doReadResource(EC2ResourceFetcher.java:80) ~[aws-java-sdk-core-1.12.13.jar:na]
-	... 24 common frames omitted
-
-2023-11-23 22:37:23.211  INFO 14059 --- [main] trationDelegate$BeanPostProcessorChecker : Bean '(inner bean)#661d88a' of type [com.amazonaws.auth.EC2ContainerCredentialsProviderWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:37:23.230  INFO 14059 --- [main] trationDelegate$BeanPostProcessorChecker : Bean '(inner bean)#37b56ac7' of type [com.amazonaws.auth.profile.ProfileCredentialsProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:37:23.236  INFO 14059 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'credentialsProvider' of type [org.springframework.cloud.aws.core.credentials.CredentialsProviderFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:37:23.237  INFO 14059 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'credentialsProvider' of type [com.amazonaws.auth.AWSCredentialsProviderChain] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-11-23 22:37:23.583  INFO 14059 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2023-11-23 22:37:23.590  INFO 14059 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-11-23 22:37:23.590  INFO 14059 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.70]
-2023-11-23 22:37:23.678  INFO 14059 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-11-23 22:37:23.678  INFO 14059 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 8060 ms
-2023-11-23 22:37:24.481  INFO 14059 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2023-11-23 22:37:24.880  INFO 14059 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2023-11-23 22:37:24.898  INFO 14059 --- [main] kun.pomondor.PomonDorApplication         : Started PomonDorApplication in 11.717 seconds (JVM running for 12.55)
+2023-11-24 00:36:41.111  INFO 16674 --- [main] trationDelegate$BeanPostProcessorChecker : Bean '(inner bean)#6b6b3572' of type [com.amazonaws.auth.EC2ContainerCredentialsProviderWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-11-24 00:36:41.133  INFO 16674 --- [main] trationDelegate$BeanPostProcessorChecker : Bean '(inner bean)#642413d4' of type [com.amazonaws.auth.profile.ProfileCredentialsProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-11-24 00:36:41.138  INFO 16674 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'credentialsProvider' of type [org.springframework.cloud.aws.core.credentials.CredentialsProviderFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-11-24 00:36:41.139  INFO 16674 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'credentialsProvider' of type [com.amazonaws.auth.AWSCredentialsProviderChain] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-11-24 00:36:41.496  INFO 16674 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-24 00:36:41.503  INFO 16674 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-24 00:36:41.503  INFO 16674 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-11-24 00:36:41.601  INFO 16674 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-24 00:36:41.601  INFO 16674 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 8143 ms
+2023-11-24 00:36:42.473  INFO 16674 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-11-24 00:36:42.806  INFO 16674 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-24 00:36:42.821  INFO 16674 --- [main] kun.pomondor.PomonDorApplication         : Started PomonDorApplication in 11.829 seconds (JVM running for 12.637)
+2023-11-24 00:36:57.974  INFO 16674 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-24 00:36:57.976  INFO 16674 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-24 00:36:57.980  INFO 16674 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2023-11-24 00:36:58.027  INFO 16674 --- [http-nio-8080-exec-1] k.p.w.interceptor.LoginCheckInterceptor  : 로그인 체크 인터셉터: /member/profile/change
+2023-11-24 00:36:58.028  INFO 16674 --- [http-nio-8080-exec-1] k.p.w.interceptor.LoginCheckInterceptor  : 로그인 미인증 사용자 요청
+2023-11-24 00:37:07.862  INFO 16674 --- [http-nio-8080-exec-3] k.p.w.controller.login.LoginController   : 로그인 시도 : LoginForm(email=user1@naver.com, password=123123)
+2023-11-24 00:37:07.891  INFO 16674 --- [http-nio-8080-exec-3] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-24 00:37:08.354  INFO 16674 --- [http-nio-8080-exec-3] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-24 00:37:08.506  INFO 16674 --- [http-nio-8080-exec-3] k.p.w.controller.login.LoginController   : 로그인 진행 로그
+2023-11-24 00:37:08.507  INFO 16674 --- [http-nio-8080-exec-3] k.p.w.controller.login.LoginController   : 일반 사용자 로그인 성공 email = user1@naver.com
+2023-11-24 00:43:01.437  INFO 16674 --- [http-nio-8080-exec-8] k.p.w.interceptor.LoginCheckInterceptor  : 로그인 체크 인터셉터: /apple-touch-icon-precomposed.png
+2023-11-24 00:43:01.440  INFO 16674 --- [http-nio-8080-exec-8] k.p.w.interceptor.LoginCheckInterceptor  : 로그인 미인증 사용자 요청
+2023-11-24 00:43:01.444  INFO 16674 --- [http-nio-8080-exec-1] k.p.w.interceptor.LoginCheckInterceptor  : 로그인 체크 인터셉터: /apple-touch-icon-precomposed.png
+2023-11-24 00:43:01.444  INFO 16674 --- [http-nio-8080-exec-10] k.p.w.interceptor.LoginCheckInterceptor  : 로그인 체크 인터셉터: /apple-touch-icon.png
+2023-11-24 00:43:01.445  INFO 16674 --- [http-nio-8080-exec-3] k.p.w.interceptor.LoginCheckInterceptor  : 로그인 체크 인터셉터: /apple-touch-icon.png
+2023-11-24 00:43:01.446  INFO 16674 --- [http-nio-8080-exec-10] k.p.w.interceptor.LoginCheckInterceptor  : 로그인 미인증 사용자 요청
+2023-11-24 00:43:01.446  INFO 16674 --- [http-nio-8080-exec-1] k.p.w.interceptor.LoginCheckInterceptor  : 로그인 미인증 사용자 요청
+2023-11-24 00:43:01.451  INFO 16674 --- [http-nio-8080-exec-3] k.p.w.interceptor.LoginCheckInterceptor  : 로그인 미인증 사용자 요청

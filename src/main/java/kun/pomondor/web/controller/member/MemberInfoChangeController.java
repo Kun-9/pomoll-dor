@@ -25,6 +25,9 @@ public class MemberInfoChangeController {
 	private final MemberService memberService;
 	private final MyFileUploadUtil myFileUploadUtil;
 
+	// 식당 사진 s3 저장 경로
+	final String filePath = "pomondor/profile-img";
+
 	@GetMapping
 	public String infoSettingForm(
 			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginMember, Model model) {
@@ -78,16 +81,17 @@ public class MemberInfoChangeController {
 			return "redirect:/member/profile/change";
 		}
 
-		String saveFileName = "profile_" + loginId + "." + ext;
+		String saveFileName = loginId + "." + ext;
 
 		try {
 			// s3에 저장 후 이미지 경로 리턴
-			String path = myFileUploadUtil.saveImgToS3(files, saveFileName);
+			String path = myFileUploadUtil.saveProfileImgToS3(files, saveFileName);
 
 			// 이미지 경로를 db board table의 picture col에 할당
-			memberService.setProfileImg(loginId, path);
+			memberService.setProfileImg(loginId, saveFileName);
 
 			log.info("{} : 프로파일 이미지 변경", loginId);
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

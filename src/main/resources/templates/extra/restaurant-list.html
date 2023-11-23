@@ -160,7 +160,7 @@
 
         <a class="card btn" th:each="post:${posts}" th:href="@{'/etc/food/post/' + ${post.postId}}" id="card" th:fragment="card" th:if="${!posts.isEmpty()}">
             <div class="card-container">
-                <img class="card-img shadow" th:src="${post.picture}" alt="" th:if="${post.picture} != null">
+                <img class="card-img shadow" th:src="'https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/post-img/thumbnail_' + ${post.picture}" alt="" th:if="${post.picture} != null">
                 <img class="card-img shadow" alt="" th:if="${post.picture} == null" style="background: white">
                 <div class="overlay w-100 h-100" style="display: flex; flex-direction: column">
                     <div style="display: flex; flex-direction: row; margin: 4px 0 8px 0; gap: 5px">
