@@ -3,13 +3,9 @@ package kun.pomondor.domain.member;
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.repository.member.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.jdbc.JdbcTestUtils;
 
 import java.util.Arrays;
 import java.util.List;

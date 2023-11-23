@@ -41,6 +41,10 @@ dependencies {
 	// 타임리프 중복 레이아웃 관리
 	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.3.0'
 
+	// 썸네일 제작 및 관리
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.1'
+
+
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

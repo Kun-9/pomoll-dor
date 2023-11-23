@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,6 +46,34 @@ public class S3Handler {
 
 		return imagePathList;
 //		return new ResponseEntity<Object>(imagePathList, HttpStatus.OK);
+	}
+
+
+
+	public List<String> uploadThumbnail(MultipartFile[] multipartFiles, String name) throws Exception {
+		List<String> imagePathList = new ArrayList<>();
+
+		for (MultipartFile multipartFile : multipartFiles) {
+			long size = multipartFile.getSize();
+
+			ObjectMetadata objectMetadata = new ObjectMetadata();
+			objectMetadata.setContentType(multipartFile.getContentType());
+			objectMetadata.setContentLength(size);
+
+//			Thumbnailator.createThumbnail();
+
+			String fullPath = S3Bucket + "/" + filePath;
+
+			amazonS3Client.putObject(
+					new PutObjectRequest(fullPath, name, multipartFile.getInputStream(), objectMetadata)
+							.withCannedAcl(CannedAccessControlList.PublicRead)
+			);
+
+			String imagePath = amazonS3Client.getUrl(fullPath, name).toString();
+			imagePathList.add(imagePath);
+		}
+
+		return imagePathList;
 	}
 
 	//파일 삭제

@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <th:block th:replace="fragment/config::configFragment"></th:block>
 
     <title>Food Review</title>
+
+    <th:block th:replace="fragment/config::configFragment"></th:block>
+
+    <link th:href="@{/css/restaurant-post.css}" href="../../static/css/restaurant-post.css" rel="stylesheet">
 
     <style>
         .toast-theme {
@@ -120,7 +123,9 @@
                     <div class="status"></div>
                 </div>
                 <div class="comment-input" style="height: 45px;" id="expand">
-                    <textarea name="content" class="w-100 h-100" style="width: 100%;" placeholder="write a comment..."></textarea>
+
+                    <textarea th:if="${member.id == null}" name="content" class="w-100 h-100" style="width: 100%;" placeholder="로그인 후 이용해 주세요." disabled></textarea>
+                    <textarea th:if="${member.id != null}" name="content" class="w-100 h-100" style="width: 100%;" placeholder="댓글을 남겨주세요."></textarea>
                 </div>
             </div>
 

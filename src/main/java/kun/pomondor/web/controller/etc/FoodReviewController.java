@@ -108,7 +108,7 @@ public class FoodReviewController {
 
 		String ext = myFileUploadUtil.validateImg(multipartRequest, files);
 		if (ext == null) {
-			// 사진파일이 없을 때 경로값 null
+			// 사진 파일이 없거나 사진 파일이 아닐 때 경로값 null
 			foodPostService.registPicture(postId, null);
 			return "redirect:/etc/food/post/" + postId;
 		}
