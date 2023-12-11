@@ -91,9 +91,10 @@
             display: flex;
             flex-direction: row;
 
-            align-items: center;
+            align-items: end;
             /*padding: 20px 200px 60px;*/
             gap: 20px;
+            justify-content: end;
         }
         .search-btn {
             height: 100%;
@@ -128,12 +129,14 @@
 
 <div th:replace="fragment/menubar.html :: login-menubar"></div>
 
-<form class="search-container">
-<!--        <button class="search-btn btn btn-success">모두 조회</button>-->
-    <input id="searchInput" placeholder="search name..." type="text" class="search-input">
-<!--    <button class="search-btn btn btn-success">Search</button>-->
-    <button type="button" id="search-all-btn" class="search-btn btn btn-success">All</button>
-</form>
+<div style="width: 100%; display: flex; justify-content: center">
+    <form class="search-container">
+    <!--        <button class="search-btn btn btn-success">모두 조회</button>-->
+        <input id="searchInput" placeholder="search name..." type="text" class="search-input">
+    <!--    <button class="search-btn btn btn-success">Search</button>-->
+        <button type="button" id="search-all-btn" class="search-btn btn btn-success">All</button>
+    </form>
+</div>
 <div class="main-container container">
     <div id="resultForm" class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" style="margin: auto">
 
@@ -154,7 +157,7 @@
             <a type="submit" class="user-card btn btn-success w-100 shadow"
                th:href="@{'/member/info/' + ${member.id}}">
                 <div class="profile-bundle">
-                    <img class="profile" th:src="${member.picture}">
+                    <img class="profile" th:src="'https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/profile-img/thumbnail_' + ${member.picture}">
                     <div class="status"></div>
                 </div>
                 <span class="username" th:text="${member.username}">iphone</span>
@@ -163,7 +166,6 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     window.onload = () => document.getElementById('search').classList.add('text-secondary');
 </script>
@@ -203,7 +205,7 @@
                                 <a type="submit" class="user-card btn btn-success w-100 shadow"
                                     href="/member/info/${member.id}">
                                     <div class="profile-bundle">
-                                        <img class="profile" src="${member.picture}">
+                                        <img class="profile" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/profile-img/thumbnail_${member.picture}">
                                         <div class="status"></div>
                                     </div>
                                     <span class="username">${member.username}</span>

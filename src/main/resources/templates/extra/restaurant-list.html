@@ -196,7 +196,7 @@
             </div>
         </a>
     </div>
-    <div class="end"></div>
+    <span class="end"></span>
 </div>
 <script>
     window.onload = () => {
@@ -235,6 +235,7 @@
     const io = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if(entry.isIntersecting) {
+                // alert('다음 로드')
                 loadNextPosts()
                 // container.appendChild(end);
             }
