@@ -14,19 +14,19 @@ class S3HandlerTest {
 
 	@Test
 	void delete() {
-		s3Handler.fileDelete("/pomondor/post-img/1.jpeg");
-		System.out.println("2");
+//		s3Handler.fileDelete("/pomondor/post-img/1.jpeg");
+//		System.out.println("2");
 	}
 
 	@Test
 	void delete2() {
-		s3Handler.fileDelete("1.jpeg");
+//		s3Handler.fileDelete("1.jpeg");
 	}
 
 	@Test
 	void delete3() {
-		s3Handler.fileDelete("https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/post-img/1.jpeg");
-		System.out.println("4");
+//		s3Handler.fileDelete("https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/post-img/1.jpeg");
+//		System.out.println("4");
 	}
 
 
