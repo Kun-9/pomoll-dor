@@ -119,7 +119,11 @@
                 class="flex-col-container shadow-lg align-top" name="commentForm" id="commentForm">
             <div class="flex-row-container-inner">
                 <div class="profile-bundle">
-                    <img class="profile" src="/picture/default.png" th:src="'https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/profile-img/thumbnail_' + ${member.picture}" style="object-fit: cover">
+<!--                    <img class="profile" src="/picture/default.png"-->
+<!--                         th:src="${member.id != null} ? 'https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/profile-img/thumbnail_' + ${member.picture} :-->
+<!--                         'https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/profile-img/thumbnail_default.png'" style="object-fit: cover">-->
+                    <img class="profile" src="/picture/default.png"
+                         th:src="'https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/profile-img/thumbnail_' + (${member.id != null} ? ${member.picture} : 'default.png')" style="object-fit: cover">
                     <div class="status"></div>
                 </div>
                 <div class="comment-input" style="height: 45px;" id="expand">
