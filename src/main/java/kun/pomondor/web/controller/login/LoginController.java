@@ -1,14 +1,24 @@
 package kun.pomondor.web.controller.login;
 
+import kun.pomondor.domain.util.KakaoAPI;
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.service.member.MemberService;
 import kun.pomondor.web.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,11 +31,28 @@ import javax.validation.Valid;
 public class LoginController {
 
     private final MemberService memberService;
+    private final KakaoAPI kakaoAPI;
 
     @GetMapping("/login")
     public String loginForm(Model model) {
         model.addAttribute("loginForm", new LoginForm());
         return "login-form";
+    }
+
+    @ResponseBody
+    @GetMapping("/kakao-login")
+    public String kakaoLogin(@RequestParam String code, @RequestParam(required = false) String error) {
+
+        String restApiCode = "798f3d347345f730f1e9e0f6a6ce6ac0";
+        String redirectURI = "http://localhost:8080/member/kakao-login";
+
+        String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
+
+        System.out.println(token);
+
+        kakaoAPI.getUserInfo(token);
+
+        return "ok";
     }
 
     @PostMapping("/login")
