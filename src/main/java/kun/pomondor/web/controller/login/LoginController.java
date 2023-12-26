@@ -34,10 +34,10 @@ public class LoginController {
     private final MemberService memberService;
     private final KakaoAPI kakaoAPI;
 
-    @Value("${kakao.redirectURI}")
-    String redirectURI;
-    @Value("${kakao.restApiCode}")
-    String restApiCode;
+//    @Value("${kakao.redirectURI}")
+    String redirectURI = "aa";
+    //    @Value("${kakao.restApiCode}")
+    String restApiCode = "bb";
 
     @GetMapping("/login")
     public String loginForm(Model model) {
@@ -48,6 +48,8 @@ public class LoginController {
     @ResponseBody
     @GetMapping("/kakao-login")
     public String kakaoLogin(@RequestParam String code, @RequestParam(required = false) String error) {
+
+
 
         String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
 
