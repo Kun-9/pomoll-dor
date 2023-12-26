@@ -49,9 +49,6 @@ public class LoginController {
     @GetMapping("/kakao-login")
     public String kakaoLogin(@RequestParam String code, @RequestParam(required = false) String error) {
 
-//        String restApiCode = "798f3d347345f730f1e9e0f6a6ce6ac0";
-//        String redirectURI = "http://localhost:8080/member/kakao-login";
-
         String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
 
         System.out.println(token);

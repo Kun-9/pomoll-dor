@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
+@Transactional
 class MemberRepositoryImplTest {
 
 	@Autowired
@@ -25,13 +27,13 @@ class MemberRepositoryImplTest {
 	String testUserName = "testuser";
 	String testPassword = "testpassword";
 
-	@AfterEach
-	void cleanup() {
-		memberRepository.deleteMember(testEmail);
-		memberRepository.deleteMember(testEmail + 1);
-		memberRepository.deleteMember(testEmail + 2);
-		memberRepository.deleteMember(testEmail + 3);
-	}
+//	@AfterEach
+//	void cleanup() {
+//		memberRepository.deleteMember(testEmail);
+//		memberRepository.deleteMember(testEmail + 1);
+//		memberRepository.deleteMember(testEmail + 2);
+//		memberRepository.deleteMember(testEmail + 3);
+//	}
 
 
 	@Test
