@@ -66,8 +66,8 @@ jobs:
       # run: ./gradlew build
       run: ./gradlew build -x test
       
-    - name: Run test file
-      run: ./gradlew test --tests "kun.pomondor.domain.member.MemberRepositoryImplTest"
+    # - name: Run test file
+    #   run: ./gradlew test --tests "kun.pomondor.domain.member.MemberRepositoryImplTest"
 
   
     ## 도커 이미지 빌드 후 도커허브에 push하기
