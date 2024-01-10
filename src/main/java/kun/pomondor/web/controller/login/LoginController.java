@@ -49,16 +49,14 @@ public class LoginController {
     @GetMapping("/kakao-login")
     public String kakaoLogin(@RequestParam String code, @RequestParam(required = false) String error) {
 
-        return code;
+//        return code;
 
 //        String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
 
-//        String token = kakaoAPI.getToken("798f3d347345f730f1e9e0f6a6ce6ac0", "http://kun.works/member/kakao-login", code);
-//
-//        System.out.println(token);
-//        kakaoAPI.getUserInfo(token);
-//
-//        return "ok";
+        String token = kakaoAPI.getToken("798f3d347345f730f1e9e0f6a6ce6ac0", "http://kun.works/member/kakao-login", code);
+        System.out.println(token);
+        kakaoAPI.getUserInfo(token);
+        return "ok";
     }
 
     @PostMapping("/login")
