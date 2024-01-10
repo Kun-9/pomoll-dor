@@ -27,6 +27,7 @@ class MemberRepositoryImplTest {
 	String testUserName = "testuser";
 	String testPassword = "testpassword";
 
+
 //	@AfterEach
 //	void cleanup() {
 //		memberRepository.deleteMember(testEmail);
