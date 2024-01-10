@@ -1,6 +1,8 @@
 package kun.pomondor.web.controller.login;
 
+import kun.pomondor.domain.KakaoMember;
 import kun.pomondor.domain.util.KakaoAPI;
+import kun.pomondor.domain.util.MyFileUploadUtil;
 import kun.pomondor.repository.member.Member;
 import kun.pomondor.service.member.MemberService;
 import kun.pomondor.web.SessionConst;
@@ -24,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Random;
 
 @Controller
 @Slf4j
@@ -33,6 +36,7 @@ public class LoginController {
 
     private final MemberService memberService;
     private final KakaoAPI kakaoAPI;
+    private final MyFileUploadUtil myFileUploadUtil;
 
     @Value("${kakao.redirectURI}")
     String redirectURI;
@@ -45,18 +49,51 @@ public class LoginController {
         return "login-form";
     }
 
-    @ResponseBody
+//    @ResponseBody
     @GetMapping("/kakao-login")
-    public String kakaoLogin(@RequestParam String code, @RequestParam(required = false) String error) {
+    public String kakaoLogin(@RequestParam String code, @RequestParam(required = false) String error, HttpSession session) {
+
+        System.out.println("redirectURI = " + redirectURI);
+        System.out.println("restApiCode = " + restApiCode);
 
 //        return code;
 
-//        String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
+        String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
 
-        String token = kakaoAPI.getToken("798f3d347345f730f1e9e0f6a6ce6ac0", "http://kun.works/member/kakao-login", code);
+//        String token = kakaoAPI.getToken("798f3d347345f730f1e9e0f6a6ce6ac0", "http://kun.works/member/kakao-login", code);
         System.out.println(token);
-        kakaoAPI.getUserInfo(token);
-        return "ok";
+        KakaoMember kakaoMember = kakaoAPI.getUserInfo(token);
+
+        if (kakaoMember == null) return "redirect:/home";
+
+        String email = kakaoMember.getEmail();
+
+        Member loginMember = memberService.findByEmail(email);
+
+
+        // 회원이 아닐 때 가입
+        if (loginMember == null) {
+            boolean validUsernameExist = memberService.validUsernameExist(kakaoMember.getName());
+
+            String nickname = kakaoMember.getName();
+
+            while (validUsernameExist) {
+                nickname = kakaoMember.getName();
+                nickname = nickname + randomNumberGenerator();
+                validUsernameExist = memberService.validUsernameExist(nickname);
+            }
+
+            memberService.join(new Member(kakaoMember.getEmail(), nickname, String.valueOf(kakaoMember.getId())));
+
+        } else {
+            // 회원일 때 로그인
+            Integer memberLevel = SessionConst.COMMON_LOGIN;
+            session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
+            session.setAttribute(SessionConst.LOGIN_LEVEL, memberLevel);
+            session.setAttribute("currentMember", loginMember);
+        }
+
+        return "redirect:/home";
     }
 
     @PostMapping("/login")
@@ -112,5 +149,13 @@ public class LoginController {
 
         model.addAttribute("member", new Member());
         return "redirect:/home";
+    }
+
+    // 1000부터 9999까지의 난수 생성
+    private static String randomNumberGenerator() {
+        Random random = new Random();
+        int randomNumber = 1000 + random.nextInt(9000);
+
+        return String.valueOf(randomNumber);
     }
 }

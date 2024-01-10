@@ -1,5 +1,6 @@
 package kun.pomondor.domain.util;
 
+import kun.pomondor.domain.KakaoMember;
 import org.json.JSONObject;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,7 @@ public class KakaoAPI {
 		return jsonObject.getString("access_token");
 	}
 
-	public String getUserInfo(String token) {
+	public KakaoMember getUserInfo(String token) {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 
@@ -55,12 +56,15 @@ public class KakaoAPI {
 		// 응답
 //		System.out.println(responseEntity.getBody());
 		JSONObject jsonObject = new JSONObject(responseEntity.getBody());
+
+		System.out.println(jsonObject);
+
+
 		String email = jsonObject.getJSONObject("kakao_account").getString("email");
-		String nickname = jsonObject.getJSONObject("properties").getString("nickname");
+		String name = jsonObject.getJSONObject("properties").getString("nickname");
+		Long id = jsonObject.getLong("id");
+		String image = jsonObject.getJSONObject("kakao_account").getJSONObject("profile").getString("profile_image_url");
 
-		System.out.println(email + " " + nickname);
-
-//		return jsonObject.getString("access_token");
-		return "OK";
+		return new KakaoMember(id, email, name, image);
 	}
 }

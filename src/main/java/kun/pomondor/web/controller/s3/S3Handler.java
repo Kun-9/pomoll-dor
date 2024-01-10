@@ -90,6 +90,7 @@ public class S3Handler {
 		return imagePathList;
 	}
 
+
 	//파일 삭제
 	public void fileDelete(String fileName, String filePath) {
 		String id = "arn:aws:iam::784296835500:user/test-user";

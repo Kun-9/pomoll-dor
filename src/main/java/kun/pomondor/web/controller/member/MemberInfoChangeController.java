@@ -52,7 +52,7 @@ public class MemberInfoChangeController {
 	public String subtractRenameCnt(
 			@SessionAttribute(value = SessionConst.LOGIN_MEMBER) Long loginId,
 			@RequestParam String username) {
-		String query = "";
+		String query;
 		int result = memberService.changeName(loginId, username);
 		if (result == 1) {
 			memberService.subtractRenameCnt(loginId);
@@ -77,7 +77,7 @@ public class MemberInfoChangeController {
 
 		// 수정폼에 업로드 이미지가 없을 시
 		if (ext == null) {
-			memberService.setProfileImg(loginId, "/picture/default.png");
+			memberService.setProfileImg(loginId, "default.png");
 			return "redirect:/member/profile/change";
 		}
 
