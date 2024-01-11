@@ -2,6 +2,7 @@ package kun.pomondor.domain.util;
 
 import kun.pomondor.web.controller.s3.S3Handler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
@@ -18,7 +19,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MyFileUploadUtil {
 
+	@Value("${localPath}")
+	private String localPath;
+
 	private final S3Handler s3Handler;
+
 	// multipartFile에 파일이 포함되어 있는지 확인하고 이미지 파일인지 검증, 이미지 파일이라면 타입 리턴
 	public String validateImg(MultipartRequest multipartRequest, MultipartFile[] files) {
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
@@ -60,7 +65,7 @@ public class MyFileUploadUtil {
 	}
 
 	public String saveProfileImgToS3(String url, String saveFileName) throws Exception {
-		File file = convertUrlToFile(url);
+		File file = convertUrlToFile(url, saveFileName);
 		if (file == null) return null;
 		return saveProfileImgToS3(file, saveFileName);
 	}
@@ -93,13 +98,13 @@ public class MyFileUploadUtil {
 		s3Handler.fileDelete(fileName, filePath);
 	}
 
-	public File convertUrlToFile(String imageUrl) {
+	public File convertUrlToFile(String imageUrl, String saveFileName) {
+
 
 		File imageFile;
 		try {
-			imageFile = downloadImage(imageUrl, "/tmp/test.jpg");
-			System.out.println("Image downloaded successfully. File path: " + imageFile.getAbsolutePath());
-
+			imageFile = downloadImage(imageUrl, localPath + "/" + saveFileName);
+			System.out.println("File path: " + imageFile.getAbsolutePath());
 			return imageFile;
 		} catch (IOException e) {
 			e.printStackTrace();

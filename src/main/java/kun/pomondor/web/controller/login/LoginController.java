@@ -58,7 +58,8 @@ public class LoginController {
 //        return code;
 //        String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
 
-        String token = kakaoAPI.getToken("798f3d347345f730f1e9e0f6a6ce6ac0", "http://kun.works/member/kakao-login", code);
+        String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
+//        String token = kakaoAPI.getToken("798f3d347345f730f1e9e0f6a6ce6ac0", "http://kun.works/member/kakao-login", code);
         System.out.println(token);
         KakaoMember kakaoMember = kakaoAPI.getUserInfo(token);
 
@@ -79,16 +80,20 @@ public class LoginController {
                 validUsernameExist = memberService.validUsernameExist(nickname);
             }
 
-            memberService.join(new Member(kakaoMember.getEmail(), nickname, String.valueOf(kakaoMember.getId())));
+            loginMember = memberService.join(new Member(kakaoMember.getEmail(), nickname, String.valueOf(kakaoMember.getId())));
 
-            loginMember = memberService.findByEmail(email);
             try {
                 myFileUploadUtil.saveProfileImgToS3(kakaoMember.getImage(), loginMember.getId() + ".jpg");
+                System.out.println("profile img success");
                 memberService.setProfileImg(loginMember.getId(), loginMember.getId() + ".jpg");
+
+                loginMember = memberService.findByEmail(email);
             } catch (Exception e) {
                 log.error("프로필 사진 업로드 오류");
             }
         }
+
+
 
         // 회원일 때 로그인
         Integer memberLevel = SessionConst.COMMON_LOGIN;

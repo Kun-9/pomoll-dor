@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +25,10 @@ public class S3Handler {
 	private final String S3Bucket = "kun-buket-test";
 
 	private final AmazonS3Client amazonS3Client;
+
+	@Value("${localPath}")
+	private String localPath;
+
 
 	// 업로드
 //	public List<String> upload(MultipartFile[] multipartFiles, String name, String filePath) throws Exception {
@@ -106,7 +111,6 @@ public class S3Handler {
 	}
 
 
-
 	public String uploadNew(MultipartFile multipartFile, String name, String filePath, int width, int height) throws IOException {
 		File uploadFile = convert(multipartFile)
 				.orElseThrow(() -> new IllegalArgumentException("MultipartFile 변환 실패"));
@@ -128,11 +132,13 @@ public class S3Handler {
 		String fileName = filePath + "/" + name;
 		String thumbnailFileName = filePath + "/" + "thumbnail_" + name;
 
-		File thumbnailFile = new File("/tmp/" + name);
-		generateThumbnail(uploadFile, thumbnailFile, 300, 300);
+		File thumbnailFile = new File(localPath + "/" + "thumbnail_" + name);
 
+		generateThumbnail(uploadFile, thumbnailFile, width, height);
 		putS3(thumbnailFile, thumbnailFileName);
-		return putS3(uploadFile, fileName);
+		String uploadUrl = putS3(uploadFile, fileName);
+
+		return uploadUrl;
 	}
 
 	private void generateThumbnail(File inputFile, File outputFile, int width, int height) throws IOException {
