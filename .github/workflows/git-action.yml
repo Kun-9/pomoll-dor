@@ -28,6 +28,7 @@ jobs:
       S3_REGION: ${{ secrets.S3_REGION }}
       KAKAO_REST_API: ${{ secrets.KAKAO_REST_API_CODE }}
       KAKAO_REDIRECT_URI: ${{ secrets.KAKAO_REDIRECT_URI }}
+      LOCAL_PATH: ${{ secrets.LOCAL_PATH }}
 
     steps:
     - uses: actions/checkout@v3
@@ -62,6 +63,7 @@ jobs:
         echo "kakao.redirectURI=${KAKAO_REDIRECT_URI}" >> ./src/main/resources/application.properties
         echo "" >> ./src/main/resources/application.properties
         echo "logging.file.path=logs" >> ./src/main/resources/application.properties
+        echo "localPath=${LOCAL_PATH}" >> ./src/main/resources/application.properties
 
 
     - name: Build with Gradle
