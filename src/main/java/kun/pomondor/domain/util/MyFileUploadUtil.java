@@ -6,6 +6,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -35,19 +40,46 @@ public class MyFileUploadUtil {
 
 	public String saveRestaurantPostImgToS3(MultipartFile[] files, String saveFileName) throws Exception {
 		String filePath = "pomondor/post-img";
+		return s3Handler.uploadNew(files[0], saveFileName, filePath, 700, 800);
+	}
 
-		s3Handler.uploadThumbnail(files, saveFileName, filePath, 400, 800);
-		List<String> imgPathList = s3Handler.upload(files, saveFileName, filePath);
-		return imgPathList.get(0);
+	public String saveRestaurantPostImgToS3(File file, String saveFileName) throws Exception {
+		String filePath = "pomondor/post-img";
+
+		return s3Handler.uploadNew(file, saveFileName, filePath, 700, 800);
 	}
 
 	public String saveProfileImgToS3(MultipartFile[] files, String saveFileName) throws Exception {
 		String filePath = "pomondor/profile-img";
-
-		s3Handler.uploadThumbnail(files, saveFileName, filePath, 100, 200);
-		List<String> imgPathList = s3Handler.upload(files, saveFileName, filePath);
-		return imgPathList.get(0);
+		return s3Handler.uploadNew(files[0], saveFileName, filePath, 100, 200);
 	}
+
+	public String saveProfileImgToS3(File file, String saveFileName) throws Exception {
+		String filePath = "pomondor/profile-img";
+		return s3Handler.uploadNew(file, saveFileName, filePath, 100, 200);
+	}
+
+	public String saveProfileImgToS3(String url, String saveFileName) throws Exception {
+		File file = convertUrlToFile(url);
+		if (file == null) return null;
+		return saveProfileImgToS3(file, saveFileName);
+	}
+
+//	public String saveRestaurantPostImgToS3(MultipartFile[] files, String saveFileName) throws Exception {
+//		String filePath = "pomondor/post-img";
+//
+//		s3Handler.uploadThumbnail(files, saveFileName, filePath, 400, 800);
+//		List<String> imgPathList = s3Handler.upload(files, saveFileName, filePath);
+//		return imgPathList.get(0);
+//	}
+//
+//	public String saveProfileImgToS3(MultipartFile[] files, String saveFileName) throws Exception {
+//		String filePath = "pomondor/profile-img";
+//
+//		s3Handler.uploadThumbnail(files, saveFileName, filePath, 100, 200);
+//		List<String> imgPathList = s3Handler.upload(files, saveFileName, filePath);
+//		return imgPathList.get(0);
+//	}
 
 	public void deleteRestaurantImg(String fileName) {
 		String filePath = "pomondor/post-img";
@@ -60,4 +92,38 @@ public class MyFileUploadUtil {
 
 		s3Handler.fileDelete(fileName, filePath);
 	}
+
+	public File convertUrlToFile(String imageUrl) {
+
+		File imageFile;
+		try {
+			imageFile = downloadImage(imageUrl, "/tmp/test.jpg");
+			System.out.println("Image downloaded successfully. File path: " + imageFile.getAbsolutePath());
+
+			return imageFile;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	private static File downloadImage(String imageUrl, String destinationPath) throws IOException {
+		URL url = new URL(imageUrl);
+		File destinationFile = new File(destinationPath);
+
+		try (InputStream in = url.openStream();
+		     FileOutputStream out = new FileOutputStream(destinationFile)) {
+
+			byte[] buffer = new byte[1024];
+			int bytesRead;
+			while ((bytesRead = in.read(buffer)) != -1) {
+				out.write(buffer, 0, bytesRead);
+			}
+
+			return destinationFile;
+		}
+	}
+
+
 }

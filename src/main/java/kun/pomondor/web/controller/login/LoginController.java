@@ -55,9 +55,7 @@ public class LoginController {
 
 //        System.out.println("redirectURI = " + redirectURI);
 //        System.out.println("restApiCode = " + restApiCode);
-
 //        return code;
-
 //        String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
 
         String token = kakaoAPI.getToken("798f3d347345f730f1e9e0f6a6ce6ac0", "http://kun.works/member/kakao-login", code);
@@ -67,9 +65,7 @@ public class LoginController {
         if (kakaoMember == null) return "redirect:/home";
 
         String email = kakaoMember.getEmail();
-
         Member loginMember = memberService.findByEmail(email);
-
 
         // 회원이 아닐 때 가입
         if (loginMember == null) {
@@ -85,13 +81,20 @@ public class LoginController {
 
             memberService.join(new Member(kakaoMember.getEmail(), nickname, String.valueOf(kakaoMember.getId())));
 
-        } else {
-            // 회원일 때 로그인
-            Integer memberLevel = SessionConst.COMMON_LOGIN;
-            session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
-            session.setAttribute(SessionConst.LOGIN_LEVEL, memberLevel);
-            session.setAttribute("currentMember", loginMember);
+            loginMember = memberService.findByEmail(email);
+            try {
+                myFileUploadUtil.saveProfileImgToS3(kakaoMember.getImage(), loginMember.getId() + ".jpg");
+                memberService.setProfileImg(loginMember.getId(), loginMember.getId() + ".jpg");
+            } catch (Exception e) {
+                log.error("프로필 사진 업로드 오류");
+            }
         }
+
+        // 회원일 때 로그인
+        Integer memberLevel = SessionConst.COMMON_LOGIN;
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
+        session.setAttribute(SessionConst.LOGIN_LEVEL, memberLevel);
+        session.setAttribute("currentMember", loginMember);
 
         return "redirect:/home";
     }
