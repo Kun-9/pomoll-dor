@@ -93,8 +93,6 @@ public class LoginController {
             }
         }
 
-
-
         // 회원일 때 로그인
         Integer memberLevel = SessionConst.COMMON_LOGIN;
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember.getId());
