@@ -40,6 +40,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/portfolio")
+    public String portfolio() {
+        return "portfolio/portfolio";
+    }
+
     @ResponseBody
     @PostMapping("/ex")
     public String ex(@RequestParam Object start) {
