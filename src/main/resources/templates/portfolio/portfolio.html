@@ -9,6 +9,50 @@
     <title>Portfolio</title>
 
     <style>
+
+        @media (max-width: 1400px) {
+            .project-main-img-container {
+                display: none;
+            }
+
+            .sub-container {
+                padding: 50px 20px;
+            }
+
+            .project-description {
+                padding: 20px;
+                margin-bottom: 30px;
+                align-items: center;
+            }
+
+            .project-main-img-container {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .skill-title {
+                font-size: 16px;
+            }
+        }
+
+        @media (min-width: 1401px) {
+            .sub-container {
+                padding: 50px;
+            }
+
+            .project-description {
+                padding: 50px;
+            }
+
+            .project-main-img-container {
+                padding: 50px;
+            }
+        }
+
+
+
+
         * {
             font-family: 'Noto Sans KR', sans-serif;
             box-sizing: border-box;
@@ -16,7 +60,7 @@
 
         body {
             margin: 0;
-            background-color: #ffffff;
+            background-color: #eaebef;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -45,14 +89,18 @@
             flex-direction: column;
             /*justify-content: center;*/
             align-items: center;
-            margin-top: 200px
+            margin-top: 50px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            /*padding: 50px;*/
+            margin-bottom: 50px;
         }
 
         .sub-title {
             font-size: 3rem;
             font-weight: bolder;
             /*padding: 100px;*/
-            color: #527cbe;
+            color: #000000;
             margin-bottom: 50px;
         }
 
@@ -109,28 +157,47 @@
             flex-direction: column;
             align-items: center;
             gap: 25px;
-
+            text-align: center;
+            margin-bottom: 50px;
+            /*width: 100%;*/
+            max-width: 300px;
         }
 
         .skill-title {
             font-size: 25px;
             font-weight: bold;
-
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #7DB150;
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            width: 100%;
         }
 
         .skill-img {
-            width: 200px;
-
+            /*width: 200px;*/
+            /*max-width: 350px;*/
+            width: 100%;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 15px;
         }
 
         .project-container {
             display: flex;
+            /*height: 800px;*/
+            /*width: 1500px;*/
+            width: 100%;
+            /*aspect-ratio: 1/1.3;*/
+            /*padding-left: 80px;*/
+            /*padding-right: 80px;*/
+            z-index: 2;
+            margin-bottom: 20px;
         }
 
-        
-        .project-container:hover {
-            cursor: grab;
-        }
+
         .project-container img {
             -webkit-filter: grayscale(0) blur(0);
             filter: grayscale(0) blur(0);
@@ -138,9 +205,85 @@
             transition: 0.5s;
             object-fit: cover;
         }
-        .project-container:hover img {
+
+        .project-container img:hover {
             -webkit-filter: grayscale(50%) blur(1px);
-            filter: grayscale(50%) blur(1px);
+            filter: grayscale(50%) blur(3px);
+        }
+
+        .project-description {
+            /*width: 500px;*/
+            font-size: 22px;
+            display: flex;
+            flex-direction: column;
+            /*padding: 0 15px 0 15px;*/
+            /*justify-content: space-between;*/
+            /*padding: 50px;*/
+        }
+
+        .project-title {
+            border-radius: 28px;
+            background-color: #89B05D;
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            padding: 10px 20px;
+            line-height: 40px;
+            display: inline-block;
+        }
+
+        .project-main-img {
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            /*border: black 1px solid;*/
+        }
+        
+        .project-main-img {
+            cursor: pointer;
+        }
+        
+        .project-main-img-container {
+            flex: 1;
+        }
+
+        .project-sub-img {
+            width: 100%;
+            aspect-ratio: 2/1.5;
+            border-radius: 5px;
+            /*border: black 1px solid;*/
+            cursor: pointer;
+            max-width: 620px;
+        }
+
+        .edu-reward {
+            border-radius: 5px; height: 100%;
+            padding: 50px
+        }
+
+        .underline {
+            /*border-bottom: 1px solid black;*/
+            /*width: 80%;*/
+            /*margin-top: 8px;*/
+
+        }
+
+        .project-subject {
+            margin-top: 10px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .project-text {
+            font-weight: lighter;
+        }
+
+        .project-des {
+            width: 100%;
+            max-width: 620px;
+            padding: 10px 10px 0 10px;
         }
     </style>
 </head>
@@ -150,18 +293,18 @@
     <div style="height: 100vh; width: 100vw; display: flex; flex-direction: column; background-color: #2b2b2b">
         <div style="align-items: center; justify-content: center; margin: auto; font-size: 1.8rem; text-align: center; color: white; font-weight: lighter;">
             <div style="font-size: 2.4rem">
-                안녕하세요. <span style="color: #ee1461; font-weight: bold;">백엔드 개발자 신동근입니다.</span>
+                <div>안녕하세요.</div> <div style="color: #ee1461; font-weight: bold;">백엔드 개발자 신동근입니다.</div>
             </div>
-            <div style="margin-top: 10px">
+            <div style="margin-top: 10px; padding: 0 15px 0 15px">
                 저는 가치있는 서비스를 제공하고 지속적으로 발전하고 싶은 개발자입니다.
             </div>
         </div>
     </div>
 
-    <div class="menubar" style="width: 100%" >
+    <div class="menubar" style="z-index: 3" >
         <header class="p-2 text-white" style="width: 100%; background: #727272">
-            <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <div class="container-fluid">
+                <div class="d-flex flex-wrap align-items-center" style="padding: 0 10px 0 10px; max-width: 1600px; margin: auto">
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li><a id="home" class="nav-link ">About Me</a></li>
                         <li><a id="group" class="nav-link ">Skills</a></li>
@@ -172,13 +315,14 @@
         </header>
     </div>
 
-    <div style="padding: 0 0 200px 0">
-        <div class="sub-container" style="margin-bottom: 200px;">
+<!--    <div style="padding: 0 100px 200px 100px">-->
+    <div style="padding: 50px 30px 200px 30px; margin: auto; max-width: 1600px">
+        <div class="sub-container shadow" style="">
             <div class="sub-title mt-3">
-                ABOUT ME
+                🧑‍💻 ABOUT ME
             </div>
 
-            <div class="p-3 row-cols-3 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 row-cols-xl-5 row text-center" style="width: 100%;">
+            <div class="p-3 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row text-center" style="width: 100%;">
                 <div class="col about-container">
                     <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/user.png" class="about-img">
                     <div class="about-object">
@@ -229,19 +373,19 @@
             </div>
         </div>
 
-        <div class="row" style="width: 80vw; margin: auto">
-            <div class="col" style="padding: 30px">
-                <div class="shadow" style="border-radius: 20px; height: 100%; padding: 50px">
+        <div class="row row-cols-sm-1 gap-3" style="">
+            <div class="col" style="margin-bottom: 50px;">
+                <div class="edu-reward shadow" style="background-color: white">
                     <div class="sub-title text-center" style="">
-                        EDUCATION
+                        🎓 EDUCATION
                     </div>
 
-                    <ul style="font-size: 20px">
+                    <ul style="font-size: 20px;">
                         <li class="w-100">
                             <div style="font-weight: bold">대진대학교 휴먼로봇융합과 전공</div>
                             <div>(2017.03 ~ 2023.02)</div>
                         </li>
-
+                        <br>
                         <li class="w-100 mt-2">
                             <div style="font-weight: bold">자바&스프링기반 AWS클라우드 융합 개발자 양성과정(D) Java 기반 풀스택 프로그래밍 과정 이수(112일, 896시간)</div>
                             <div>(2023.01.31 ~ 2023.07.13)</div>
@@ -250,10 +394,10 @@
                 </div>
             </div>
 
-            <div class="col" style="padding: 30px">
-                <div class="shadow" style="border-radius: 20px; height: 100%; padding: 50px">
+            <div class="col" style="">
+                <div class="edu-reward shadow" style="background-color: white">
                     <div class="sub-title text-center" style="">
-                        REWARD
+                        🏅 REWARD
                     </div>
 
                     <ul style="font-size: 20px">
@@ -267,94 +411,139 @@
             </div>
         </div>
 
-        <div class="sub-container">
-            <div class="sub-title mt-5">
-                SKILLS
+        <div class="sub-container shadow" style="">
+            <div class="sub-title">
+                🖥️ SKILLS
             </div>
-            <div style="display: flex; gap: 100px">
-                <div class="skill-object">
+            <div class="row row-cols-sm-2 row-cols-md-2 row-cols-xl-3 row-cols-xl-3" style="width: 100%; justify-content: center">
+                <div class="skill-object col">
                     <div class="skill-title">
                         <div>Frontend</div>
+<!--                        <div class="underline"></div>-->
                     </div>
                     <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/front.png" class="skill-img">
                 </div>
 
-                <div class="skill-object">
-                    <div class="skill-title">Backend</div>
+                <div class="skill-object col">
+                    <div class="skill-title">
+                        <div>Backend</div>
+                        <div class="underline"></div>
+                    </div>
                     <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/back.png" class="skill-img">
                 </div>
 
-                <div class="skill-object">
-                    <div class="skill-title">Deployment</div>
+                <div class="skill-object col">
+                    <div class="skill-title">
+                        <div>Deployment</div>
+                        <div class="underline"></div>
+                    </div>
                     <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/deploy.png" class="skill-img">
                 </div>
-            </div>
 
-            <div style="display: flex; gap: 100px; margin-top: 70px;">
-                <div class="skill-object">
-                    <div class="skill-title">Version Control</div>
+                <div class="skill-object col">
+                    <div class="skill-title">
+                        <div>Version Control</div>
+                        <div class="underline"></div>
+                    </div>
                     <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/vc.png" class="skill-img">
                 </div>
 
-                <div class="skill-object">
-                    <div class="skill-title">Template Engine</div>
+                <div class="skill-object col">
+                    <div class="skill-title">
+                        <div>Template Engine</div>
+                        <div class="underline"></div>
+                    </div>
                     <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/template.png" class="skill-img">
                 </div>
 
-                <div class="skill-object">
-                    <div class="skill-title">DataBase</div>
+                <div class="skill-object col">
+                    <div class="skill-title">
+                        <div>DataBase</div>
+                        <div class="underline"></div>
+                    </div>
                     <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/db.png" class="skill-img">
                 </div>
-            </div>
 
-            <div style="display: flex; gap: 100px; margin-top: 70px;">
-                <div class="skill-object">
-                    <div class="skill-title">Language</div>
+                <div class="skill-object col">
+                    <div class="skill-title">
+                        <div>Language</div>
+                        <div class="underline"></div>
+                    </div>
                     <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/lang.png" class="skill-img">
                 </div>
 
-                <div class="skill-object">
-                    <div class="skill-title">Tool</div>
+                <div class="skill-object col">
+                    <div class="skill-title">
+                        <div>Tool</div>
+                        <div class="underline"></div>
+                    </div>
                     <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/tool.png" class="skill-img">
                 </div>
             </div>
         </div>
 
-        <div class="sub-container">
+        <div class="sub-container shadow" style="">
             <div class="sub-title">
-                PROJECTS
+                📚 PROJECTS
             </div>
 
-            <div class="project-container" style="height: 800px; padding-left: 80px; padding-right: 80px ">
-                <div style="width: 500px; padding: 50px; font-size: 22px; gap: 10px; display: flex; flex-direction: column">
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/print.png" style="width:100%; aspect-ratio: 2/1.5; border-radius: 20px">
-                    <div class="project-title" style="color: #0a53be; font-size: 30px; font-weight: bold; margin-top: 10px; margin-bottom: 10px;">소스 프린터</div>
-                    <div>2022.03.01 ~ 2022.12.10</div>
-                    <div>캡스톤 프로젝트</div>
-                    <div>소스 레시피의 간편한 저장과 출력을 위한 프로젝트입니다.</div>
+            <div class="project-container row" style="">
+                <div class="project-description col" style="">
+                    <a th:href="@{/portfolio/sauce-printer}">
+                        <img class="project-sub-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/print.png">
+                    </a>
+                    <div class="project-des" >
+                        <div class="project-title" >소스 프린터</div>
+                        <div>2022.03.01 ~ 2022.12.10</div>
+                        <div class="project-subject">캡스톤 프로젝트</div>
+                        <div class="project-text">소스 레시피의 간편한 저장과 출력을 위한 프로젝트입니다.</div>
+                    </div>
                 </div>
-                <div style="flex: 1; padding: 50px">
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/print.png" style="height: 100%; width: 100%; border-radius: 20px">
+                <div class="project-main-img-container col">
+                    <a th:href="@{/portfolio/sauce-printer}">
+                        <img class="project-main-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/print.png">
+                    </a>
                 </div>
             </div>
 
-            <div class="project-container">
-                <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/por.png" style="width: 20vw; aspect-ratio: 1/1.3">
+            <div class="project-container row" style="">
+                <div class="project-description col" style="">
+                    <img class="project-sub-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/por.png">
+                    <div class="project-des" >
+                        <div class="project-title" >Pomor</div>
+                        <div>2022.09.22 ~ 진행중</div>
+                        <div class="project-subject">1인 프로젝트</div>
+                        <div class="project-text">시간관리와 음식점 리뷰 기능이 있는 웹 프로젝트입니다.</div>
+                    </div>
+                </div>
+                <div class="project-main-img-container col">
+                    <img class="project-main-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/por.png">
+                </div>
             </div>
 
-            <div class="project-container">
-                <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/today.png" style="width: 20vw; aspect-ratio: 1/1.3">
+            <div class="project-container row" style="">
+                <div class="project-description col" style="">
+                    <img class="project-sub-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/today.png">
+                    <div class="project-des" >
+                        <div class="project-title" >오늘의집 클론코딩</div>
+                        <div>2023.05.04 ~ 2023.07.01</div>
+                        <div class="project-subject">6인 팀 프로젝트</div>
+                        <div class="project-text">오늘의집 사이트를 클론코딩한 웹 프로젝트 입니다.</div>
+                    </div>
+                </div>
+                <div class="project-main-img-container col">
+                    <img class="project-main-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/today.png">
+                </div>
             </div>
-
         </div>
     </div>
 </div>
 
 
 <footer style="width: 100%; color: white">
-    <div style="display: flex; padding: 70px; background-color: #2b2b2b; justify-content: center; gap: 20px">
-        <div>Blog</div>
-        <div>GitHub</div>
+    <div style="display: flex; padding: 70px; background-color: #2b2b2b; justify-content: center; gap: 20px;">
+        <a href="https://dong-ding.tistory.com/" style="text-decoration: none; color: white">Blog</a>
+        <a href="https://github.com/Kun-9/" style="text-decoration: none; color: white">GitHub</a>
     </div>
 </footer>
 
