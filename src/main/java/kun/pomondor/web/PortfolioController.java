@@ -23,4 +23,14 @@ public class PortfolioController {
         return "portfolio/projects/sauce_printer";
     }
 
+    @GetMapping("/portfolio/pomor")
+    public String portfolioPomor() {
+        return "portfolio/projects/pomor";
+    }
+
+    @GetMapping("/portfolio/today")
+    public String portfolioToday() {
+        return "portfolio/projects/today";
+    }
+
 }

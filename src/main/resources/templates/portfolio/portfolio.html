@@ -29,6 +29,18 @@
                 padding: 20px;
             }
         }
+        
+        @media (max-width: 750px) {
+            .underline {
+                display: block;
+            }
+        }
+
+        @media (min-width: 750px) {
+            .underline {
+                display: none;
+            }
+        }
 
         @media (max-width: 900px) {
             .skill-title {
@@ -58,6 +70,10 @@
             box-sizing: border-box;
         }
 
+        a {
+            text-decoration: none;
+        }
+
         body {
             margin: 0;
             background-color: #eaebef;
@@ -66,10 +82,10 @@
             align-items: center;
         }
 
-        .nav > li > a {
-            color: white;
-            font-size: 1em;
-        }
+        /*.nav > li > a {*/
+        /*    color: white;*/
+        /*    font-size: 1em;*/
+        /*}*/
 
 
         /*body {*/
@@ -91,7 +107,7 @@
             align-items: center;
             margin-top: 50px;
             background-color: #ffffff;
-            border-radius: 5px;
+            border-radius: 25px;
             /*padding: 50px;*/
             margin-bottom: 50px;
         }
@@ -107,7 +123,7 @@
         .menubar {
             position: sticky;
             top: 0;
-            color: white;
+            /*color: white;*/
             font-weight: lighter;
             font-size: 1.3rem;
         }
@@ -180,9 +196,8 @@
             /*width: 200px;*/
             /*max-width: 350px;*/
             width: 100%;
-            border: 1px solid black;
-            border-radius: 5px;
-            padding: 15px;
+            /*border: 1px solid black;*/
+            /*padding: 15px;*/
         }
 
         .project-container {
@@ -202,13 +217,21 @@
             -webkit-filter: grayscale(0) blur(0);
             filter: grayscale(0) blur(0);
             -webkit-transition: 0.3s;
-            transition: 0.5s;
+            transition: 0.3s;
             object-fit: cover;
         }
 
         .project-container img:hover {
-            -webkit-filter: grayscale(50%) blur(1px);
-            filter: grayscale(50%) blur(3px);
+            /*-webkit-filter: grayscale(50%) blur(1px);*/
+            /*filter: grayscale(50%) blur(3px);*/
+        }
+
+        .view-detail:hover {
+            display: block;
+        }
+
+        .project-container img:hover ~ .view-detail {
+            display: block;
         }
 
         .project-description {
@@ -219,6 +242,13 @@
             /*padding: 0 15px 0 15px;*/
             /*justify-content: space-between;*/
             /*padding: 50px;*/
+
+        }
+
+        .project-description a {
+            color: black;
+            max-width: 620px;
+            width: 100%;
         }
 
         .project-title {
@@ -252,22 +282,21 @@
         .project-sub-img {
             width: 100%;
             aspect-ratio: 2/1.5;
-            border-radius: 5px;
+            /*border-radius: 5px;*/
             /*border: black 1px solid;*/
             cursor: pointer;
-            max-width: 620px;
+            /*max-width: 620px;*/
         }
 
         .edu-reward {
-            border-radius: 5px; height: 100%;
+            border-radius: 25px; height: 100%;
             padding: 50px
         }
 
         .underline {
-            /*border-bottom: 1px solid black;*/
-            /*width: 80%;*/
-            /*margin-top: 8px;*/
-
+            border-bottom: 2px solid #9b9b9b;
+            width: 80%;
+            margin-bottom: 30px;
         }
 
         .project-subject {
@@ -283,135 +312,246 @@
         .project-des {
             width: 100%;
             max-width: 620px;
-            padding: 10px 10px 0 10px;
+            padding: 10px 30px 30px 30px;
+        }
+
+        .skill-img-container {
+            flex: 1;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .nav-link {
+            color: white;
+        }
+
+        .navbar .nav-item .active {
+            background-color: rgba(255, 255, 255, 0);
+            color: #DB3462;
+            font-weight: normal;
+        }
+
+        .next-arrow {
+            color: white;
+        }
+
+        .next-arrow:hover {
+            cursor: pointer;
+            color: #DB3462;
+        }
+
+        .view-detail {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 15px;
+            padding: 10px 20px;
+            display: none;
+            transition: 0.1s;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .view-detail-button {
+            display: inline-block;
+            padding: 10px 20px;
+            /*background-color: #0a53be;*/
+            /*color: white;*/
+            color: black;
+            border-radius: 18px;
+            margin-top: 20px;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+
+        .view-detail-button:hover {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .project-card {
+            border-radius: 5px;
+            overflow: hidden;
+            transition: 0.2s;
+            max-width: 620px;
+            width: 100%;
+        }
+        
+        .project-card:hover {
+            cursor: pointer;
+            /*opacity: 0.8;*/
+            /*-webkit-filter: grayscale(50%) blur(1px);*/
+            filter: grayscale(50%) blur(2px);
+        }
+
+        .project-main-img:hover {
+            filter: grayscale(50%) blur(2px);
         }
     </style>
 </head>
 <body>
 
-<div class="" style="display: flex; flex-direction: column;">
-    <div style="height: 100vh; width: 100vw; display: flex; flex-direction: column; background-color: #2b2b2b">
-        <div style="align-items: center; justify-content: center; margin: auto; font-size: 1.8rem; text-align: center; color: white; font-weight: lighter;">
-            <div style="font-size: 2.4rem">
-                <div>안녕하세요.</div> <div style="color: #ee1461; font-weight: bold;">백엔드 개발자 신동근입니다.</div>
-            </div>
-            <div style="margin-top: 10px; padding: 0 15px 0 15px">
-                저는 가치있는 서비스를 제공하고 지속적으로 발전하고 싶은 개발자입니다.
+<div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" tabindex="0" class="" style="display: flex; flex-direction: column;">
+<!--    background-color: #2b2b2b;-->
+    <div style="height: 100vh; width: 100vw; display: flex; flex-direction: column; position: relative">
+        <div style="align-items: center; justify-content: center; margin: auto; font-size: 1.8rem; text-align: center; color: white; font-weight: lighter; height: 70%">
+
+            <img style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; opacity: 0.5; z-index: -2; object-fit: cover"
+                 src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/IMG_8081.jpeg">
+            <div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; opacity: 0.75; z-index: -1;  background-color: #2b2b2b;"></div>
+
+            <div style="z-index: 2; margin: auto; height: 100%; display: flex; flex-direction: column; justify-content: space-between">
+                <div></div>
+                <div>
+                    <div style="font-size: 2.4rem">
+                        <div>안녕하세요.</div> <div style="color: #ee1461; font-weight: bold;">백엔드 개발자 신동근입니다.</div>
+                    </div>
+                    <div style="margin-top: 10px; padding: 0 15px 0 15px">
+                        저는 가치있는 서비스를 제공하고 지속적으로 발전하고 싶은 개발자입니다.
+                    </div>
+                </div>
+
+                <div style="font-size: 60px">
+                    <a href="#aboutMe"><i class="bi bi-caret-down-fill next-arrow"></i></a>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="menubar" style="z-index: 3" >
-        <header class="p-2 text-white" style="width: 100%; background: #727272">
+        <header class="p-2 text-white" style="width: 100%; background: #727272;">
             <div class="container-fluid">
-                <div class="d-flex flex-wrap align-items-center" style="padding: 0 10px 0 10px; max-width: 1600px; margin: auto">
-                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <li><a id="home" class="nav-link ">About Me</a></li>
-                        <li><a id="group" class="nav-link ">Skills</a></li>
-                        <li><a id="myPage" class="nav-link ">Projects</a></li>
+                <nav id="list-example" class="navbar px-3" style="padding: 0 10px 0 10px; max-width: 1600px; margin: auto">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#aboutMe">ABOUT ME</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#skills">SKILLS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#projects">PROJECTS</a>
+                        </li>
                     </ul>
-                </div>
+                </nav>
             </div>
         </header>
     </div>
+<!--        <header class="p-2 text-white" style="width: 100%; background: #727272">-->
+<!--            <div class="container-fluid">-->
+<!--                <div id="navbar" class="d-flex flex-wrap align-items-center" style="padding: 0 10px 0 10px; max-width: 1600px; margin: auto">-->
+<!--                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">-->
+<!--                        <li><a class="nav-link" href="#aboutMe">About Me</a></li>-->
+<!--                        <li><a class="nav-link" href="#skills">Skills</a></li>-->
+<!--                        <li><a class="nav-link" href="#projects">Projects</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </header>-->
+
 
 <!--    <div style="padding: 0 100px 200px 100px">-->
     <div style="padding: 50px 30px 200px 30px; margin: auto; max-width: 1600px">
-        <div class="sub-container shadow" style="">
-            <div class="sub-title mt-3">
-                🧑‍💻 ABOUT ME
+
+        <div id="aboutMe">
+            <div class="sub-container shadow" style="margin-bottom: 0;">
+                <div class="sub-title mt-3">
+                    🧑‍💻 ABOUT ME
+                </div>
+
+                <div class="p-3 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row text-center" style="width: 100%;">
+                    <div class="col about-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/user.png" class="about-img">
+                        <div class="about-object">
+                            <div class="about-title">NAME</div>
+                            <div>신동근</div>
+                        </div>
+                    </div>
+
+                    <div class="col about-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/calendar-silhouette.png" class="about-img">
+                        <div class="about-object">
+                            <div class="about-title">BIRTH</div>
+                            <div>1998.09.10</div>
+                        </div>
+                    </div>
+
+                    <div class="col about-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/pin.png" class="about-img">
+                        <div class="about-object">
+                            <div class="about-title">LOCATE</div>
+                            <div>서울 광진구</div>
+                        </div>
+                    </div>
+
+                    <div class="col about-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/phone.png" class="about-img">
+                        <div class="about-object">
+                            <div class="about-title">TEL</div>
+                            <div>010-8515-3921</div>
+                        </div>
+                    </div>
+
+                    <div class="col about-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/letter.png" class="about-img">
+                        <div class="about-object">
+                            <div class="about-title">E-MAIL</div>
+                            <div><a>sdg3921@naver.com</a></div>
+                        </div>
+                    </div>
+
+    <!--                <div class="col about-container">-->
+    <!--                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/blog.png" class="about-img" style="">-->
+    <!--                    <div class="about-object">-->
+    <!--                        <div class="about-title">BLOG</div>-->
+    <!--                        <div><a href="https://dong-ding.tistory.com/" style="text-decoration: none; color: #3e6fd5; font-weight: bold">블로그 이동하기</a></div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+                </div>
             </div>
 
-            <div class="p-3 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row text-center" style="width: 100%;">
-                <div class="col about-container">
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/user.png" class="about-img">
-                    <div class="about-object">
-                        <div class="about-title">NAME</div>
-                        <div>신동근</div>
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2" style="">
+                <div class="col" style="margin-top: 50px">
+                    <div class="edu-reward shadow" style="background-color: white">
+                        <div class="sub-title text-center" style="">
+                            🎓 EDUCATION
+                        </div>
+
+                        <ul style="font-size: 20px;">
+                            <li class="w-100">
+                                <div style="font-weight: bold">대진대학교 휴먼로봇융합과 전공</div>
+                                <div>(2017.03 ~ 2023.02)</div>
+                            </li>
+                            <br>
+                            <li class="w-100 mt-2">
+                                <div style="font-weight: bold">자바&스프링기반 AWS클라우드 융합 개발자 양성과정(D) Java 기반 풀스택 프로그래밍 과정 이수(112일, 896시간)</div>
+                                <div>(2023.01.31 ~ 2023.07.13)</div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-                <div class="col about-container">
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/calendar-silhouette.png" class="about-img">
-                    <div class="about-object">
-                        <div class="about-title">BIRTH</div>
-                        <div>1998.09.10</div>
+                <div class="col" style="margin-top: 50px;">
+                    <div class="edu-reward shadow" style="background-color: white">
+                        <div class="sub-title text-center" style="">
+                            🏅 REWARD
+                        </div>
+
+                        <ul style="font-size: 20px">
+                            <li class="w-100">
+                                <div style="font-weight: bold">
+                                    한국 정보기술학회 대학생 논문경진대회 금상 (2022)
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-
-                <div class="col about-container">
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/pin.png" class="about-img">
-                    <div class="about-object">
-                        <div class="about-title">LOCATE</div>
-                        <div>서울 광진구</div>
-                    </div>
-                </div>
-
-                <div class="col about-container">
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/phone.png" class="about-img">
-                    <div class="about-object">
-                        <div class="about-title">TEL</div>
-                        <div>010-8515-3921</div>
-                    </div>
-                </div>
-
-                <div class="col about-container">
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/letter.png" class="about-img">
-                    <div class="about-object">
-                        <div class="about-title">E-MAIL</div>
-                        <div><a>sdg3921@naver.com</a></div>
-                    </div>
-                </div>
-
-<!--                <div class="col about-container">-->
-<!--                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/blog.png" class="about-img" style="">-->
-<!--                    <div class="about-object">-->
-<!--                        <div class="about-title">BLOG</div>-->
-<!--                        <div><a href="https://dong-ding.tistory.com/" style="text-decoration: none; color: #3e6fd5; font-weight: bold">블로그 이동하기</a></div>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
         </div>
 
-        <div class="row row-cols-sm-1 gap-3" style="">
-            <div class="col" style="margin-bottom: 50px;">
-                <div class="edu-reward shadow" style="background-color: white">
-                    <div class="sub-title text-center" style="">
-                        🎓 EDUCATION
-                    </div>
-
-                    <ul style="font-size: 20px;">
-                        <li class="w-100">
-                            <div style="font-weight: bold">대진대학교 휴먼로봇융합과 전공</div>
-                            <div>(2017.03 ~ 2023.02)</div>
-                        </li>
-                        <br>
-                        <li class="w-100 mt-2">
-                            <div style="font-weight: bold">자바&스프링기반 AWS클라우드 융합 개발자 양성과정(D) Java 기반 풀스택 프로그래밍 과정 이수(112일, 896시간)</div>
-                            <div>(2023.01.31 ~ 2023.07.13)</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col" style="">
-                <div class="edu-reward shadow" style="background-color: white">
-                    <div class="sub-title text-center" style="">
-                        🏅 REWARD
-                    </div>
-
-                    <ul style="font-size: 20px">
-                        <li class="w-100">
-                            <div style="font-weight: bold">
-                                한국 정보기술학회 대학생 논문경진대회 금상 (2022)
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="sub-container shadow" style="">
+        <div id="skills" class="sub-container shadow" style="">
             <div class="sub-title">
                 🖥️ SKILLS
             </div>
@@ -421,68 +561,84 @@
                         <div>Frontend</div>
 <!--                        <div class="underline"></div>-->
                     </div>
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/front.png" class="skill-img">
+                    <div class="shadow skill-img-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/front.png" class="skill-img">
+                    </div>
                 </div>
 
                 <div class="skill-object col">
                     <div class="skill-title">
                         <div>Backend</div>
-                        <div class="underline"></div>
+<!--                        <div class="underline"></div>-->
                     </div>
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/back.png" class="skill-img">
+                    <div class="shadow skill-img-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/back.png" class="skill-img">
+                    </div>
                 </div>
 
                 <div class="skill-object col">
                     <div class="skill-title">
                         <div>Deployment</div>
-                        <div class="underline"></div>
+<!--                        <div class="underline"></div>-->
                     </div>
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/deploy.png" class="skill-img">
+                    <div class="shadow skill-img-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/deploy.png" class="skill-img">
+                    </div>
                 </div>
 
                 <div class="skill-object col">
                     <div class="skill-title">
                         <div>Version Control</div>
-                        <div class="underline"></div>
+<!--                        <div class="underline"></div>-->
                     </div>
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/vc.png" class="skill-img">
+                    <div class="shadow skill-img-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/vc.png" class="skill-img">
+                    </div>
                 </div>
 
                 <div class="skill-object col">
                     <div class="skill-title">
                         <div>Template Engine</div>
-                        <div class="underline"></div>
+<!--                        <div class="underline"></div>-->
                     </div>
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/template.png" class="skill-img">
+                    <div class="shadow skill-img-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/template.png" class="skill-img">
+                    </div>
                 </div>
 
                 <div class="skill-object col">
                     <div class="skill-title">
                         <div>DataBase</div>
-                        <div class="underline"></div>
+<!--                        <div class="underline"></div>-->
                     </div>
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/db.png" class="skill-img">
+                    <div class="shadow skill-img-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/db.png" class="skill-img">
+                    </div>
                 </div>
 
                 <div class="skill-object col">
                     <div class="skill-title">
                         <div>Language</div>
-                        <div class="underline"></div>
+<!--                        <div class="underline"></div>-->
                     </div>
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/lang.png" class="skill-img">
+                    <div class="shadow skill-img-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/lang.png" class="skill-img">
+                    </div>
                 </div>
 
                 <div class="skill-object col">
                     <div class="skill-title">
                         <div>Tool</div>
-                        <div class="underline"></div>
+<!--                        <div class="underline"></div>-->
                     </div>
-                    <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/tool.png" class="skill-img">
+                    <div class="shadow skill-img-container">
+                        <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/skills/tool.png" class="skill-img">
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="sub-container shadow" style="">
+        <div id="projects" class="sub-container shadow" style="">
             <div class="sub-title">
                 📚 PROJECTS
             </div>
@@ -490,14 +646,17 @@
             <div class="project-container row" style="">
                 <div class="project-description col" style="">
                     <a th:href="@{/portfolio/sauce-printer}">
-                        <img class="project-sub-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/print.png">
+                        <div class="project-card shadow" style="flex: 1">
+                            <img class="project-sub-img" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/sauce-printer/4.png">
+                            <div class="project-des">
+                                <div class="project-title" >소스 프린터</div>
+                                <div>2022.03.01 ~ 2022.12.10</div>
+                                <div class="project-subject">캡스톤 프로젝트</div>
+                                <div class="project-text">소스 레시피의 간편한 저장과 출력을 위한 프로젝트입니다.</div>
+    <!--                            <a th:href="@{/portfolio/sauce-printer}" class="view-detail-button">자세히보기</a>-->
+                            </div>
+                        </div>
                     </a>
-                    <div class="project-des" >
-                        <div class="project-title" >소스 프린터</div>
-                        <div>2022.03.01 ~ 2022.12.10</div>
-                        <div class="project-subject">캡스톤 프로젝트</div>
-                        <div class="project-text">소스 레시피의 간편한 저장과 출력을 위한 프로젝트입니다.</div>
-                    </div>
                 </div>
                 <div class="project-main-img-container col">
                     <a th:href="@{/portfolio/sauce-printer}">
@@ -506,33 +665,57 @@
                 </div>
             </div>
 
-            <div class="project-container row" style="">
-                <div class="project-description col" style="">
-                    <img class="project-sub-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/por.png">
-                    <div class="project-des" >
-                        <div class="project-title" >Pomor</div>
-                        <div>2022.09.22 ~ 진행중</div>
-                        <div class="project-subject">1인 프로젝트</div>
-                        <div class="project-text">시간관리와 음식점 리뷰 기능이 있는 웹 프로젝트입니다.</div>
-                    </div>
-                </div>
-                <div class="project-main-img-container col">
-                    <img class="project-main-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/por.png">
-                </div>
-            </div>
+            <div class="underline"></div>
 
             <div class="project-container row" style="">
                 <div class="project-description col" style="">
-                    <img class="project-sub-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/today.png">
-                    <div class="project-des" >
-                        <div class="project-title" >오늘의집 클론코딩</div>
-                        <div>2023.05.04 ~ 2023.07.01</div>
-                        <div class="project-subject">6인 팀 프로젝트</div>
-                        <div class="project-text">오늘의집 사이트를 클론코딩한 웹 프로젝트 입니다.</div>
-                    </div>
+                    <a th:href="@{/portfolio/pomor}">
+                        <div class="project-card shadow" style="flex: 1">
+
+                            <img class="project-sub-img" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/pomor-dor/main.png">
+        <!--                        <div class="shadow view-detail">자세히 보기</div>-->
+
+                            <div class="project-des" >
+                                <div class="project-title" >Pomor-dor</div>
+                                <div>2022.09.22 ~ 진행중</div>
+                                <div class="project-subject">1인 프로젝트</div>
+                                <div class="project-text">시간관리와 음식점 리뷰 기능이 있는 웹 프로젝트입니다.</div>
+    <!--                            <a th:href="@{/portfolio/pomor}" class="view-detail-button">자세히보기</a>-->
+                            </div>
+                        </div>
+                    </a>
+
                 </div>
                 <div class="project-main-img-container col">
-                    <img class="project-main-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/today.png">
+                        <a th:href="@{/portfolio/pomor}">
+                            <img class="project-main-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/pomor-dor/7.png">
+                        </a>
+<!--                        <div class="shadow view-detail">자세히 보기</div>-->
+                </div>
+            </div>
+
+            <div class="underline"></div>
+
+            <div class="project-container row" style="">
+                <div class="project-description col" style="">
+                    <a th:href="@{/portfolio/today}">
+                        <div class="project-card shadow" style="flex: 1">
+                            <img style="border-bottom: #c4c4c4 1px solid" class="project-sub-img" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/todayhome/logo2.png">
+
+                            <div class="project-des" >
+                                <div class="project-title" >오늘의집 클론코딩</div>
+                                <div>2023.05.04 ~ 2023.07.01</div>
+                                <div class="project-subject">6인 팀 프로젝트</div>
+                                <div class="project-text">오늘의집 사이트를 클론코딩한 웹 프로젝트 입니다.</div>
+    <!--                            <a th:href="@{/portfolio/today}" class="view-detail-button">자세히보기</a>-->
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-main-img-container col" style="flex: 1">
+                    <a th:href="@{/portfolio/today}">
+                        <img class="project-main-img shadow" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/today.png">
+                    </a>
                 </div>
             </div>
         </div>
@@ -554,12 +737,29 @@
 
     }
 
-    let printer = document.getElementById('printer')
-    let pomor = document.getElementById('pomor')
-    let today = document.getElementById('today')
+    $(document).ready(function() {
+        $("a").on('click', function(event) {
+            // 부드러운 스크롤
+            if (this.hash !== "") {
+                event.preventDefault();
 
-    printer.addEventListener('click', function () {
+                var hash = this.hash;
+                var targetOffset = $(hash).offset().top - 130;
+                console.log(targetOffset)
+                // window.location.hash = targetOffset;
+                // targetOffset -= 100;
+                // console.log('after : ' + targetOffset)
 
+                $('html, body').animate({
+                }, 100, function(){
+                    window.location.hash = hash;
+                    $('html, body').animate({
+                        scrollTop: targetOffset
+                    }, 100, function(){
+                    });
+                });
+            }
+        });
     });
 </script>
 </body>
