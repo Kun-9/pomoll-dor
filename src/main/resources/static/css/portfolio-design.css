@@ -26,14 +26,6 @@
         font-size: 22px;
     }
 
-    .sub-container {
-        width: 100%;
-    }
-
-    .main-container {
-        padding: 30px 0;
-    }
-
     .main-title-font {
         font-size: 40px;
     }
@@ -55,14 +47,6 @@
 
     .highlight-title {
         font-size: 30px;
-    }
-
-    .sub-container {
-        width: 320px
-    }
-
-    .main-container {
-        padding: 65px 30px;
     }
 
     .main-title-font {
