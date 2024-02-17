@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
 
     <th:block th:replace="fragment/config::configFragment"></th:block>
     <link th:href="@{/css/portfolio-design.css}" href="../../static/css/portfolio-design.css" rel="stylesheet">
@@ -27,9 +28,9 @@
             </div>
         </div>
 
-        <div class="col" style="flex: 1; padding: 0 42px 0 42px; justify-content: center; display: flex; flex-direction: column;">
-            <div style="font-size: 60px; font-weight: bolder; margin-top: 0px;">소스프린터</div>
-            <div style="font-size: 40px; font-weight: lighter;">소스 레시피를 저장하고 모바일 앱을 통해 원클릭으로 출력</div>
+        <div class="col title-container" style="flex: 1; justify-content: center; display: flex; flex-direction: column;">
+            <div class="main-title-font" style="font-weight: bolder; margin-top: 0px;">소스프린터</div>
+            <div class="sub-title-font" style="font-weight: lighter;">소스 레시피를 저장하고 모바일 앱을 통해 원클릭으로 출력</div>
         </div>
     </div>
 
@@ -195,11 +196,9 @@
         <!--                </div>-->
 
                         <div class="col project-text">
-                            이 프로젝트는 항상 정확한 소스 레시피를 출력하고 공유하기 위해 기획된 임베디드 시스템 및 모바일 앱 프로젝트입니다. 한 숟갈, 한 꼬집과 같은 모호한 표현 대신 소스 무게를 기반으로 한 정보로 레시피를 저장하여, 편차가 적은 소스를 제조할 수 있습니다. 액체와 가루 형태의 소스를 모두 출력할 수 있도록 구현되었습니다.
-                            <br><br>
-                            Raspberry Pi를 사용하여 소켓 통신을 통한 간이 서버를 구축하고, Android 애플리케이션을 제작하여 다양한 플랫폼 간의 상호작용을 구현했습니다. 이를 통해 다양한 언어와 플랫폼 개발 경험을 쌓을 뿐만 아니라, 소켓 통신과 시리얼 통신을 통해 통신에 대한 깊은 이해를 얻을 수 있었습니다. 또한 Fusion 360을 활용하여 부품을 설계하고 출력하여 하드웨어 통합을 경험했습니다.
-                            <br><br>
-                            데이터 관리 측면에서는 JSON 파일을 활용하여 NoSQL 방식으로 구현하여, 데이터베이스의 역할과 중요성에 대해 체감하며 이해하였습니다.
+                            <p>이 프로젝트는 항상 정확한 소스 레시피를 출력하고 공유하기 위해 기획된 임베디드 시스템 및 모바일 앱 프로젝트입니다. 한 숟갈, 한 꼬집과 같은 모호한 표현 대신 소스 무게를 기반으로 한 정보로 레시피를 저장하여, 편차가 적은 소스를 제조할 수 있습니다. 액체와 가루 형태의 소스를 모두 출력할 수 있도록 구현되었습니다.</p>
+                            <p>Raspberry Pi를 사용하여 소켓 통신을 통한 간이 서버를 구축하고, Android 애플리케이션을 제작하여 다양한 플랫폼 간의 상호작용을 구현했습니다. 이를 통해 다양한 언어와 플랫폼 개발 경험을 쌓을 뿐만 아니라, 소켓 통신과 시리얼 통신을 통해 통신에 대한 깊은 이해를 얻을 수 있었습니다. 또한 Fusion 360을 활용하여 부품을 설계하고 출력하여 하드웨어 통합을 경험했습니다.</p>
+                            <p>데이터 관리 측면에서는 JSON 파일을 활용하여 NoSQL 방식으로 구현하여, 데이터베이스의 역할과 중요성에 대해 체감하며 이해하였습니다.</p>
                         </div>
                     </div>
 
@@ -218,6 +217,13 @@
     </div>
 </div>
 </body>
+
+<footer style="width: 100%; color: white">
+    <div style="display: flex; padding: 70px; background-color: #2b2b2b; justify-content: center; gap: 20px;">
+        <a href="https://dong-ding.tistory.com/" style="text-decoration: none; color: white">Blog</a>
+        <a href="https://github.com/Kun-9/" style="text-decoration: none; color: white">GitHub</a>
+    </div>
+</footer>
 </html>
 
 <script>

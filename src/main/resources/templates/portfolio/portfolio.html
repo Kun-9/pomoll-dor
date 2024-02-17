@@ -21,7 +21,7 @@
 
             .project-description {
                 padding: 20px;
-                margin-bottom: 30px;
+                /*margin-bottom: 30px;*/
                 align-items: center;
             }
 
@@ -29,16 +29,78 @@
                 padding: 20px;
             }
         }
-        
+
+        /* 모바일 */
         @media (max-width: 750px) {
-            .underline {
-                display: block;
+            /*.underline {*/
+            /*    display: block;*/
+            /*}*/
+
+            .nav-link {
+                padding: 8px;
+            }
+
+            .title-font {
+                font-size: 18px;
+            }
+
+            .middle-font {
+                font-size: 16px;
+            }
+
+            .large-font {
+                font-size: 28px;
+            }
+
+            .project-container {
+                margin-bottom: 0;
+            }
+
+            /*.project-description {*/
+            /*    margin-bottom: 0;*/
+            /*}*/
+
+            .project-des {
+                width: 100%;
+                max-width: 620px;
+                padding: 10px 20px 30px 20px;
+            }
+
+            .project-title {
+                padding: 3px 15px;
             }
         }
 
-        @media (min-width: 750px) {
-            .underline {
-                display: none;
+
+        @media  (min-width: 750px) {
+            /*.underline {*/
+            /*    display: none;*/
+            /*}*/
+
+            .nav-link {
+                padding: 20px;
+            }
+
+            .title-font {
+                font-size: 25px;
+            }
+
+            .middle-font {
+                font-size: 22px;
+            }
+
+            .large-font {
+                font-size: 45px;
+            }
+
+            /*.project-description {*/
+            /*    margin-bottom: 0;*/
+            /*}*/
+
+            .project-des {
+                width: 100%;
+                max-width: 620px;
+                padding: 10px 30px 30px 30px;
             }
         }
 
@@ -54,15 +116,13 @@
             }
 
             .project-description {
-                padding: 50px;
+                padding: 50px 10px 50px 50px;
             }
 
             .project-main-img-container {
-                padding: 50px;
+                padding: 50px 50px 50px 10px;
             }
         }
-
-
 
 
         * {
@@ -113,7 +173,6 @@
         }
 
         .sub-title {
-            font-size: 3rem;
             font-weight: bolder;
             /*padding: 100px;*/
             color: #000000;
@@ -125,7 +184,6 @@
             top: 0;
             /*color: white;*/
             font-weight: lighter;
-            font-size: 1.3rem;
         }
 
         .nav-link {
@@ -133,7 +191,6 @@
             text-align: center;
             /*padding-left: 15px;*/
             /*padding-right: 15px;*/
-            padding: 20px;
         }
         
         .nav-link:hover {
@@ -143,7 +200,6 @@
 
         .about-title {
             font-weight: bold;
-            font-size: 25px;
         }
 
         .about-object {
@@ -151,7 +207,6 @@
             flex-direction: column;
             justify-content: center;
             gap: 15px;
-            font-size: 22px;
             font-weight: lighter;
         }
 
@@ -180,7 +235,6 @@
         }
 
         .skill-title {
-            font-size: 25px;
             font-weight: bold;
             display: flex;
             flex-direction: column;
@@ -210,6 +264,7 @@
             /*padding-right: 80px;*/
             z-index: 2;
             margin-bottom: 20px;
+
         }
 
 
@@ -236,12 +291,13 @@
 
         .project-description {
             /*width: 500px;*/
-            font-size: 22px;
             display: flex;
             flex-direction: column;
             /*padding: 0 15px 0 15px;*/
             /*justify-content: space-between;*/
             /*padding: 50px;*/
+
+            align-items: center;
 
         }
 
@@ -249,17 +305,18 @@
             color: black;
             max-width: 620px;
             width: 100%;
+            height: 100%;
+            display: block;
+            flex: 1;
         }
 
         .project-title {
             border-radius: 28px;
             background-color: #89B05D;
             color: white;
-            font-size: 25px;
             font-weight: bold;
             margin-top: 20px;
             margin-bottom: 15px;
-            padding: 10px 20px;
             line-height: 40px;
             display: inline-block;
         }
@@ -290,18 +347,18 @@
 
         .edu-reward {
             border-radius: 25px; height: 100%;
-            padding: 50px
+            padding: 50px 50px 70px 50px;
         }
 
         .underline {
             border-bottom: 2px solid #9b9b9b;
             width: 80%;
             margin-bottom: 30px;
+            display: none;
         }
 
         .project-subject {
             margin-top: 10px;
-            font-size: 25px;
             font-weight: bold;
         }
 
@@ -312,7 +369,6 @@
         .project-des {
             width: 100%;
             max-width: 620px;
-            padding: 10px 30px 30px 30px;
         }
 
         .skill-img-container {
@@ -389,14 +445,23 @@
         .project-main-img:hover {
             filter: grayscale(50%) blur(2px);
         }
+
+        footer a {
+            cursor: pointer;
+        }
+
+        footer a:hover {
+            opacity: 0.7;
+        }
+
     </style>
 </head>
 <body>
 
 <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" tabindex="0" class="" style="display: flex; flex-direction: column;">
 <!--    background-color: #2b2b2b;-->
-    <div style="height: 100vh; width: 100vw; display: flex; flex-direction: column; position: relative">
-        <div style="align-items: center; justify-content: center; margin: auto; font-size: 1.8rem; text-align: center; color: white; font-weight: lighter; height: 70%">
+    <div style="height: 100vh; width: 100%; display: flex; flex-direction: column; position: relative">
+        <div class="title-font" style="align-items: center; justify-content: center; margin: auto; text-align: center; color: white; font-weight: lighter; height: 70%">
 
             <img style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; opacity: 0.5; z-index: -2; object-fit: cover"
                  src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/IMG_8081.jpeg">
@@ -405,7 +470,7 @@
             <div style="z-index: 2; margin: auto; height: 100%; display: flex; flex-direction: column; justify-content: space-between">
                 <div></div>
                 <div>
-                    <div style="font-size: 2.4rem">
+                    <div class="large-font">
                         <div>안녕하세요.</div> <div style="color: #ee1461; font-weight: bold;">백엔드 개발자 신동근입니다.</div>
                     </div>
                     <div style="margin-top: 10px; padding: 0 15px 0 15px">
@@ -420,7 +485,7 @@
         </div>
     </div>
 
-    <div class="menubar" style="z-index: 3" >
+    <div class="menubar middle-font" style="z-index: 3" >
         <header class="p-2 text-white" style="width: 100%; background: #727272;">
             <div class="container-fluid">
                 <nav id="list-example" class="navbar px-3" style="padding: 0 10px 0 10px; max-width: 1600px; margin: auto">
@@ -457,47 +522,47 @@
 
         <div id="aboutMe">
             <div class="sub-container shadow" style="margin-bottom: 0;">
-                <div class="sub-title mt-3">
+                <div class="sub-title large-font mt-3">
                     🧑‍💻 ABOUT ME
                 </div>
 
-                <div class="p-3 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row text-center" style="width: 100%;">
+                <div class="p-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row text-center" style="width: 100%;">
                     <div class="col about-container">
                         <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/user.png" class="about-img">
-                        <div class="about-object">
-                            <div class="about-title">NAME</div>
+                        <div class="about-object middle-font">
+                            <div class="about-title title-font">NAME</div>
                             <div>신동근</div>
                         </div>
                     </div>
 
                     <div class="col about-container">
                         <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/calendar-silhouette.png" class="about-img">
-                        <div class="about-object">
-                            <div class="about-title">BIRTH</div>
+                        <div class="about-object middle-font">
+                            <div class="about-title title-font">BIRTH</div>
                             <div>1998.09.10</div>
                         </div>
                     </div>
 
                     <div class="col about-container">
                         <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/pin.png" class="about-img">
-                        <div class="about-object">
-                            <div class="about-title">LOCATE</div>
+                        <div class="about-object middle-font">
+                            <div class="about-title title-font">LOCATE</div>
                             <div>서울 광진구</div>
                         </div>
                     </div>
 
                     <div class="col about-container">
                         <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/phone.png" class="about-img">
-                        <div class="about-object">
-                            <div class="about-title">TEL</div>
+                        <div class="about-object middle-font">
+                            <div class="about-title title-font">TEL</div>
                             <div>010-8515-3921</div>
                         </div>
                     </div>
 
                     <div class="col about-container">
                         <img src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/about-me/letter.png" class="about-img">
-                        <div class="about-object">
-                            <div class="about-title">E-MAIL</div>
+                        <div class="about-object middle-font">
+                            <div class="about-title title-font">E-MAIL</div>
                             <div><a>sdg3921@naver.com</a></div>
                         </div>
                     </div>
@@ -515,49 +580,58 @@
             <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2" style="">
                 <div class="col" style="margin-top: 50px">
                     <div class="edu-reward shadow" style="background-color: white">
-                        <div class="sub-title text-center" style="">
+                        <div class="sub-title large-font text-center" style="">
                             🎓 EDUCATION
                         </div>
 
-                        <ul style="font-size: 20px;">
-                            <li class="w-100">
-                                <div style="font-weight: bold">대진대학교 휴먼로봇융합과 전공</div>
-                                <div>(2017.03 ~ 2023.02)</div>
-                            </li>
-                            <br>
-                            <li class="w-100 mt-2">
-                                <div style="font-weight: bold">자바&스프링기반 AWS클라우드 융합 개발자 양성과정(D) Java 기반 풀스택 프로그래밍 과정 이수(112일, 896시간)</div>
-                                <div>(2023.01.31 ~ 2023.07.13)</div>
-                            </li>
-                        </ul>
+                        <div class="middle-font">
+                            <ul style="margin: auto; max-width: 500px">
+                                <li class="w-100">
+                                    <div style="font-weight: bold">대진대학교 휴먼로봇융합과 전공</div>
+                                    <div>(2017.03 ~ 2023.02)</div>
+                                </li>
+                                <br>
+                                <li class="mt-2">
+                                    <div style="font-weight: bold">
+                                        자바&스프링기반 AWS클라우드 융합 개발자 양성과정
+                                        Java 기반 풀스택 프로그래밍 과정 이수<br>
+                                        (112일, 896시간)
+                                    </div>
+                                    <div>(2023.01.31 ~ 2023.07.13)</div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col" style="margin-top: 50px;">
                     <div class="edu-reward shadow" style="background-color: white">
-                        <div class="sub-title text-center" style="">
+                        <div class="sub-title large-font text-center" style="">
                             🏅 REWARD
                         </div>
 
-                        <ul style="font-size: 20px">
-                            <li class="w-100">
-                                <div style="font-weight: bold">
-                                    한국 정보기술학회 대학생 논문경진대회 금상 (2022)
-                                </div>
-                            </li>
-                        </ul>
+                        <div class="middle-font" style="text-align: center">
+<!--                            <ul style="margin: auto; max-width: 550px">-->
+<!--                                <li style="display: block">-->
+                                    <span style="font-weight: bold">
+                                        한국 정보기술학회 대학생 논문경진대회 금상
+                                        <span style="font-weight: normal">(2022)</span>
+                                    </span>
+<!--                                </li>-->
+<!--                            </ul>-->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div id="skills" class="sub-container shadow" style="">
-            <div class="sub-title">
+            <div class="sub-title large-font">
                 🖥️ SKILLS
             </div>
-            <div class="row row-cols-sm-2 row-cols-md-2 row-cols-xl-3 row-cols-xl-3" style="width: 100%; justify-content: center">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3 row-cols-xl-3" style="width: 100%; justify-content: center">
                 <div class="skill-object col">
-                    <div class="skill-title">
+                    <div class="skill-title title-font">
                         <div>Frontend</div>
 <!--                        <div class="underline"></div>-->
                     </div>
@@ -567,7 +641,7 @@
                 </div>
 
                 <div class="skill-object col">
-                    <div class="skill-title">
+                    <div class="skill-title title-font">
                         <div>Backend</div>
 <!--                        <div class="underline"></div>-->
                     </div>
@@ -577,7 +651,7 @@
                 </div>
 
                 <div class="skill-object col">
-                    <div class="skill-title">
+                    <div class="skill-title title-font">
                         <div>Deployment</div>
 <!--                        <div class="underline"></div>-->
                     </div>
@@ -587,7 +661,7 @@
                 </div>
 
                 <div class="skill-object col">
-                    <div class="skill-title">
+                    <div class="skill-title title-font">
                         <div>Version Control</div>
 <!--                        <div class="underline"></div>-->
                     </div>
@@ -597,7 +671,7 @@
                 </div>
 
                 <div class="skill-object col">
-                    <div class="skill-title">
+                    <div class="skill-title title-font">
                         <div>Template Engine</div>
 <!--                        <div class="underline"></div>-->
                     </div>
@@ -607,7 +681,7 @@
                 </div>
 
                 <div class="skill-object col">
-                    <div class="skill-title">
+                    <div class="skill-title title-font">
                         <div>DataBase</div>
 <!--                        <div class="underline"></div>-->
                     </div>
@@ -617,7 +691,7 @@
                 </div>
 
                 <div class="skill-object col">
-                    <div class="skill-title">
+                    <div class="skill-title title-font">
                         <div>Language</div>
 <!--                        <div class="underline"></div>-->
                     </div>
@@ -627,7 +701,7 @@
                 </div>
 
                 <div class="skill-object col">
-                    <div class="skill-title">
+                    <div class="skill-title title-font">
                         <div>Tool</div>
 <!--                        <div class="underline"></div>-->
                     </div>
@@ -639,19 +713,19 @@
         </div>
 
         <div id="projects" class="sub-container shadow" style="">
-            <div class="sub-title">
+            <div class="sub-title large-font">
                 📚 PROJECTS
             </div>
 
             <div class="project-container row" style="">
-                <div class="project-description col" style="">
+                <div class="project-description col middle-font">
                     <a th:href="@{/portfolio/sauce-printer}">
-                        <div class="project-card shadow" style="flex: 1">
+                        <div class="project-card shadow" style="height: 100%">
                             <img class="project-sub-img" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/sauce-printer/4.png">
                             <div class="project-des">
-                                <div class="project-title" >소스 프린터</div>
+                                <div class="project-title title-font" >소스 프린터</div>
                                 <div>2022.03.01 ~ 2022.12.10</div>
-                                <div class="project-subject">캡스톤 프로젝트</div>
+                                <div class="project-subject title-font">캡스톤 프로젝트</div>
                                 <div class="project-text">소스 레시피의 간편한 저장과 출력을 위한 프로젝트입니다.</div>
     <!--                            <a th:href="@{/portfolio/sauce-printer}" class="view-detail-button">자세히보기</a>-->
                             </div>
@@ -668,17 +742,17 @@
             <div class="underline"></div>
 
             <div class="project-container row" style="">
-                <div class="project-description col" style="">
+                <div class="project-description col middle-font" style="">
                     <a th:href="@{/portfolio/pomor}">
-                        <div class="project-card shadow" style="flex: 1">
+                        <div class="project-card shadow" style="height: 100%">
 
                             <img class="project-sub-img" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/pomor-dor/main.png">
         <!--                        <div class="shadow view-detail">자세히 보기</div>-->
 
                             <div class="project-des" >
-                                <div class="project-title" >Pomor-dor</div>
+                                <div class="project-title title-font" >Pomor-dor</div>
                                 <div>2022.09.22 ~ 진행중</div>
-                                <div class="project-subject">1인 프로젝트</div>
+                                <div class="project-subject title-font">1인 프로젝트</div>
                                 <div class="project-text">시간관리와 음식점 리뷰 기능이 있는 웹 프로젝트입니다.</div>
     <!--                            <a th:href="@{/portfolio/pomor}" class="view-detail-button">자세히보기</a>-->
                             </div>
@@ -697,15 +771,15 @@
             <div class="underline"></div>
 
             <div class="project-container row" style="">
-                <div class="project-description col" style="">
+                <div class="project-description col middle-font" style="">
                     <a th:href="@{/portfolio/today}">
-                        <div class="project-card shadow" style="flex: 1">
+                        <div class="project-card shadow" style="height: 100%">
                             <img style="border-bottom: #c4c4c4 1px solid" class="project-sub-img" src="https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/portfolio-img/projects/todayhome/logo2.png">
 
                             <div class="project-des" >
-                                <div class="project-title" >오늘의집 클론코딩</div>
+                                <div class="project-title title-font" >오늘의집 클론코딩</div>
                                 <div>2023.05.04 ~ 2023.07.01</div>
-                                <div class="project-subject">6인 팀 프로젝트</div>
+                                <div class="project-subject title-font">6인 팀 프로젝트</div>
                                 <div class="project-text">오늘의집 사이트를 클론코딩한 웹 프로젝트 입니다.</div>
     <!--                            <a th:href="@{/portfolio/today}" class="view-detail-button">자세히보기</a>-->
                             </div>
