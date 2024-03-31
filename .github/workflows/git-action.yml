@@ -78,9 +78,9 @@ jobs:
     ## 도커 이미지 빌드 후 도커허브에 push하기
     - name: web docker build and push
       run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build --platform linux/amd64 -f Dockerfile -t ${{ secrets.DOCKER_REPO }} .
-        docker push ${{ secrets.DOCKER_REPO }}
+        sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        sudo docker build --platform linux/amd64 -f Dockerfile -t ${{ secrets.DOCKER_REPO }} .
+        sudo docker push ${{ secrets.DOCKER_REPO }}
          
     ## 서버에 접속하여 도커 이미지를 pull 받고 실행하기
     - name: executing remote ssh commands using password
@@ -95,9 +95,9 @@ jobs:
           CONTAINER_ID=$(docker ps -q --latest)
           if [[ -n "$CONTAINER_ID" ]]; then
             IMAGE_ID=$(docker inspect --format='{{.Image}}' "$CONTAINER_ID")
-            docker stop "$CONTAINER_ID"
-            docker rm "$CONTAINER_ID"
-            docker rmi "$IMAGE_ID"
+            sudo docker stop "$CONTAINER_ID"
+            sudo docker rm "$CONTAINER_ID"
+            sudo docker rmi "$IMAGE_ID"
           fi
           
           # 도커에서 이미지 pull 후 run
