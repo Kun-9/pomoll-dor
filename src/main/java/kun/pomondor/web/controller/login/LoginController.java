@@ -59,7 +59,7 @@ public class LoginController {
 //        String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
 
 //        String token = kakaoAPI.getToken(restApiCode, redirectURI, code);
-        String token = kakaoAPI.getToken("798f3d347345f730f1e9e0f6a6ce6ac0", "http://kun.works/member/kakao-login", code);
+        String token = kakaoAPI.getToken("798f3d347345f730f1e9e0f6a6ce6ac0", "http://knnn.me/member/kakao-login", code);
         System.out.println(token);
         KakaoMember kakaoMember = kakaoAPI.getUserInfo(token);
 

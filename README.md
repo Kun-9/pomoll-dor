@@ -1,7 +1,7 @@
 # 공부 타이머 및 음식점 공유 커뮤니티 | pomoll-dor
 
 
-#### :link:[ 사이트 접속하기 ](http://kun.works)
+#### :link:[ 사이트 접속하기 ](http://knnn.me)
 
 
 <img width="1912" alt="스크린샷 2023-09-15 오후 5 58 49" src="https://github.com/Kun-9/pomoll-dor/assets/87655809/acaba4a3-8b6e-42a2-8721-c66296267f47">
