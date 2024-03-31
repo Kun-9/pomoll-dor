@@ -14,6 +14,7 @@ on:
 permissions:
   contents: read
 
+
 jobs:
   build:
     # 기본 설정 및 application.yml 생성
