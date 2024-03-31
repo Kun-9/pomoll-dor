@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+
     <th:block th:replace="fragment/config::configFragment"></th:block>
 
     <title>Login</title>
@@ -17,7 +19,7 @@
             font-family: 'Noto Sans KR', sans-serif;
         }
 
-        .main-block {
+        .main-container {
             padding:100px 0;
             width: 100%;
             display: grid;
@@ -28,7 +30,7 @@
         }
 
         @media (max-width: 900px) {
-            .main-block {
+            .main-container {
                 display: flex;
                 flex-direction: column;
                 width: 400px;
