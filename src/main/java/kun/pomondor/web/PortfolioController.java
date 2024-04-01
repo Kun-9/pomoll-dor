@@ -33,4 +33,8 @@ public class PortfolioController {
         return "portfolio/projects/today";
     }
 
+    @GetMapping("/portfolio/portfolio-web")
+    public String portfolioWeb() {
+        return "portfolio/projects/portfolio_web";
+    }
 }

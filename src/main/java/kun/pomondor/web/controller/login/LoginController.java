@@ -37,6 +37,7 @@ public class LoginController {
     private final MemberService memberService;
     private final KakaoAPI kakaoAPI;
     private final MyFileUploadUtil myFileUploadUtil;
+    private final String REDIRECT_HOME_URI = "redirect:/home";
 
     @Value("${kakao.redirectURI}")
     String redirectURI;
@@ -63,7 +64,7 @@ public class LoginController {
         System.out.println(token);
         KakaoMember kakaoMember = kakaoAPI.getUserInfo(token);
 
-        if (kakaoMember == null) return "redirect:/home";
+        if (kakaoMember == null) return REDIRECT_HOME_URI;
 
         String email = kakaoMember.getEmail();
         Member loginMember = memberService.findByEmail(email);
@@ -99,7 +100,7 @@ public class LoginController {
         session.setAttribute(SessionConst.LOGIN_LEVEL, memberLevel);
         session.setAttribute("currentMember", loginMember);
 
-        return "redirect:/home";
+        return REDIRECT_HOME_URI;
     }
 
     @PostMapping("/login")
@@ -119,7 +120,7 @@ public class LoginController {
         if (loginMember == null) {
             log.info("로그인 실패");
             bindingResult.reject("","아이디 또는 비밀번호를 확인해주세요.");
-//            return "redirect:/home";
+
         }
 
         if (bindingResult.hasErrors()) {
@@ -154,7 +155,7 @@ public class LoginController {
         session.invalidate();
 
         model.addAttribute("member", new Member());
-        return "redirect:/home";
+        return REDIRECT_HOME_URI;
     }
 
     // 1000부터 9999까지의 난수 생성
