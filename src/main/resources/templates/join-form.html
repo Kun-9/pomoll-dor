@@ -26,7 +26,7 @@
     <div class="w-100 m-auto form-signin" style="max-width: 330px; padding: 15px">
         <h1 class="h2 text-white h3 fw-normal mb-5 text-center">Join</h1>
         <p class="fw-normal" style="color: #e0e0e0">아이디와 비밀번호는 암호화되지 않습니다.<br>임의의 아이디를 입력해주세요.</p>
-        <form method="post" th:action="@{/member/join}" th:object="${joinForm}">
+        <form id="join-form" method="post" th:action="@{/member/join}" th:object="${joinForm}">
             <div class="mb-3">
                 <label for="email" class="form-label text-white">Email address</label>
                 <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Email"
@@ -46,20 +46,82 @@
                 <div style="display: flex; flex-direction: row">
                     <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="Username"
                            th:errorclass="error-field" style="margin-right: 10px">
-                    <button type="button" class="btn btn-info">✓</button>
+                    <button type="button" class="btn btn-info username-check-btn" onclick="checkUsername()">✓</button>
                 </div>
                 <p th:errors="*{username}" th:errorclass="error-field"></p>
             </div>
 
-            <button type="submit" onclick="trimUsername()" id="submitBtn" class="btn btn-primary w-100 btn-lg">Submit</button>
+            <button type="button" id="submitBtn" class="btn btn-primary w-100 btn-lg">Submit</button>
         </form>
+
+<!--        <div class="username-check-btn" onclick="checkUsername()">버튼</div>-->
     </div>
 
 <script>
-    let username = document.getElementById('username');
+    let usernameInput = document.getElementById('username');
+    let isChecked = false;
     function trimUsername() {
-        username.value = username.value.trim();
+        usernameInput.value = usernameInput.value.trim();
     }
+
+    function checkUsername() {
+
+        if (isChecked) {
+            $('#username').prop('readonly', false)
+
+            let checkBtn = $('.username-check-btn');
+            $(checkBtn).text('✓');
+
+            $(checkBtn).addClass('btn-info')
+            $(checkBtn).removeClass('btn-warning')
+
+            isChecked = false;
+        } else {
+
+            trimUsername();
+
+            let targetUsername = usernameInput.value;
+
+            $.ajax({
+                url: "/member/validate-username/" + targetUsername,
+                type: "GET",
+                success: function (data) {
+                    if (data === true) {
+                        alert('이미 존재하는 이름입니다.')
+                    } else {
+                        if (confirm('이 이름으로 등록 하시겠습니까?')) {
+
+                            $('#username').prop('readonly', true)
+
+                            let checkBtn = $('.username-check-btn');
+                            $(checkBtn).text('x');
+                            $(checkBtn).removeClass('btn-info')
+                            $(checkBtn).addClass('btn-warning')
+
+                            isChecked = true;
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
+    let submitBtn = $('#submitBtn');
+
+    $(document).ready(function () {
+
+        $(submitBtn).on('click', function () {
+            if (isChecked) {
+                $('#join-form').submit();
+            } else {
+                alert('먼저 이름 중복체크를 해주세요.')
+            }
+        });
+    });
+
 
 </script>
 </body>

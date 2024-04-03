@@ -1,5 +1,6 @@
 package kun.pomondor.domain.util;
 
+import groovy.util.logging.Slf4j;
 import kun.pomondor.domain.KakaoMember;
 import org.json.JSONObject;
 import org.springframework.http.*;
@@ -9,6 +10,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Component
+@Slf4j
 public class KakaoAPI {
 
 	public String getToken(String restApiCode, String redirectUri, String code) {
@@ -53,10 +55,20 @@ public class KakaoAPI {
 		// 응답
 		JSONObject jsonObject = new JSONObject(responseEntity.getBody());
 
-		String email = jsonObject.getJSONObject("kakao_account").getString("email");
-		String name = jsonObject.getJSONObject("properties").getString("nickname");
-		Long id = jsonObject.getLong("id");
-		String image = jsonObject.getJSONObject("kakao_account").getJSONObject("profile").getString("profile_image_url");
+		String email = null;
+		String name = null;
+		Long id = null;
+		String image = null;
+
+		name = jsonObject.getJSONObject("properties").getString("nickname");
+		id = jsonObject.getLong("id");
+		image = jsonObject.getJSONObject("kakao_account").getJSONObject("profile").getString("profile_image_url");
+
+		try {
+			email = jsonObject.getJSONObject("kakao_account").getString("email");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
 		return new KakaoMember(id, email, name, image);
 	}

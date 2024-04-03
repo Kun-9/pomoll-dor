@@ -131,4 +131,9 @@ public class MemberController {
         return "user/user-info";
     }
 
+    @ResponseBody
+    @GetMapping("/validate-username/{username}")
+    public boolean validateUserName(@PathVariable String username) {
+        return memberService.validUsernameExist(username);
+    }
 }

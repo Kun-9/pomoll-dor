@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Main</title>
-
     <th:block th:replace="fragment/config::configFragment"></th:block>
     <style>
+        .profile-thumbnail::after {
+            border-color: white;
+            color: white;
+        }
+
         header > div {
             width: 100%;
         }
@@ -33,7 +36,11 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a id="home" th:href="@{/home}" class="nav-link px-2">Home</a></li>
                     <li><a id="group" th:href="@{/group/index}" class="nav-link px-2">Group</a></li>
-                    <li><a id="myPage" th:href="@{/statistics/info}" class="nav-link px-2">MyPage</a></li>
+<!--                    <li>-->
+<!--                        <a th:if="${session.loginMember != null}" id="myPage" th:href="@{/statistics/info/{memberId}(memberId = ${session.currentMember.id})}" class="nav-link px-2">MyPage</a>-->
+<!--                        <a th:if="${session.loginMember == null}" id="myPage" th:href="@{/statistics/info/{memberId}(memberId = ${session.currentMember.id})}" class="nav-link px-2">MyPage</a>-->
+<!--                    -->
+<!--                    </li>-->
                     <li><a id="search" th:href="@{/search/all}" class="nav-link px-2">Search</a></li>
                     <li><a id="friend" th:href="@{/friend/view}" class="nav-link px-2">Friends</a></li>
                     <li><a id="food" th:href="@{/etc/food}" class="nav-link px-2">Food</a></li>
@@ -62,7 +69,7 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a id="home" th:href="@{/home}" class="nav-link px-2">Home</a></li>
                     <li><a id="group" th:href="@{/group/index}" class="nav-link px-2">Group</a></li>
-                    <li><a id="myPage" th:href="@{/statistics/info}" class="nav-link px-2">MyPage</a></li>
+                    <li><a id="myPage" th:href="@{/member/info/{memberId}(memberId = ${session.currentMember.id})}" class="nav-link px-2">MyPage</a></li>
                     <li><a id="search" th:href="@{/search/all}" class="nav-link px-2">Search</a></li>
                     <li><a id="friend" th:href="@{/friend/view}" class="nav-link px-2">Friends</a></li>
                     <li><a id="food" th:href="@{/etc/food}" class="nav-link px-2">Food</a></li>
@@ -84,14 +91,14 @@
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <div style="background: white; display: inline-block" width="32" height="32" class="rounded-circle">
+                        <div style="background: white; display: inline-block" width="32" height="32" class="rounded-circle profile-thumbnail">
                             <img th:src="'https://kun-buket-test.s3.ap-northeast-2.amazonaws.com/pomondor/profile-img/thumbnail_' + ${session.currentMember.picture}" src="../../static/picture/default.png" alt="mdo" width="32" height="32" class="rounded-circle" style="object-fit: cover;">
                         </div>
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
 <!--                        <li><a class="dropdown-item" th:href="@{/setting}">Settings</a></li>-->
                         <li><a class="dropdown-item" th:href="@{/member/profile/change}">Settings</a></li>
-                        <li><a class="dropdown-item" th:href="@{/member/info/{memberId}(memberId = ${session.currentMember.id})}">Profile</a></li>
+<!--                        <li><a class="dropdown-item" th:href="@{/member/info/{memberId}(memberId = ${session.currentMember.id})}">Profile</a></li>-->
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" th:href="@{/member/logout}">Logout</a></li>
                     </ul>

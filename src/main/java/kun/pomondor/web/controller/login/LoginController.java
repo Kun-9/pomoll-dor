@@ -64,7 +64,15 @@ public class LoginController {
         System.out.println(token);
         KakaoMember kakaoMember = kakaoAPI.getUserInfo(token);
 
-        if (kakaoMember == null) return REDIRECT_HOME_URI;
+        if (kakaoMember == null) {
+            log.error("카카오 객체 반환 에러");
+            return REDIRECT_HOME_URI;
+        }
+
+        if (kakaoMember.getEmail() == null) {
+            log.error("이메일 누락 에러");
+            kakaoMember.setEmail("email" + kakaoMember.getId());
+        }
 
         String email = kakaoMember.getEmail();
         Member loginMember = memberService.findByEmail(email);
@@ -85,7 +93,7 @@ public class LoginController {
 
             try {
                 myFileUploadUtil.saveProfileImgToS3(kakaoMember.getImage(), loginMember.getId() + ".jpg");
-                System.out.println("profile img success");
+                log.info(kakaoMember.getId() + " : profile img success");
                 memberService.setProfileImg(loginMember.getId(), loginMember.getId() + ".jpg");
 
                 loginMember = memberService.findByEmail(email);
@@ -113,9 +121,9 @@ public class LoginController {
 
         Member loginMember = memberService.login(loginForm.getEmail(), loginForm.getPassword());
 
-        if (bindingResult.hasErrors()) {
-            return "login-form";
-        }
+//        if (bindingResult.hasErrors()) {
+//            return "login-form";
+//        }
 
         if (loginMember == null) {
             log.info("로그인 실패");

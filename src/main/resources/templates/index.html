@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>MainPage</title>
+    <title>Pomor</title>
     <th:block th:replace="fragment/config::configFragment"></th:block>
 
 </head>
@@ -173,6 +173,7 @@
         flex-direction: column;
     }
 
+
 </style>
 
 <body>
@@ -299,6 +300,14 @@
 <script>
     window.onload = () => {
         document.getElementById('home').classList.add('text-secondary');
+
+        let dropdownToggle = document.querySelector(".dropdown-toggle");
+        if (dropdownToggle === null) {
+            console.log('no')
+        } else {
+            console.log(dropdownToggle)
+            dropdownToggle.style.setProperty("--bs-caret-color", "white");
+        }
     }
 
     (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.")}var ch=function(){ch.c(arguments)};ch.q=[];ch.c=function(args){ch.q.push(args)};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];if(x.parentNode){x.parentNode.insertBefore(s,x)}}if(document.readyState==="complete"){l()}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l)}})();
@@ -310,6 +319,8 @@
             "name": username,
         }
     });
+
+
 
     // closeBtn.addEventListener('click', function () {
     //     updateAlert.style.display = 'none';
