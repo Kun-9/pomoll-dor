@@ -170,7 +170,6 @@ public class LoginController {
     private static String randomNumberGenerator() {
         Random random = new Random();
         int randomNumber = 1000 + random.nextInt(9000);
-
         return String.valueOf(randomNumber);
     }
 }
