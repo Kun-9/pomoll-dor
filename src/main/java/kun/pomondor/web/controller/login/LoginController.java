@@ -172,4 +172,5 @@ public class LoginController {
         int randomNumber = 1000 + random.nextInt(9000);
         return String.valueOf(randomNumber);
     }
+
 }
